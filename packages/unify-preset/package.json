@@ -1,0 +1,43 @@
+{
+  "name": "@unifyui/unify-preset",
+  "version": "0.0.0",
+  "description": "The atomic UI Library",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "scripts": {
+    "build": "rimraf dist && unbuild",
+    "format": "biome format --write ./src"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "package.json",
+    "!.gitignore",
+    "!tsconfig.json",
+    "!biome.js"
+  ],
+  "author": "unifyui-dev",
+  "license": "ISC",
+  "dependencies": {
+    "unbuild": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.27",
+    "@unocss/reset": "^0.58.6",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.2",
+    "unocss": "^0.58.6"
+  }
+}

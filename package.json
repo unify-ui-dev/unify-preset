@@ -4,8 +4,8 @@
   "workspaces": [
     "packages/*"
   ],
-  "dependencies": {},
   "devDependencies": {
+    "@biomejs/biome": "1.6.2",
     "lerna": "^8.1.2"
   }
 }
