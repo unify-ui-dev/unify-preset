@@ -1,4 +1,8 @@
+import { resolve } from 'path'
 import { defineBuildConfig } from 'unbuild'
+
+
+
 
 export default defineBuildConfig({
     entries: ['src/index'],
@@ -6,6 +10,15 @@ export default defineBuildConfig({
     clean: true,
     rollup: {
         emitCJS: true,
+        alias: {
+            entries: {
+                "@/types": resolve(__dirname, './src/types'),
+                "@/utils":resolve(__dirname, './src/utils/')
+            }
+        }
     },
-    externals: ['unocss'],
+
+    failOnWarn: false,
+
+    externals: ['unocss', "@unifyui/unify-variant"],
 })

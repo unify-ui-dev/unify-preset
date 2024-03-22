@@ -1,7 +1,7 @@
 {
   "name": "@unifyui/unify-preset",
   "version": "0.0.0",
-  "description": "The atomic UI Library",
+  "description": "Variants for unify-preset : The atomic UI Library",
   "publishConfig": {
     "access": "public"
   },
@@ -22,22 +22,22 @@
   "files": [
     "dist",
     "README.md",
+    "favicon-dark.png",
     "package.json",
     "!.gitignore",
     "!tsconfig.json",
     "!biome.js"
   ],
-  "author": "unifyui-dev",
-  "license": "ISC",
-  "dependencies": {
-    "unbuild": "^2.0.0"
-  },
+  "author": "Johnkat MJ",
+  "license": "MIT",
   "devDependencies": {
+    "unbuild": "^2.0.0",
+    "@unifyui/unify-variant": "^0.0.0",
     "@types/node": "^20.11.27",
-    "@unocss/reset": "^0.58.6",
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2",
-    "unocss": "^0.58.6"
+    "unocss": "^0.58.6",
+    "@biomejs/biome": "1.6.2"
   }
 }
