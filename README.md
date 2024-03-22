@@ -55,7 +55,7 @@ Contribute, collaborate, and become a part of our mission 🚀
 
 - [Antfu](https://github.com/antfu) - The creator of UnoCSS.
 - [UnoCSS](https://github.com/unocss/unocss) - The project is powered by UnoCSS.
-- [Méschac Irung]([link](https://github.com/Meschacirung)) - Whose theming ideas have significantly shaped our thematic approach, check [Tailus Themer](https://github.com/Tailus-UI/themer).
+- [Méschac Irung](https://github.com/Meschacirung) - Whose theming ideas have significantly shaped our thematic approach, check [Tailus Themer](https://github.com/Tailus-UI/themer).
 - [Nuxt UI](https://github.com/nuxt/ui) - Much like Tailus Themer,  Nuxt UI has been instrumental in helping us leverage themable UI components.
 - [Phojie Rengel](https://github.com/phojie) - Our thanks go out to his exceptional work on [Una UI](https://github.com/una-ui/una-ui), which inspired us to create our Atomic Theming Toolkit. His amazing code has been instrumental in our development process.
 - [Saadeghi](https://github.com/saadeghi) - For creating [DaisyUI](https://github.com/saadeghi/daisyui), whose idea of using semantic class names has been a key inspiration in our pursuit since we're providing utility classes in semantic style.
@@ -65,7 +65,7 @@ Contribute, collaborate, and become a part of our mission 🚀
 
 If you like this project and want to support us, feel free to donate via the following methods: 
 
-- Direct Contact : `johnkatembue4@gmail.com`
+- Direct Contact : [johnkatembue4@gmail.com](mailto:johnkatembue4@gmail.com)
 
 
 

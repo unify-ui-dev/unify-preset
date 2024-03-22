@@ -1,0 +1,1 @@
+export { presetVariants, type VariantGenOptions } from "./gen-variant"
