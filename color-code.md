@@ -1,8 +1,8 @@
 The Right way to config colors in your uno.config.js (uno.config.ts)
 
-## Using colorPaletteProvider : "default"
+# Colors
 
-### Default palette : Pick colors you need
+## Default palette : Pick colors you need
 
 ```js
 import { colors } from "@unocss/preset-mini/colors";
@@ -27,7 +27,7 @@ import { colors } from "@unocss/preset-mini/colors";
 ```
 
 
-### Custom with CSS Variables 
+## Custom with CSS Variables 
 
 > **Not** : you need to provide every color with all shades from 50 to 950, black is black, there's no shade even white
 
@@ -75,26 +75,4 @@ import { colors } from "@unocss/preset-mini/colors";
 
 This will help to have things like `btn-solid-primary`, `btn-solid-success`, `btn-ghost-primary`, and so on.
 
-
-## Using colorPaletteProvider : "cssVar"
-
-
-> **Not** : this feature is not ready to be used, we still need to improve it
-
-
-When choosing this you need to follow this : 
-
-In your uno config, here How you can add colors :
-
-```ts
-colors: {
-    //
-    primary:"rgba(var(--ui-primary) / <alpha-value>)",
-
-    'colorname-hover':"rgba(var(--colorname-hover) / <alpha-value>)"
-    'colorname-active' : "rgba(var(--colorname-text) / <alpha-value>)"
-    'colorname-text' : "rgba(var(--colorname-text) / <alpha-value>)"
-    
-    // 
-},
-```
+ 
