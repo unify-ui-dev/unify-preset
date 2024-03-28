@@ -1,119 +1,95 @@
-import type { appearance, colorPaletteProvider, colorShade, formOutline } from "@/types"
+import type { Appearance, formOutline } from "@/types"
 import { getConfigValue } from "@/utils"
-import { generalBtnOuline } from "./const"
-import type { btnGhostOrSoft, solidBtnShade } from "./types"
+import { btnCongig } from "./const"
+import type { BtnGhostOrSoft, SolidBtnShade, BtnWhite, SolidGradientBtn } from "./types"
 
-const getTextColorSolid = (colorApply: "white-only" | "gray", colorPaletteProvider: colorPaletteProvider, color: {
-    light?: { textShade?: colorShade },
-    dark?: { textShade?: colorShade }
-}) => {
-    const { light: light_, dark: dark_ } = color
-    const light = colorApply === "white-only" ? `white` : colorPaletteProvider === "default" ? `gray-${light_?.textShade}` : `${color}-text`
-    const dark = colorApply === "white-only" ? `white` : colorPaletteProvider === "default" ? `gray-${dark_?.textShade}` : `${color}-text`
 
-    return { light, dark }
+export const genBtnVariantWhite = ({ solid, appearance }: { solid: BtnWhite, appearance: Appearance }) => {
+    const { light, dark } = solid
+    const btnvariantLight = `${appearance === "light" || appearance === "both" ?
+        `b b-gray-200/60 bg-${light.bg} hover-bg-${light.hoverBg} active-bg-${light.pressBg} text-${light.textColor} focus-visible-outline-${light.hoverBg}` : ""} `
+
+    const variantDark = `${appearance === "dark" ?
+        `b b-gray-800/60 bg-${dark.bg} hover-bg-${dark.hoverBg} active-bg-${dark.pressBg} text-${dark.textColor} focus-visible-outline-${dark.hoverBg}` :
+        appearance === "both" ?
+            `dark-b-gray-800/60 dark-bg-${dark.bg} dark-hover-bg-${dark.hoverBg} dark-active-bg-${dark.pressBg} dark-text-${dark.textColor} dark-focus-visible-outline-${dark.hoverBg}` : ""}`
+    return `${btnvariantLight} ${variantDark}`
 }
 
 // generate btn variants 
-export const genBtnVariantSolid = ({ color, solidShade, appearance, colorPaletteProvider }: { color: string, solidShade: solidBtnShade, appearance: appearance, colorPaletteProvider: colorPaletteProvider }) => {
-    const { light, dark } = solidShade
-    const appliedTextColor = color === "gray" ? "gray" : "white-only"
-    const foreText = getTextColorSolid(appliedTextColor, colorPaletteProvider, {
-        light: { textShade: solidShade.light?.textShade },
-        dark: { textShade: solidShade.dark?.textShade }
-    })
+export const genBtnVariantSolid = ({ color, solid, graySolid, appearance }: { color: string, solid: SolidBtnShade, graySolid: SolidBtnShade, appearance: Appearance }) => {
+    if (color === "neutral") {
+        return `${genBtnVariantSolidNeutral({ appearance })}`
+    }
+
+    const { light, dark } = color === "gray" ? graySolid : solid
+
     const btnvariantLight = `${appearance === "light" || appearance === "both" ?
-        colorPaletteProvider === "default" ?
-            `bg-${color}-${light?.bgShade} hover-bg-${color}-${light?.hoverBgShade} active-bg-${color}-${light?.pressBgShade} text-${foreText.light} focus-visible-outline-${color}-${light?.hoverBgShade}` :
-            `bg-${color} hover-bg-${color}-hover active-bg-${color}-active focus-visible-outline-${color} text-${foreText.light}`
-        : ""} `
+        `bg-${color}-${light?.bgShade} hover-bg-${color}-${light?.hoverBgShade} active-bg-${color}-${light?.pressBgShade} text-white focus-visible-outline-${color}-${light?.hoverBgShade}` : ""} `
 
     const variantDark = `${appearance === "dark" ?
-        colorPaletteProvider === "default" ?
-            `bg-${color}-${dark?.bgShade} hover-bg-${color}-${dark?.hoverBgShade} active-bg-${color}-${dark?.pressBgShade} text-${foreText.dark} focus-visible-outline-${color}-${dark?.hoverBgShade}` :
-            `bg-${color} hover-bg-${color}-hover active-bg-${color}-active focus-visible-outline-${color} text-${foreText}`
-        : appearance === "both" ?
-            colorPaletteProvider === "default" ?
-                `dark-bg-${color}-${dark?.bgShade} dark-hover-bg-${color}-${dark?.hoverBgShade} dark-active-bg-${color}-${dark?.pressBgShade} dark-focus-visible-outline-${color}-${dark?.hoverBgShade}` :
-                `dark-bg-${color} dark-hover-bg-${color}-hover dark-active-bg-${color}-active dark-focus-visible-outline-${color}-active` : ""}`
+        `bg-${color}-${dark?.bgShade} hover-bg-${color}-${dark?.hoverBgShade} active-bg-${color}-${dark?.pressBgShade} text-white focus-visible-outline-${color}-${dark?.hoverBgShade}` :
+        appearance === "both" ?
+            `dark-bg-${color}-${dark?.bgShade} dark-hover-bg-${color}-${dark?.hoverBgShade} dark-active-bg-${color}-${dark?.pressBgShade} dark-focus-visible-outline-${color}-${dark?.hoverBgShade}` : ""}`
     return `${btnvariantLight} ${variantDark}`
 }
 
-export const genBtnVariantSolidGray = ({ shades, appearance, colorPaletteProvider }: { shades: solidBtnShade, appearance: appearance, colorPaletteProvider: colorPaletteProvider }) => {
-    const color = colorPaletteProvider === "default" ? "gray" : "btn-gray"
-    return `${genBtnVariantSolid({ color, solidShade: shades, colorPaletteProvider, appearance })}`
-}
+export const genBtnVariantOutline = ({ color, appearance, outlineBtn, outlineBtnGray }: { color: string, appearance: Appearance, outlineBtn: formOutline, outlineBtnGray: formOutline }) => {
+    const { borderSize, light, dark } = color === "gray" ? outlineBtnGray : outlineBtn
 
-export const genBtnVariantOutline = ({ color, appearance, colorPaletteProvider, outlineBtn }: { color: string, appearance: appearance, colorPaletteProvider: colorPaletteProvider, outlineBtn: formOutline }) => {
-    const { borderSize, light, dark } = outlineBtn
     const borderSize_ = borderSize ? borderSize : 1
+
+    if (color === "neutral") {
+        return `${genBtnVariantOutlineNeutral({ appearance, outlineBtn: { borderSize: borderSize_ } })}`
+    }
+
     const variantLight = `${appearance === "light" || appearance === "both" ?
-        colorPaletteProvider === "default" ?
-            `bg-transparent border-${color}-${light?.borderShade} hover-border-${color}-${light?.hoverBorderShade} text-${color}-${light?.textShade} hover-text-${color}-${light?.hoverTextShade} focus-visible-outline-${color}-${light?.hoverBorderShade}` :
-            `bg-transparent border-${color} hover-border-${color}-hover active-border-${color}-active text-${color}-text hover-text-${color}-text-hover focus-visible-outline-${color}-text`
-        : ""}`
+        `bg-transparent hover-bg-${color}-${light?.textShade}/10 border-${color}-${light?.borderShade} hover-border-${color}-${light?.hoverBorderShade} text-${color}-${light?.textShade} hover-text-${color}-${light?.hoverTextShade} focus-visible-outline-${color}-${light?.hoverBorderShade}` : ""}`
 
     const variantDark = `${appearance === "dark" ?
-        colorPaletteProvider === "default" ?
-            `bg-transparent border-${color}-${dark?.borderShade} hover-border-${color}-${dark?.hoverBorderShade} text-${color}-${dark?.textShade} hover-text-${color}-${dark?.hoverTextShade} focus-visible-outline-${color}-${dark?.hoverBorderShade}` :
-            `bg-transparent border-${color} hover-border-${color}-hover active-border-${color}-active focus-visible-outline-${color}`
-        : appearance === "both" ?
-            colorPaletteProvider === "default" ?
-                `dark-border-${color}-${dark?.borderShade} dark-hover-border-${color}-${dark?.hoverBorderShade} dark-text-${color}-${dark?.textShade} dark-hover-text-${color}-${dark?.hoverTextShade} dark-focus-visible-outline-${color}-${dark?.hoverBorderShade}` :
-                `dark-border-${color} dark-hover-border-${color}-hover dark-active-border-${color}-active dark-focus-visible-outline-${color}` : ""}`
+        `bg-transparent hover-bg-${color}-${dark?.textShade}/10 border-${color}-${dark?.borderShade} hover-border-${color}-${dark?.hoverBorderShade} text-${color}-${dark?.textShade} hover-text-${color}-${dark?.hoverTextShade} focus-visible-outline-${color}-${dark?.hoverBorderShade}` :
+        appearance === "both" ?
+            `dark-border-${color}-${dark?.borderShade} dark-hover-bg-${color}-${dark?.textShade}/10 dark-hover-border-${color}-${dark?.hoverBorderShade} dark-text-${color}-${dark?.textShade} dark-hover-text-${color}-${dark?.hoverTextShade} dark-focus-visible-outline-${color}-${dark?.hoverBorderShade}` : ""}`
     return `border-${getConfigValue(borderSize_)} ${variantLight} ${variantDark}`
 }
-export const genBtnVariantOutlineGray = ({ appearance, outlineBtn, colorPaletteProvider }: { appearance: appearance, outlineBtn: formOutline, colorPaletteProvider: colorPaletteProvider }) => {
-    const color = colorPaletteProvider === "default" ? "gray" : "btn-gray-outline"
-    return `${genBtnVariantOutline({ color, colorPaletteProvider, appearance, outlineBtn })}`
-}
 
-export const genBtnVariantSoftOrGost = ({ color, appearance, colorPaletteProvider, ghostOrSoft }: { color: string, appearance: appearance, colorPaletteProvider: colorPaletteProvider, ghostOrSoft: btnGhostOrSoft }) => {
-    const { light, dark } = ghostOrSoft
+export const genBtnVariantSoftOrGost = ({ color, appearance, ghostOrSoft, graySoftGhost, variant }: { color: string, appearance: Appearance, ghostOrSoft: BtnGhostOrSoft, graySoftGhost: BtnGhostOrSoft, variant: "soft" | "ghost" }) => {
+    if (color === "neutral") {
+        return `${genNeutralSoftGhost({ variant, appearance })}`
+    }
+
+    const { light, dark } = color === "gray" ? graySoftGhost : ghostOrSoft
 
     const variantLight = `${appearance === "light" || appearance === "both" ?
-        colorPaletteProvider === "default" ?
-            `bg-${color}-${light?.bgShade}/${getConfigValue(light?.bgOpacity)} hover-bg-${color}-${light?.hoverBgShade}/${getConfigValue(light?.hoverBgOpacity)} active-bg-${color}-${light?.pressBgShade}/${getConfigValue(light?.pressOpacity)} text-${color}-${light?.textShade || 600} focus-visible-outline-${color}-${light?.textShade || 600}` :
-            `bg-${color}/${getConfigValue(light?.bgOpacity)} hover-bg-${color}-hover/${getConfigValue(light?.hoverBgOpacity)} active-bg-${color}-active/${getConfigValue(light?.pressOpacity)} text-${color} focus-visible-outline-${color}`
-        : ""}`
+        `bg-${color}-${light?.bgShade}/${getConfigValue(light?.bgOpacity)} hover-bg-${color}-${light?.hoverBgShade}/${getConfigValue(light?.hoverBgOpacity)} active-bg-${color}-${light?.pressBgShade}/${getConfigValue(light?.pressOpacity)} text-${color}-${light?.textShade || 600} focus-visible-outline-${color}-${light?.textShade || 600}` : ""}`
 
     const variantDark = `${appearance === "dark" ?
-        colorPaletteProvider === "default" ?
-            `bg-${color}-${dark?.bgShade}/${getConfigValue(dark?.bgOpacity)} hover-bg-${color}-${dark?.hoverBgShade}/${getConfigValue(dark?.hoverBgOpacity)} active-bg-${color}-${dark?.pressBgShade}/${getConfigValue(dark?.pressOpacity)} text-${color}-${dark?.textShade || 500} focus-visible-outline-${color}-${dark?.textShade || 500}` :
-            `bg-${color}/${getConfigValue(dark?.bgOpacity)} hover-bg-${color}-hover/${getConfigValue(dark?.hoverBgOpacity)} active-bg-${color}-active/${getConfigValue(dark?.pressOpacity)} text-${color} focus-visible-outline-${color}`
-        : appearance === "both" ?
-            colorPaletteProvider === "default" ?
-                `dark-bg-${color}-${dark?.bgShade}/${getConfigValue(dark?.bgOpacity)} dark-hover-bg-${color}-${dark?.hoverBgShade}/${getConfigValue(dark?.hoverBgOpacity)} dark-active-bg-${color}-${dark?.pressBgShade}/${getConfigValue(dark?.pressOpacity)} dark-text-${color}-${dark?.textShade || 500} dark-focus-visible-outline-${color}-${dark?.textShade || 500}` :
-                `dark-bg-${color}/${getConfigValue(dark?.bgOpacity)} dark-hover-bg-${color}-hover/${getConfigValue(dark?.hoverBgOpacity)} dark-active-bg-${color}-active/${getConfigValue(dark?.pressOpacity)} dark-focus-visible-outline-${color}` : ""}`
+        `bg-${color}-${dark?.bgShade}/${getConfigValue(dark?.bgOpacity)} hover-bg-${color}-${dark?.hoverBgShade}/${getConfigValue(dark?.hoverBgOpacity)} active-bg-${color}-${dark?.pressBgShade}/${getConfigValue(dark?.pressOpacity)} text-${color}-${dark?.textShade || 500} focus-visible-outline-${color}-${dark?.textShade || 500}` :
+        appearance === "both" ?
+            `dark-bg-${color}-${dark?.bgShade}/${getConfigValue(dark?.bgOpacity)} dark-hover-bg-${color}-${dark?.hoverBgShade}/${getConfigValue(dark?.hoverBgOpacity)} dark-active-bg-${color}-${dark?.pressBgShade}/${getConfigValue(dark?.pressOpacity)} dark-text-${color}-${dark?.textShade || 500} dark-focus-visible-outline-${color}-${dark?.textShade || 500}` : ""}`
     return `${variantLight} ${variantDark}`
 }
-export const genBtnVariantSoftGhostGray = ({ appearance, ghostOrSoft, colorPaletteProvider, prefix }: { appearance: appearance, ghostOrSoft: btnGhostOrSoft, colorPaletteProvider: colorPaletteProvider, prefix: "soft" | "ghost" }) => {
-    const color = colorPaletteProvider === "default" ? "gray" : `btn-gray-${prefix}`
-    return `${genBtnVariantSoftOrGost({ appearance, color, colorPaletteProvider, ghostOrSoft })}`
-}
-export const genBtnVariantGhostSoftNeutral = ({ appearance, ghostOrSoft, prefix, colorPaletteProvider }: { appearance: appearance, ghostOrSoft: btnGhostOrSoft, colorPaletteProvider: colorPaletteProvider, prefix: "soft" | "ghost" }) => {
-    const color = colorPaletteProvider === "default" ? "gray" : `btn-neutral-${prefix}`
-    return `${genBtnVariantSoftOrGost({ appearance, color, colorPaletteProvider, ghostOrSoft })}`
+
+export const genBtnVariantSoft = ({ color, appearance, ghostOrSoft, graySoft }: { color: string, appearance: Appearance, ghostOrSoft: BtnGhostOrSoft, graySoft: BtnGhostOrSoft }) => {
+    return `${genBtnVariantSoftOrGost({ variant: "soft", color, appearance, ghostOrSoft, graySoftGhost: graySoft })}`
 }
 
-export const genBtnVariantSolidNeutral = ({ appearance, colorPaletteProvider }: { appearance: appearance, colorPaletteProvider: colorPaletteProvider }) => {
+export const genBtnVariantGhost = ({ color, appearance, ghost: ghostOrSoft, grayGhost }: { color: string, appearance: Appearance, ghost: BtnGhostOrSoft, grayGhost: BtnGhostOrSoft }) => {
+    return `${genBtnVariantSoftOrGost({ variant: "ghost", color, appearance, ghostOrSoft, graySoftGhost: grayGhost })}`
+}
+
+
+export const genBtnVariantSolidNeutral = ({ appearance }: { appearance: Appearance }) => {
     const btnvariantLight = `${appearance === "light" || appearance === "both" ?
-        colorPaletteProvider === "default" ?
-            "bg-gray-900 hover-bg-gray-950 active-bg-gray-700 text-white focus-visible-outline-gray-900" :
-            "bg-gray hover-bg-gray-hover active-bg-gray-active focus-visible-outline-gray"
-        : ""} `
+        "bg-gray-900 hover-bg-gray-950 active-bg-gray-700 text-white focus-visible-outline-gray-900" : ""} `
 
     const variantDark = `${appearance === "dark" ?
-        colorPaletteProvider === "default" ?
-            "bg-gray-50 hover-bg-gray-100 active-bg-white text-gray-900 focus-visible-outline-gray-50" :
-            "bg-white hover-bg-gray-hover active-bg-white focus-visible-outline-gray-100"
+        "bg-gray-50 hover-bg-gray-100 active-bg-white text-gray-900 focus-visible-outline-gray-50"
         : appearance === "both" ?
-            colorPaletteProvider === "default" ?
-                "dark-bg-gray-50 dark-hover-bg-gray-100 dark-active-bg-white dark-text-gray-900 dark-focus-visible-outline-gray-900" :
-                "dark-bg-white dark-hover-bg-gray-hover dark-active-bg-white dark-focus-visible-outline-gray-100" : ""}`
+            "dark-bg-gray-50 dark-hover-bg-gray-100 dark-active-bg-white dark-text-gray-900 dark-focus-visible-outline-gray-900" : ""}`
     return `${btnvariantLight} ${variantDark}`
 }
-export const genBtnVariantOutlineNeutral = ({ appearance, outlineBtn = generalBtnOuline }: { appearance: appearance, outlineBtn?: formOutline }) => {
+const genBtnVariantOutlineNeutral = ({ appearance, outlineBtn = btnCongig["generalBtnOuline"] }: { appearance: Appearance, outlineBtn?: formOutline }) => {
     const { borderSize } = outlineBtn
     const borderSize_ = borderSize ? borderSize : 1
     const variantLight = `${appearance === "light" || appearance === "both" ?
@@ -121,9 +97,58 @@ export const genBtnVariantOutlineNeutral = ({ appearance, outlineBtn = generalBt
         ""}`
 
     const variantDark = `${appearance === "dark" ?
-        `bg-transparent border-white hover-bg-gray-900/30  text-white` :
+        `bg-transparent border-white hover-bg-gray-900/30 text-white` :
         appearance === "both" ?
-
-            `dark-border-white dark-hover-bg-gray-900/30 dark-text-white` : ""}`
+            `dark-border-white dark-hover-bg-gray-900/30 dark-text-white dark-hover-text-white` : ""}`
     return `border-${getConfigValue(borderSize_)} ${variantLight} ${variantDark}`
+}
+
+
+const genNeutralSoftGhost = ({ appearance, variant }: { variant: "soft" | "ghost", appearance: Appearance }) => {
+    return variant === "soft" ? `${genBtnNeutralSoft(appearance)}` : `${genBtnNeutralGhost(appearance)}`
+}
+
+const genBtnNeutralGhost = (appearance: Appearance) => {
+    const lightV = `${appearance === "light" || appearance === "both" ? "bg-transparent hover-bg-gray-900/90 hover-text-white active-bg-gray-900/80 text-gray-900" : ""}`
+    const darkV = `${appearance === "dark" ? "bg-transparent hover-bg-white/90 active-bg-white/60 text-white hover-text-gray-900" :
+        appearance === "both" ? "dark-hover-bg-white/90 dark-active-bg-white/60 dark-text-white dark-hover-text-gray-900" : ""}`
+
+    return `${lightV} ${darkV}`
+}
+
+const genBtnNeutralSoft = (appearance: Appearance) => {
+    const lightV = `${appearance === "light" || appearance === "both" ?
+        "bg-gray-50/80 hover-bg-gray-950 hover-text-white active-bg-gray-900 text-gray-900" : ""}`
+    const darkV = `${appearance === "dark" ?
+        "bg-white/4 hover-bg-white active-bg-gray-50 text-white hover-text-gray-900" :
+        appearance === "both" ? "dark-bg-white/4 dark-hover-bg-white dark-active-bg-gray-50 dark-text-white dark-hover-text-gray-900" :
+            ""}`
+
+    return `${lightV} ${darkV}`
+}
+
+
+export const genBtnVariantSolidNeutralGradient = ({ appearance }: { appearance: Appearance }) => {
+    const btnvariantLight = `${appearance === "light" || appearance === "both" ?
+        "b b-gray-700 bg-gradient-to-bl from-gray-900 to-gray-700 text-white hover-from-gray-950 hover-to-gray-800  focus-visible-outline-gray-900" : ""} `
+
+    const variantDark = `${appearance === "dark" ?
+        "b b-gray-300 bg-gradient-to-bl from-gray-100 to-white text-gray-950 hover-from-gray-200 hover-to-gray-50 focus-visible-outline-gray-50"
+        : appearance === "both" ?
+            "dark-b-gray-300 dark-from-gray-100 dark-to-white dark-text-gray-950 dark-hover-from-gray-200 dark-hover-to-gray-50 focus-visible-outline-gray-50" : ""}`
+    return `active-opacity-90 ${btnvariantLight} ${variantDark}`
+}
+
+export const genBtnVariantSolidGradient = ({ color, gradient, grayGradient, appearance }: { color: string, gradient: SolidGradientBtn, grayGradient: SolidGradientBtn, appearance: Appearance }) => {
+    if (color === "neutral")  return `${genBtnVariantSolidNeutralGradient({ appearance })}`
+    const { light, dark } = color === "gray" ? grayGradient : gradient
+
+    const btnvariantLight = `${appearance === "light" || appearance === "both" ?
+        `bg-gradient-to-bl b b-${color}-${light?.borderShade} from-${color}-${light?.bgShadeFrom} to-${color}-${light?.bgShadeTo} hover-from-${color}-${light?.hoverShadeFrom} hover-to-${color}-${light?.hoverShadeTo} text-white focus-b-transparent focus-visible-outline-${color}-${light?.bgShadeFrom}` : ""} `
+
+    const variantDark = `${appearance === "dark" ?
+        `bg-gradient-to-bl b b-${color}-${dark?.borderShade} from-${color}-${dark?.bgShadeFrom} to-${color}-${dark?.bgShadeTo} hover-from-${color}-${dark?.hoverShadeFrom} hover-to-${color}-${dark?.hoverShadeTo} text-white focus-b-transparent focus-visible-outline-${color}-${dark?.bgShadeFrom}` :
+        appearance === "both" ?
+            `dark-b-${color}-${dark?.borderShade} dark-from-${color}-${dark?.bgShadeFrom} dark-to-${color}-${dark?.bgShadeTo} dark-hover-from-${color}-${dark?.hoverShadeFrom} dark-hover-to-${color}-${dark?.hoverShadeTo} dark-focus-visible-outline-${color}-${dark?.bgShadeFrom}` : ""}`
+    return `active-opacity-90 ${btnvariantLight} ${variantDark}`
 }

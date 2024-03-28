@@ -1,54 +1,95 @@
-import type { focusRing, colorShade, formOutline } from "@/types"
+import type { RingColorShades, ColorShade, formOutline, TextSizes, RingBase } from "@/types"
 
-
-export type ghostSoftBase = {
-    bgShade?: colorShade,
+export type GhostSoftBase = {
+    bgShade?: ColorShade,
     bgOpacity?: number | string,
     hoverBgOpacity?: number | string,
-    hoverBgShade?: colorShade,
-    pressBgShade?: colorShade,
+    hoverBgShade?: ColorShade,
+    pressBgShade?: ColorShade,
     pressOpacity?: number | string,
-    textShade?: colorShade
+    textShade?: ColorShade
 }
 
-export type btnGhostOrSoft = {
-    light?: ghostSoftBase
-    dark?: ghostSoftBase
+export type BtnGhostOrSoft = {
+    light?: GhostSoftBase
+    dark?: GhostSoftBase
 }
 
 
-
-export type btnSizes = {
-    xs?: { height?: number | string, px?: number | string },
-    sm?: { height?: number | string, px?: number | string },
-    md?: { height?: number | string, px?: number | string },
-    lg?: { height?: number | string, px?: number | string },
-    xl?: { height?: number | string, px?: number | string }
+export type BtnSizes = {
+    xs?: { height?: number | string, px?: number | string, textSize?: TextSizes },
+    sm?: { height?: number | string, px?: number | string, textSize?: TextSizes },
+    md?: { height?: number | string, px?: number | string, textSize?: TextSizes },
+    lg?: { height?: number | string, px?: number | string, textSize?: TextSizes },
+    xl?: { height?: number | string, px?: number | string, textSize?: TextSizes }
 }
 
-export type solidBtnShadeBase = {
-    bgShade?: colorShade,
-    hoverBgShade?: colorShade,
-    pressBgShade?: colorShade,
-    textShade?: colorShade,
-}
-export type solidBtnShade = {
-    light?: solidBtnShadeBase
-    dark?: solidBtnShadeBase
+export type BtnIconSizes = {
+    xs?: { size?: number | string, textSize?: TextSizes },
+    sm?: { size?: number | string, textSize?: TextSizes },
+    md?: { size?: number | string, textSize?: TextSizes },
+    lg?: { size?: number | string, textSize?: TextSizes },
+    xl?: { size?: number | string, textSize?: TextSizes }
 }
 
-export type button = {
-    size?: btnSizes,
-    solidShade?: solidBtnShade
-    solidShadeGray?: solidBtnShade
-    ghost?: btnGhostOrSoft,
-    soft?: btnGhostOrSoft,
+type BaseSoligGradientBtn = {
+    borderShade:ColorShade,
+    bgShadeFrom:ColorShade,
+    bgShadeTo:ColorShade,
+    hoverShadeFrom:ColorShade,
+    hoverShadeTo:ColorShade,
+}
+
+export type SolidGradientBtn ={
+    light?:BaseSoligGradientBtn,
+    dark?:BaseSoligGradientBtn
+}
+
+
+export type SolidBtnShadeBase = {
+    bgShade?: ColorShade,
+    hoverBgShade?: ColorShade,
+    pressBgShade?: ColorShade,
+    textShade?: ColorShade,
+}
+export type SolidBtnShade = {
+    light?: SolidBtnShadeBase
+    dark?: SolidBtnShadeBase
+}
+type BaseBtnWhite = {
+    bg: string,
+    hoverBg: string,
+    pressBg: string,
+    textColor: string
+}
+export type BtnWhite = {
+    light: BaseBtnWhite,
+    dark: BaseBtnWhite
+}
+
+export type Button = {
+    useRing?:boolean,
+    ringBase?:RingBase,
+    size?: BtnSizes,
+    btnIcon?: BtnIconSizes,
+
+    btnWhite?: BtnWhite
+
+    solidShade?: SolidBtnShade
+    solidShadeGray?: SolidBtnShade
+
+    gradient?:SolidGradientBtn,
+    grayGradient?:SolidGradientBtn,
+
+    ghost?: BtnGhostOrSoft,
+    grayGhost?: BtnGhostOrSoft,
+
     outline?: formOutline,
-    outlineGray?:formOutline,
-    grayOutline?: formOutline,
-    graySoft?: btnGhostOrSoft,
-    grayGhost?: btnGhostOrSoft,
-    neutralSoft?: btnGhostOrSoft,
-    neutralGhost?: btnGhostOrSoft,
-    focusRing?: focusRing,
+    outlineGray?: formOutline,
+
+    soft?: BtnGhostOrSoft,
+    graySoft?: BtnGhostOrSoft,
+
+    ring?: RingColorShades,
+    ringGray?: RingColorShades,
 }

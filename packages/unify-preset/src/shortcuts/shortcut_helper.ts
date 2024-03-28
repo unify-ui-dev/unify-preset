@@ -1,57 +1,66 @@
+import { Appearance, RingColorShades } from "@/types"
 import { getConfigValue } from "../utils"
-import { defaultFocusRing, defaultFocusRingGray } from "./button/const"
+import { btnCongig } from "./button/const"
 
-export const genVariantFocusRing = (color: string, appearance: "dark" | "both" | "light", colorMode: "default" | "cssVar", focusRing = defaultFocusRing) => {
-    const { size, offset } = focusRing
+
+export const getRingBase = (appearance: Appearance, size?: number | string, offset?: number | string) => {
+    const lightV = `${appearance === "light" || appearance === "both" ? "ring-offset-white" : ""}`
+    const darkV = `${appearance === "dark" ? "ring-offset-gray-950" : appearance === "both" ? `dark-ring-offset-gray-950` : ""}`
+
+    return `ring-${getConfigValue(size)} ring-transparent ring-offset-${getConfigValue(offset || 4)} ${lightV} ${darkV}`
+}
+export const genFocusVisibleRing = (color: string, appearance: Appearance, focusRing = btnCongig.ringConfig, focusRingGray: RingColorShades) => {
+    if (color === "neutral") {
+        return `${genVariantFocusVisibleRingBlack(appearance)}`
+    }
+    const focusRing_ = color === "gray" ? focusRingGray : focusRing
     const ringLight = `${appearance === "light" || appearance === "both" ?
-        colorMode === "default" ?
-            `focus-ring-${color}-${focusRing.lightShade} ring-offset-white` :
-            `focus-ring-${color} ring-offset-white`
+        `focus-visible-ring-${color}-${focusRing_.light}`
         : ""}`
 
     const ringDark = `${appearance === "dark" ?
-        colorMode === "default" ?
-            `focus-ring-${color}-${focusRing.darkShade} ring-offset-gray-950` :
-            `focus-ring-${color} ring-offset-gray-950`
+        `focus-visible-ring-${color}-${focusRing_.dark}`
         : appearance === "both" ?
-            colorMode === "default" ?
-                `dark-focus-ring-${color}-${focusRing.darkShade} dark-ring-offset-gray-950` :
-                `dark-focus-ring-${color} dark-ring-offset-gray-950` : ""}`
-    return `focus-ring-${getConfigValue(size)} ring-transparent ring-offset-0 focus-ring-offset-${getConfigValue(offset || 6)} ${ringLight} ${ringDark}`
+            `dark-focus-visible-ring-${color}-${focusRing_.dark}` : ""}`
+    return `${ringLight} ${ringDark}`
 }
 
-export const genVariantFocusRingGray = (appearance: "dark" | "both" | "light", colorMode: "default" | "cssVar", focusRing = defaultFocusRingGray) => {
-    const { size, offset } = focusRing
+
+
+export const genVariantFocusRing = (color: string, appearance: Appearance, ring = btnCongig.ringConfig, ringGray = btnCongig.ringGrayConfig) => {
+    if (color === "neutral") return `${genVariantFocusRingBlack(appearance)}`
+
+    const focusRing = color === "gray" ? ringGray : ring
     const ringLight = `${appearance === "light" || appearance === "both" ?
-        colorMode === "default" ?
-            `focus-ring-gray-${focusRing.lightShade} ring-offset-white` :
-            `focus-ring-gray ring-offset-white`
+        `focus-visible-ring-${color}-${focusRing.light} focus-ring-${color}-${focusRing.light} ring-offset-white`
         : ""}`
 
     const ringDark = `${appearance === "dark" ?
-        colorMode === "default" ?
-            `focus-ring-gray-${focusRing.darkShade} ring-offset-gray-950` :
-            `focus-ring-gray ring-offset-gray-950`
+        `focus-ring-${color}-${focusRing.dark}`
         : appearance === "both" ?
-            colorMode === "default" ?
-                `dark-focus-ring-gray-${focusRing.darkShade} dark-ring-offset-gray-950` :
-                `dark-focus-ring-gray dark-ring-offset-gray-950` : ""}`
-    return `focus-ring-${getConfigValue(size)} ring-transparent ring-offset-0 focus-ring-offset-${getConfigValue(offset)} ${ringLight} ${ringDark}`
+            `focus-visible-ring-${color}-${focusRing.dark}` : ""}`
+    return `dark-focus-visible-ring-${color}-${focusRing.dark} ${ringLight} ${ringDark}`
 }
 
-export const genBtnVariantFocusRingBlack = (appearance: "dark" | "both" | "light", colorMode: "default" | "cssVar", focusRing = defaultFocusRing) => {
-    const { size, offset } = focusRing
+const genVariantFocusRingBlack = (appearance: Appearance) => {
+
     const ringLight = `${appearance === "light" || appearance === "both" ?
-        colorMode === "default" ?
-            `focus-ring-gray-900 ring-offset-white` :
-            `focus-ring-black ring-offset-white`
-        : ""}`
+        `focus-visible-ring-900 focus-ring-gray-900` : ""}`
 
     const ringDark = `${appearance === "dark" ?
-        colorMode === "default" ?
-            `focus-ring-gray-900 ring-offset-gray-950` :
-            `focus-ring-gray ring-offset-gray-950`
+        `focus-visible-ring-white focus-ring-white`
         : appearance === "both" ?
-            `dark-focus-ring-white dark-ring-offset-gray-950` : ""}`
-    return `focus-ring-${getConfigValue(size)} ring-transparent ring-offset-0 focus-ring-offset-${getConfigValue(offset)} ${ringLight} ${ringDark}`
+            `dark-focus-visible-ring-white dark-focus-ring-white` : ""}`
+    return `${ringLight} ${ringDark}`
+}
+
+const genVariantFocusVisibleRingBlack = (appearance: Appearance) => {
+    const ringLight = `${appearance === "light" || appearance === "both" ?
+        `focus-visible-ring-900 ring-offset-white` : ""}`
+
+    const ringDark = `${appearance === "dark" ?
+        `focus-visible-ring-white`
+        : appearance === "both" ?
+            `dark-focus-visible-ring-white` : ""}`
+    return `${ringLight} ${ringDark}`
 }
