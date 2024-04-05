@@ -39,8 +39,8 @@ const getAccordionShortcuts = (accordion?: Accordion, sharedConfig?: SharedVaria
 
     const dynamicAccordions: [RegExp, (params: RegExpExecArray) => string][] = [
         [/^accordion-wrapper(-(\S+))?$/, ([, , size = 4]) => `relative flex flex-col gap-y-${getConfigValue(size)}`],
-        [/^accordion-solid(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSolid({ color, appearance, solidShades: solidShade, graySolid: solidGray })}`],
-        [/^accordion-outline(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantOutline({ color, appearance, outline, grayOutline })}`],
+        [/^accordion-solid(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSolid({ color, appearance, colorShades: solidShade, grayShades: solidGray })}`],
+        [/^accordion-outline(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantOutline({ color, appearance, outlineColor: outline, outlineGray: grayOutline })}`],
         [/^accordion-subtle(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSubtle({ color, appearance, subtle, graySubtle })}`],
         [/^accordion-soft(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSoft({ color, appearance, soft, graySoft })}`],
         [/^accordion-wrapper-joined(-(\S+))?$/, ([, , color = 'gray']) => `divide-y ${genDividerY({ color: color, appearance, divider: grayDivider, colorDivider: coloredDivider })}`],

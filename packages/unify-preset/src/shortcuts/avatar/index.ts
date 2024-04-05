@@ -1,4 +1,4 @@
-import type { SharedVariant } from "@/types"
+import type { Appearance, SharedVariant } from "@/types"
 import { getConfigValue } from "@/utils"
 import { genVariantOutline, genVariantSoft, genVariantSolid, genVariantSubtle } from "../helpers"
 import { helperDefaultValues } from "../helpers"
@@ -7,7 +7,7 @@ import type { Avatar } from "./types"
 
 
 
-const getAvatarShortcuts = (avatar?: Avatar, sharedConfig?: SharedVariant, uiConfig?: { appearance?: "both" | "light" | "dark", cssPaletteColor?: "default" | "cssVar" }) => {
+const getAvatarShortcuts = (avatar?: Avatar, sharedConfig?: SharedVariant, uiConfig?: { appearance?: Appearance }) => {
 
     const { xs, sm, md, xl, lg } = avatar?.sizes || { xs: 6.5, sm: 8, md: 9.5, lg: 10.5, xl: 12 }
 
@@ -46,8 +46,8 @@ const getAvatarShortcuts = (avatar?: Avatar, sharedConfig?: SharedVariant, uiCon
     }
 
     const dynamicaAvatar: [RegExp, (params: RegExpExecArray) => string][] = [
-        [/^avatar-placeholder-solid(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSolid({ color, appearance, solidShades: solid, graySolid: solidGray })}`],
-        [/^avatar-placeholder-outline(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantOutline({ color, appearance, outline: outline, grayOutline: outlineGray })}`],
+        [/^avatar-placeholder-solid(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSolid({ color, appearance, colorShades: solid, grayShades: solidGray })}`],
+        [/^avatar-placeholder-outline(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantOutline({ color, appearance, outlineColor: outline, outlineGray: outlineGray })}`],
         [/^avatar-placeholder-subtle(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSubtle({ color, appearance, subtle, graySubtle: subtleGray })}`],
         [/^avatar-placeholder-soft(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSoft({ color, appearance, soft, graySoft: softGray })}`],
     ]

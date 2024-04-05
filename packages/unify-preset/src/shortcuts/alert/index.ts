@@ -1,4 +1,4 @@
-import type { SharedVariant } from "@/types"
+import type { Appearance, SharedVariant } from "@/types"
 import { getConfigValue } from "@/utils"
 import { genVariantOutline, genVariantSoft, genVariantSolid, genVariantSubtle } from "../helpers"
 import { helperDefaultValues } from "../helpers"
@@ -7,7 +7,7 @@ import type { Alert } from "./types"
 
 
 
-const getAlertShortcuts = (alert?: Alert, sharedConfig?: SharedVariant, uiConfig?: { appearance?: "both" | "light" | "dark", cssPaletteColor?: "default" | "cssVar" }) => {
+const getAlertShortcuts = (alert?: Alert, sharedConfig?: SharedVariant, uiConfig?: { appearance?: Appearance }) => {
     const solidShade = alert?.solid || sharedConfig?.solid || helperDefaultValues.defaultSolidShades
     const soft = alert?.soft || sharedConfig?.soft || helperDefaultValues.generalSoft
     const subtle = alert?.subtle || sharedConfig?.subtle || helperDefaultValues.defaultSubtle
@@ -28,8 +28,8 @@ const getAlertShortcuts = (alert?: Alert, sharedConfig?: SharedVariant, uiConfig
     }
 
     const dynamicAlerts: [RegExp, (params: RegExpExecArray) => string][] = [
-        [/^alert-solid(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSolid({ color, appearance,  solidShades: solidShade, graySolid })}`],
-        [/^alert-outline(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantOutline({ color, appearance,  outline, grayOutline })}`],
+        [/^alert-solid(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSolid({ color, appearance,  colorShades: solidShade, grayShades: graySolid })}`],
+        [/^alert-outline(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantOutline({ color, appearance,  outlineColor: outline, outlineGray: grayOutline })}`],
         [/^alert-subtle(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSubtle({ color, appearance,  subtle, graySubtle })}`],
         [/^alert-soft(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSoft({ color, appearance,  soft, graySoft })}`],
     ]
