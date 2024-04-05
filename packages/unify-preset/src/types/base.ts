@@ -46,6 +46,7 @@ export type RingBase = {
 }
 
 export type RingColorShades = {
+    useLightForBoth?: boolean,
     light?: ColorShade
     dark?: ColorShade
 }
@@ -57,6 +58,7 @@ export type SoftBase = {
 }
 
 export type Soft = {
+    useLightForBoth?: boolean,
     light?: SoftBase,
     dark?: SoftBase
 }
@@ -68,6 +70,7 @@ export type SolidShadeBase = {
 
 
 export type SolidShade = {
+    useLightForBoth?: boolean
     light?: SolidShadeBase
     dark?: SolidShadeBase
 }
@@ -77,6 +80,7 @@ export type SubtleBase = {
     borderOpacity?: number | string
 } & SoftBase
 export type Subtle = {
+    useLightForBoth?: boolean
     borderWidth?: number | string
     light?: SubtleBase
     dark?: SubtleBase
@@ -88,32 +92,77 @@ export type OutlineBase = {
 }
 
 export type OutlineVariant = {
+    useLightForBoth?: boolean
     borderSize?: number | string,
     light?: OutlineBase
     dark?: OutlineBase
 }
 
 
+type BaseBlurColor = {
+    color: string,
+    opacity: number
+}
+export type BgBackdropBlur = {
+    useLightForBoth?:boolean
+    blur: "lg" | "xl" | "2xl" | "3xl"
+    light: BaseBlurColor,
+    dark: BaseBlurColor,
+}
+
 export type SharedVariant = {
     solid?: SolidShade,
     solidGray?: SolidShade
     ghost?: Soft,
     soft?: Soft,
-    softActive?:Soft,
+    softActive?: Soft,
     softGray?: Soft,
-    graySoftActive?:Soft,
-    outline?: OutlineVariant,
+    graySoftActive?: Soft,
     outlineGray?: OutlineVariant,
     subtle?: Subtle,
-    subtleActive?:Subtle,
+    subtleActive?: Subtle,
     subtleGray?: Subtle,
-    graySubtleActive?:Subtle,
+    graySubtleActive?: Subtle,
+
+    outline?: OutlineVariant,
+    outlineLight?: OutlineVariant,
+    outlineHigh?: OutlineVariant,
+    outlineHigher?: OutlineVariant,
+    outlineLightGray?: OutlineVariant,
+    outlineHighGray?: OutlineVariant,
+    outlineHigherGray?: OutlineVariant,
 }
 
+
+type BaseColor = {
+    useLightForBoth?:boolean
+    light?: ColorShade,
+    dark?: ColorShade
+}
+
+
+export type BorderUI = {
+    borderSize?: number | string
+    high?: BaseColor,
+    higher?: BaseColor,
+    light?: BaseColor,
+    default?: BaseColor
+    bgBackdropBlur?:BgBackdropBlur
+}
+
+export type BgUI = {
+    grayHigh?: SolidShade,
+    grayHigher?: SolidShade,
+    grayLight?: SolidShade,
+    gray?: SolidShade
+}
 export type BaseUI = {
-    textTypoColor?: TextTypoColor,
-    textTypoColorReverse?:TextTypoColor
-    textTypoNeutral?: TextTypoColor,
-    background?: { light: string, dark: string }
-    backgroundInverse?: { light: string, dark: string }
+    bodyColor?: TextTypoColor,
+    bodyColorReverse?: TextTypoColor
+    bodyNeutral?: TextTypoColor,
+    bodyBg?: { light: string, dark: string }
+    bodyBgInverse?: { light: string, dark: string }
+    borderGray?: BorderUI,
+    borderColor?: BorderUI
+    grayBg?: BgUI
 }
