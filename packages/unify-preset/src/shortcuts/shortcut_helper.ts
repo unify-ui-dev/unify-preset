@@ -13,15 +13,16 @@ export const genFocusVisibleRing = (color: string, appearance: Appearance, focus
     if (color === "neutral") {
         return `${genVariantFocusVisibleRingBlack(appearance)}`
     }
+    const isCurrent = color === "current"
     const focusRing_ = color === "gray" ? focusRingGray : focusRing
     const ringLight = `${appearance === "light" || appearance === "both" ?
-        `focus-visible-ring-${color}-${focusRing_.light}`
+        `focus-visible-ring-${color}${!isCurrent ? `-${focusRing_.light}` : ""}`
         : ""}`
 
     const ringDark = `${appearance === "dark" ?
-        `focus-visible-ring-${color}-${focusRing_.dark}`
+        `focus-visible-ring-${color}${!isCurrent ? `-${focusRing_.dark}` : ""}`
         : appearance === "both" ?
-            `dark-focus-visible-ring-${color}-${focusRing_.dark}` : ""}`
+            `dark-focus-visible-ring-${color}${!isCurrent ? `-${focusRing_.dark}` : ""}` : ""}`
     return `${ringLight} ${ringDark}`
 }
 
@@ -32,7 +33,7 @@ export const genVariantFocusRing = (color: string, appearance: Appearance, ring 
 
     const focusRing = color === "gray" ? ringGray : ring
     const ringLight = `${appearance === "light" || appearance === "both" ?
-        `focus-visible-ring-${color}-${focusRing.light} focus-ring-${color}-${focusRing.light} ring-offset-white`
+        `focus-visible-ring-${color}-${focusRing.light} focus-ring-${color}-${focusRing.light}`
         : ""}`
 
     const ringDark = `${appearance === "dark" ?
