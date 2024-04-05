@@ -1,8 +1,9 @@
+import { Appearance } from "@/types"
 import { divideGray, dividerShade } from "./const"
 import { getDivider } from "./helper"
 import type { Divider } from "./types"
 
-const getDividerShortcuts = ({ divider, appearance: appearance_ }: { divider?: Divider, appearance?: "both" | "light" | "dark" | undefined }) => {
+const getDividerShortcuts = ({ divider, appearance: appearance_ }: { divider?: Divider, appearance?: Appearance | undefined }) => {
     const appearance = appearance_ || "both"
     const shades = divider?.shades || dividerShade
     const grayShades = divider?.grayShades || divideGray

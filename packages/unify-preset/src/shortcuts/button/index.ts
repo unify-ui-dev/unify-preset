@@ -1,4 +1,4 @@
-import type { Button } from "./types"
+import type { BtnIconBase, BtnSizeBase, Button } from "./types"
 import { genBtnVariantOutline, genBtnVariantSolid, genBtnVariantSoft, genBtnVariantGhost, genBtnVariantWhite, genBtnVariantSolidGradient } from "./helpers"
 import { getConfigValue } from "@/utils"
 import { btnCongig } from "./const"
@@ -6,6 +6,12 @@ import { genVariantFocusRing, getRingBase } from "../shortcut_helper"
 
 import type { SharedFormConfig, UiConfig } from "@/types"
 
+const getBtnSizeIngo = (sizeVariant: BtnSizeBase) => {
+    return `h-${getConfigValue(sizeVariant.height)} px-${getConfigValue(sizeVariant.px)} text-${sizeVariant.textSize}`
+}
+const getBtnIconSizeIngo = (sizeVariant: BtnIconBase) => {
+    return `truncate justify-center size-${getConfigValue(sizeVariant.size)} text-${sizeVariant.textSize}`
+}
 
 const getBtnShortcuts = ({ button, uiConfig, formConfig }: { button?: Button, formConfig?: SharedFormConfig, uiConfig: UiConfig }) => {
     const { xs, sm, md, xl, lg } = button?.size || btnCongig.btnSizes
@@ -30,25 +36,25 @@ const getBtnShortcuts = ({ button, uiConfig, formConfig }: { button?: Button, fo
 
 
     const btns = {
-        'btn': `flex items-center disabled-opacity-50 disabled-cursor-not-allowed disabled-hover-opacity-70 focus-outline-offset-2 ${getRingBase(appearance, ringBase.size, ringBase.offset)}`,
-        'btn-xs': `h-${getConfigValue(xs?.height)} px-${getConfigValue(xs?.px)} text-${xs?.textSize}`,
-        'btn-sm': `h-${getConfigValue(sm?.height)} px-${getConfigValue(sm?.px)} text-${sm?.textSize}`,
-        'btn-md': `h-${getConfigValue(md?.height)} px-${getConfigValue(md?.px)} text-${md?.textSize}`,
-        'btn-lg': `h-${getConfigValue(lg?.height)} px-${getConfigValue(lg?.px)} text-${lg?.textSize}`,
-        'btn-xl': `h-${getConfigValue(xl?.height)} px-${getConfigValue(xl?.px)} text-${xl?.textSize}`,
-        'btn-icon-xs': `truncate justify-center size-${getConfigValue(iconXs?.size)} text-${iconXs?.textSize}`,
-        'btn-icon-sm': `truncate justify-center size-${getConfigValue(iconSm?.size)} text-${iconSm?.textSize}`,
-        'btn-icon-md': `truncate justify-center size-${getConfigValue(iconMd?.size)} text-${iconMd?.textSize}`,
-        'btn-icon-lg': `truncate justify-center size-${getConfigValue(iconLg?.size)} text-${iconLg?.textSize}`,
-        'btn-icon-xl': `truncate justify-center size-${getConfigValue(iconXl?.size)} text-${iconXl?.textSize}`,
+        'btn': `flex items-center disabled-opacity-50 disabled-cursor-not-allowed disabled-hover-opacity-70 outline-0 outline-transparent focus-outline-offset-2`,
+        'btn-xs': `${getBtnSizeIngo(xs as BtnSizeBase)}`,
+        'btn-sm': `${getBtnSizeIngo(sm as BtnSizeBase)}`,
+        'btn-md': `${getBtnSizeIngo(md as BtnSizeBase)}`,
+        'btn-lg': `${getBtnSizeIngo(lg as BtnSizeBase)}`,
+        'btn-xl': `${getBtnSizeIngo(xl as BtnSizeBase)}`,
+        'btn-icon-xs': `${getBtnIconSizeIngo(iconXs as BtnIconBase)}`,
+        'btn-icon-sm': `${getBtnIconSizeIngo(iconSm as BtnIconBase)}`,
+        'btn-icon-md': `${getBtnIconSizeIngo(iconMd as BtnIconBase)}`,
+        'btn-icon-lg': `${getBtnIconSizeIngo(iconLg as BtnIconBase)}`,
+        'btn-icon-xl': `${getBtnIconSizeIngo(iconXl as BtnIconBase)}`,
         'btn-white': `${genBtnVariantWhite({ solid: btnWhite, appearance })}`
     }
 
     const getRing = (color: string) => useRing ? `btn-focus-ring-${color}` : ''
 
     const dynamicBtns: [RegExp, (params: RegExpExecArray) => string][] = [
-        [/^btn-focus-ring(-(\S+))?$/, ([, , color = 'primary']) => `${genVariantFocusRing(color, appearance, focusRing, focusRingGray)}`],
-        [/^btn-solid(-(\S+))?$/, ([, , color = 'primary']) => `${getRing(color)} ${genBtnVariantSolid({ color, solid: solidShade, graySolid, appearance })} `],
+        [/^btn-focus-ring(-(\S+))?$/, ([, , color = 'primary']) => `${getRingBase(appearance, ringBase.size, ringBase.offset)} ${genVariantFocusRing(color, appearance, focusRing, focusRingGray)}`],
+        [/^btn-solid(-(\S+))?$/, ([, , color = 'primary']) => `${getRing(color)} ${genBtnVariantSolid({ color, solid: solidShade, graySolid, appearance })}`],
         [/^btn-outline(-(\S+))?$/, ([, , color = 'primary']) => `${getRing(color)} ${genBtnVariantOutline({ color, appearance, outlineBtn, outlineBtnGray })}`],
         [/^btn-soft(-(\S+))?$/, ([, , color = 'primary']) => `${getRing(color)} ${genBtnVariantSoft({ color, appearance, ghostOrSoft: soft, graySoft })}`],
         [/^btn-ghost(-(\S+))?$/, ([, , color = 'primary']) => `${getRing(color)} ${genBtnVariantGhost({ color, appearance, ghost: ghost, grayGhost })}`],
