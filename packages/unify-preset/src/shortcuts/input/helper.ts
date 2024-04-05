@@ -1,6 +1,7 @@
 
 import type { Appearance, ColorShade, SolidShade } from "@/types";
-import { getConfigValue } from "@/utils";
+import { getConfigValue, getShortcutsIfNotSame } from "@/utils";
+import { genTextColor } from "../helpers";
 
 
 export const getPlaceHolder = ({ appearance, placeHolder }: {
@@ -18,17 +19,9 @@ export const getPlaceHolder = ({ appearance, placeHolder }: {
     return `${lightV} ${darkV}`
 }
 
-export const getTextColor = ({ appearance, textColor }: {
-    appearance: Appearance, textColor?: {
-        light?: ColorShade,
-        dark?: ColorShade
-    }
-}) => {
-    const lightV = `${appearance === "light" || appearance === "both" ? `text-gray-${textColor?.light}` : ""}`
-
-    const darkV = `${appearance === "dark" ? `text-gray-${textColor?.dark}` :
-        appearance === "both" ? `dark-text-gray-${textColor?.dark}` : ""}`
-    return `${lightV} ${darkV}`
+export const getTextColor = ({ appearance, textColor }: { appearance: Appearance, textColor?: { light?: ColorShade, dark?: ColorShade } }) => {
+    const textColor_ = genTextColor(appearance, { light: `gray-${textColor?.light}`, dark: `gray-${textColor?.dark}` })
+    return `${textColor_}`
 }
 
 export const getInputBorder = ({ appearance, shades }: { appearance: Appearance, shades: { light: ColorShade, dark: ColorShade } }) => {
@@ -38,7 +31,8 @@ export const getInputBorder = ({ appearance, shades }: { appearance: Appearance,
 
     const darkUtilities = `
         ${appearance === "dark" ? `outline-gray-${dark}` :
-            appearance === "both" ? `dark-border-gray-${dark}` : ""}`
+            appearance === "both" ? `
+            ${getShortcutsIfNotSame({ val1: light, val2: dark, shortcuts: `dark-border-gray-${dark}` })}` : ""}`
 
     return `${lightUtilities} ${darkUtilities}`
 }
@@ -60,8 +54,13 @@ export const getInputOutlineFocus = ({ color, appearance, shades }: { color: str
         appearance === "both" ? `focus-outline-${color}-${shades?.light}` : ""
         }`
     const darkVariant = `${appearance === "dark" ? `focus-outline-${color}-${shades?.dark}` :
-        appearance === "both" ? `dark-focus-outline-${color}-${shades?.dark}` : ""
-        }`
+        appearance === "both" ? `
+        ${getShortcutsIfNotSame({
+            val1: `${color}-${shades?.light}`,
+            val2: `${color}-${shades?.dark}`,
+            shortcuts: `dark-focus-outline-${color}-${shades?.dark}`
+        })
+            }` : ""}`
 
     return `focus-outline-offset-0 focus-b-transparent ${lightVariant} ${darkVariant}`
 }

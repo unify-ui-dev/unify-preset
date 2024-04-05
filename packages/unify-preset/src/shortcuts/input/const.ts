@@ -21,6 +21,36 @@ export const defaultInput: Input = {
             textShade: "300"
         }
     },
+    lightGray:{
+        light: {
+            bgShade: "50",
+            textShade: "700"
+        },
+        dark: {
+            bgShade: "950",
+            textShade: "300"
+        }
+    },
+    higherGray:{
+        light: {
+            bgShade: "300",
+            textShade: "800"
+        },
+        dark: {
+            bgShade: "700",
+            textShade: "300"
+        }
+    },
+    highGray:{
+        light: {
+            bgShade: "200",
+            textShade: "200"
+        },
+        dark: {
+            bgShade: "800",
+            textShade: "300"
+        }
+    },
     ring: {
         light: "600",
         dark: "500"

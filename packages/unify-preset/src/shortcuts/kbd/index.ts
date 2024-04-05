@@ -22,7 +22,6 @@ const getKdbShortcuts = ({ kdb: kbd, sharedConfig, uiConfig }: { kdb?: Kdb, shar
     const appearance = uiConfig.appearance
 
     const kbds = {
-        'kbd': "relative",
         'kbd-xs': `py-${getConfigValue(xs?.py)} px-${getConfigValue(xs?.px)} text-${xs?.textSize}`,
         'kbd-sm': `py-${getConfigValue(sm?.py)} px-${getConfigValue(sm?.px)} text-${sm?.textSize}`,
         'kbd-md': `py-${getConfigValue(md?.py)} px-${getConfigValue(md?.px)} text-${md?.textSize}`,
@@ -31,8 +30,8 @@ const getKdbShortcuts = ({ kdb: kbd, sharedConfig, uiConfig }: { kdb?: Kdb, shar
     }
 
     const dynamicKbd: [RegExp, (params: RegExpExecArray) => string][] = [
-        [/^kbd-solid(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSolid({ color, appearance, solidShades, graySolid })}`],
-        [/^kbd-outline(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantOutline({ color, appearance, outline, grayOutline })}`],
+        [/^kbd-solid(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSolid({ color, appearance, colorShades: solidShades, grayShades: graySolid })}`],
+        [/^kbd-outline(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantOutline({ color, appearance, outlineColor: outline, outlineGray: grayOutline })}`],
         [/^kbd-subtle(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSubtle({ color, appearance, subtle, graySubtle })}`],
         [/^kbd-soft(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSoft({ color, appearance, soft, graySoft })}`],
     ]

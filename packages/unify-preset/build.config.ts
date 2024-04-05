@@ -20,5 +20,5 @@ export default defineBuildConfig({
 
     failOnWarn: false,
 
-    externals: ['unocss', "@unifyui/unify-variant"],
+    externals: ['unocss', "@unifyui/unify-variant", '@unocss/preset-mini/utils','@unocss/rule-utils','@unocss/core','magic-string','@jridgewell/sourcemap-codec'],
 })

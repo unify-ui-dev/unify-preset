@@ -6,7 +6,7 @@ import type { Input } from "./types"
 
 
 const getFormInputShortcuts = ({ input, formConfig, uiConfig }: { input?: Input, formConfig?: SharedFormConfig, uiConfig: UiConfig }) => {
-    const { size, solidGray, borderSize, outline, focusColor, focusGray, ring, ringGray, textColor, placeHolder, focusOutlineSize } = input || defaultInput
+    const { size, solidGray, highGray, lightGray, higherGray, borderSize, outline, focusColor, focusGray, ring, ringGray, textColor, placeHolder, focusOutlineSize } = input || defaultInput
     const appearance = uiConfig.appearance
     const _2xs = size?.["2xs"]
     const xs = size?.xs
@@ -19,8 +19,12 @@ const getFormInputShortcuts = ({ input, formConfig, uiConfig }: { input?: Input,
 
     const ringBase = input?.ringBase || formConfig?.ringBase || defRingBase
     const inputs = {
-        'form-input': `transition-colors ease-linear duration-200 ${getTextColor({ appearance, textColor })} ${getPlaceHolder({ appearance, placeHolder: placeHolder })} `,
+        'form-input': `transition-colors ease-linear duration-200 wfull ${getTextColor({ appearance, textColor })} ${getPlaceHolder({ appearance, placeHolder: placeHolder })} `,
         'form-input-gray': `${getInputGrayVariant({ appearance, shades: { light: solidGray?.light, dark: solidGray?.dark } })}`,
+        'form-input-high-gray': `${getInputGrayVariant({ appearance, shades: { light: highGray?.light, dark: highGray?.dark } })}`,
+        'form-input-higher-gray': `${getInputGrayVariant({ appearance, shades: { light: higherGray?.light, dark: higherGray?.dark } })}`,
+        'form-input-light-gray': `${getInputGrayVariant({ appearance, shades: { light: lightGray?.light, dark: lightGray?.dark } })}`,
+        
         'form-input-2xs': `px-${_2xs?.padding?.x} py-${_2xs?.padding?.y} text-${_2xs?.textSize}`,
         'form-input-xs': `px-${xs?.padding?.x} py-${xs?.padding?.y} text-${xs?.textSize}`,
         'form-input-sm': `px-${sm?.padding?.x} py-${sm?.padding?.y} text-${sm?.textSize}`,

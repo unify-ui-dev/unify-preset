@@ -1,4 +1,4 @@
-import type { OutlineVariant, GradientText, Soft, SolidShade, Subtle } from "@/types";
+import type { OutlineVariant, GradientText, Soft, SolidShade, Subtle, BgUI, BorderUI, RingBase, RingColorShades } from "@/types";
 
 const defaultSolidShades: SolidShade = {
     light: {
@@ -175,7 +175,7 @@ const defaultTypoGray = {
     }
 }
 
-const textTypoColorReverse ={
+const textTypoColorReverse = {
     title: {
         light: "white",
         dark: "gray-900"
@@ -226,16 +226,92 @@ const defaultTextGradient: GradientText = {
     },
 }
 
-const background = {
+const bodyBg = {
     light: "white",
     dark: "gray-950"
 }
-const backgroundInverse = {
+const bodyBgInverse = {
     light: "gray-950",
     dark: "white",
 }
 
+const bgSoligUI: BgUI = {
+    gray: {
+        light: { bgShade: "100", textShade: "700" },
+        dark: { bgShade: "900", textShade: "300" }
+    },
+    grayHigh: {
+        light: { bgShade: "200", textShade: "800" },
+        dark: { bgShade: "800", textShade: "200" }
+    },
+    grayHigher: {
+        light: { bgShade: "100", textShade: "700" },
+        dark: { bgShade: "900", textShade: "300" }
+    },
+    grayLight: {
+        light: { bgShade: "50", textShade: "700" },
+        dark: { bgShade: "950", textShade: "300" }
+    }
+}
+
+const grayBdrUI: BorderUI = {
+    borderSize: 1,
+    default: {
+        light: "200",
+        dark: "900"
+    },
+    high: {
+        light: "300",
+        dark: "800"
+    },
+    higher: {
+        light: "400",
+        dark: "700"
+    },
+    light: {
+        light: "100",
+        dark: "900"
+    },
+}
+const bdrUI: BorderUI = {
+    borderSize: 1,
+    default: {
+        light: "600",
+        dark: "600"
+    },
+    high: {
+        light: "700",
+        dark: "700"
+    },
+    higher: {
+        light: "700",
+        dark: "700"
+    },
+    light: {
+        light: "400",
+        dark: "600"
+    }
+}
+
+
+const ringBase: RingBase = {
+    size: 2,
+    offset: 2,
+}
+
+const ringConfig: RingColorShades = {
+    light: "600",
+    dark: "500"
+}
+const ringGrayConfig: RingColorShades = {
+    light: "200",
+    dark: "800"
+}
+
 export const helperDefaultValues = {
+    ringBase,
+    ringConfig,
+    ringGrayConfig,
     defaultOutlineELement,
     defaultOutlineGrayELement,
     defaultSolidGrayShades,
@@ -254,7 +330,10 @@ export const helperDefaultValues = {
     textTypoColorReverse,
     defaultTypoNeutral,
     defaultTextGradient,
-    background,
-    backgroundInverse
+    bodyBg,
+    bodyBgInverse,
+    bgSoligUI,
+    grayBdrUI,
+    bdrUI,
 }
 

@@ -1,37 +1,38 @@
 import { Preset } from 'unocss'
-import { presetVariants } from '@unifyui/unify-variant'
-import type { unifyUI } from './types'
-import { getAllShortcut } from './shortcuts/'
 
-export default function unifyUI(config?: unifyUI): Preset {
-    
+import type { UnifyUIConfig } from './types'
+import { getAllShortcut } from './shortcuts/'
+import { getAllRules } from './rules'
+import { getAllVariants } from './variants'
+import { theme } from './ui-theme'
+
+
+
+function unifyUI(config?: UnifyUIConfig): Preset {
+
+
     const appearance = config?.appearance || "both"
-    const paletteProvider = config?.colorModeProvider || "default"
+
+
 
     const shortcuts = getAllShortcut({
         components: config?.components,
-        sharedElement : config?.sharedConfig?.element,
+        sharedElementVariant: config?.sharedConfig?.element,
         appearance,
-        colorPaletteProvider: paletteProvider
+        baseUI: config?.globalElement,
+        form: config?.sharedConfig?.form
     })
+
+    const rules = getAllRules(appearance)
+    const variants = getAllVariants()
 
     return {
         name: 'unify-preset',
-        variants: [
-            presetVariants({
-                prefix: config?.prefixState
-            })
-        ],
+        variants,
         shortcuts,
-        rules: [
-            [
-                'u-fx-popper', {
-                    position: "absolute",
-                    transform: "translate(var(--fx-popper-placement-x), var(--fx-popper-placement-y))",
-                    left: "0",
-                    top: "0"
-                }
-            ]
-        ]
+        rules,
+        theme
     }
 }
+
+export { unifyUI, type UnifyUIConfig as unifyUIConfig }

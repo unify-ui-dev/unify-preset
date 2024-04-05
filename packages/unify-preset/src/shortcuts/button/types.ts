@@ -15,34 +15,38 @@ export type BtnGhostOrSoft = {
     dark?: GhostSoftBase
 }
 
+export type BtnSizeBase = { height?: number | string, px?: number | string, textSize?: TextSizes }
+
 
 export type BtnSizes = {
-    xs?: { height?: number | string, px?: number | string, textSize?: TextSizes },
-    sm?: { height?: number | string, px?: number | string, textSize?: TextSizes },
-    md?: { height?: number | string, px?: number | string, textSize?: TextSizes },
-    lg?: { height?: number | string, px?: number | string, textSize?: TextSizes },
-    xl?: { height?: number | string, px?: number | string, textSize?: TextSizes }
+    xs?: BtnSizeBase,
+    sm?: BtnSizeBase,
+    md?: BtnSizeBase,
+    lg?: BtnSizeBase,
+    xl?: BtnSizeBase
 }
 
+export type BtnIconBase = { size?: number | string, textSize?: TextSizes }
 export type BtnIconSizes = {
-    xs?: { size?: number | string, textSize?: TextSizes },
-    sm?: { size?: number | string, textSize?: TextSizes },
-    md?: { size?: number | string, textSize?: TextSizes },
-    lg?: { size?: number | string, textSize?: TextSizes },
-    xl?: { size?: number | string, textSize?: TextSizes }
+    xs?: BtnIconBase,
+    sm?: BtnIconBase,
+    md?: BtnIconBase,
+    lg?: BtnIconBase,
+    xl?: BtnIconBase
 }
 
 type BaseSoligGradientBtn = {
-    borderShade:ColorShade,
-    bgShadeFrom:ColorShade,
-    bgShadeTo:ColorShade,
-    hoverShadeFrom:ColorShade,
-    hoverShadeTo:ColorShade,
+    borderShade: ColorShade,
+    bgShadeFrom: ColorShade,
+    bgShadeTo: ColorShade,
+    hoverShadeFrom: ColorShade,
+    hoverShadeTo: ColorShade,
 }
 
-export type SolidGradientBtn ={
-    light?:BaseSoligGradientBtn,
-    dark?:BaseSoligGradientBtn
+export type SolidGradientBtn = {
+    useLightForBoth?: boolean,
+    light?: BaseSoligGradientBtn,
+    dark?: BaseSoligGradientBtn
 }
 
 
@@ -53,6 +57,7 @@ export type SolidBtnShadeBase = {
     textShade?: ColorShade,
 }
 export type SolidBtnShade = {
+    useLightForBoth?: boolean,
     light?: SolidBtnShadeBase
     dark?: SolidBtnShadeBase
 }
@@ -68,8 +73,8 @@ export type BtnWhite = {
 }
 
 export type Button = {
-    useRing?:boolean,
-    ringBase?:RingBase,
+    useRing?: boolean,
+    ringBase?: RingBase,
     size?: BtnSizes,
     btnIcon?: BtnIconSizes,
 
@@ -78,8 +83,8 @@ export type Button = {
     solidShade?: SolidBtnShade
     solidShadeGray?: SolidBtnShade
 
-    gradient?:SolidGradientBtn,
-    grayGradient?:SolidGradientBtn,
+    gradient?: SolidGradientBtn,
+    grayGradient?: SolidGradientBtn,
 
     ghost?: BtnGhostOrSoft,
     grayGhost?: BtnGhostOrSoft,

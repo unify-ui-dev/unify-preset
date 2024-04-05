@@ -1,5 +1,5 @@
 import type { Appearance, formOutline } from "@/types"
-import { getConfigValue } from "@/utils"
+import { getConfigValue, getShortcutsIfNotSame } from "@/utils"
 import { btnCongig } from "./const"
 import type { BtnGhostOrSoft, SolidBtnShade, BtnWhite, SolidGradientBtn } from "./types"
 
@@ -16,13 +16,12 @@ export const genBtnVariantWhite = ({ solid, appearance }: { solid: BtnWhite, app
     return `${btnvariantLight} ${variantDark}`
 }
 
-// generate btn variants 
 export const genBtnVariantSolid = ({ color, solid, graySolid, appearance }: { color: string, solid: SolidBtnShade, graySolid: SolidBtnShade, appearance: Appearance }) => {
-    if (color === "neutral") {
-        return `${genBtnVariantSolidNeutral({ appearance })}`
-    }
-
-    const { light, dark } = color === "gray" ? graySolid : solid
+    if (color === "neutral") return `${genBtnVariantSolidNeutral({ appearance })}`
+    const { light, dark, useLightForBoth } = color === "gray" ? graySolid : solid
+    const bgDark = getShortcutsIfNotSame({ val1: `${color}-${light?.bgShade}`, val2: `${color}-${dark?.bgShade}`, shortcuts: `dark-bg-${color}-${dark?.bgShade}` })
+    const bgHover = getShortcutsIfNotSame({ val1: `${color}-${light?.hoverBgShade}`, val2: `${color}-${dark?.hoverBgShade}`, shortcuts: `dark-hover-bg-${color}-${dark?.hoverBgShade} dark-focus-visible-outline-${color}-${dark?.hoverBgShade}` })
+    const activeBg = getShortcutsIfNotSame({ val1: `${color}-${light?.pressBgShade}`, val2: `${color}-${dark?.pressBgShade}`, shortcuts: ` dark-active-bg-${color}-${dark?.pressBgShade}` })
 
     const btnvariantLight = `${appearance === "light" || appearance === "both" ?
         `bg-${color}-${light?.bgShade} hover-bg-${color}-${light?.hoverBgShade} active-bg-${color}-${light?.pressBgShade} text-white focus-visible-outline-${color}-${light?.hoverBgShade}` : ""} `
@@ -30,18 +29,16 @@ export const genBtnVariantSolid = ({ color, solid, graySolid, appearance }: { co
     const variantDark = `${appearance === "dark" ?
         `bg-${color}-${dark?.bgShade} hover-bg-${color}-${dark?.hoverBgShade} active-bg-${color}-${dark?.pressBgShade} text-white focus-visible-outline-${color}-${dark?.hoverBgShade}` :
         appearance === "both" ?
-            `dark-bg-${color}-${dark?.bgShade} dark-hover-bg-${color}-${dark?.hoverBgShade} dark-active-bg-${color}-${dark?.pressBgShade} dark-focus-visible-outline-${color}-${dark?.hoverBgShade}` : ""}`
-    return `${btnvariantLight} ${variantDark}`
+            `${bgDark} ${bgHover} ${activeBg}` : ""}`
+    return `${btnvariantLight} ${useLightForBoth ? "" : variantDark}`
 }
 
 export const genBtnVariantOutline = ({ color, appearance, outlineBtn, outlineBtnGray }: { color: string, appearance: Appearance, outlineBtn: formOutline, outlineBtnGray: formOutline }) => {
-    const { borderSize, light, dark } = color === "gray" ? outlineBtnGray : outlineBtn
+    const { borderSize, light, dark, useLightForBoth } = color === "gray" ? outlineBtnGray : outlineBtn
 
     const borderSize_ = borderSize ? borderSize : 1
 
-    if (color === "neutral") {
-        return `${genBtnVariantOutlineNeutral({ appearance, outlineBtn: { borderSize: borderSize_ } })}`
-    }
+    if (color === "neutral") return `${genBtnVariantOutlineNeutral({ appearance, outlineBtn: { borderSize: borderSize_ } })}`
 
     const variantLight = `${appearance === "light" || appearance === "both" ?
         `bg-transparent hover-bg-${color}-${light?.textShade}/10 border-${color}-${light?.borderShade} hover-border-${color}-${light?.hoverBorderShade} text-${color}-${light?.textShade} hover-text-${color}-${light?.hoverTextShade} focus-visible-outline-${color}-${light?.hoverBorderShade}` : ""}`
@@ -49,8 +46,13 @@ export const genBtnVariantOutline = ({ color, appearance, outlineBtn, outlineBtn
     const variantDark = `${appearance === "dark" ?
         `bg-transparent hover-bg-${color}-${dark?.textShade}/10 border-${color}-${dark?.borderShade} hover-border-${color}-${dark?.hoverBorderShade} text-${color}-${dark?.textShade} hover-text-${color}-${dark?.hoverTextShade} focus-visible-outline-${color}-${dark?.hoverBorderShade}` :
         appearance === "both" ?
-            `dark-border-${color}-${dark?.borderShade} dark-hover-bg-${color}-${dark?.textShade}/10 dark-hover-border-${color}-${dark?.hoverBorderShade} dark-text-${color}-${dark?.textShade} dark-hover-text-${color}-${dark?.hoverTextShade} dark-focus-visible-outline-${color}-${dark?.hoverBorderShade}` : ""}`
-    return `border-${getConfigValue(borderSize_)} ${variantLight} ${variantDark}`
+            `
+            ${getShortcutsIfNotSame({ val1: `${light?.borderShade}`, val2: `${dark?.borderShade}`, shortcuts: `dark-border-${color}-${dark?.borderShade}` })}
+            ${getShortcutsIfNotSame({ val1: `${light?.textShade}`, val2: `${dark?.textShade}`, shortcuts: `dark-text-${color}-${dark?.textShade} dark-hover-bg-${color}-${dark?.textShade}/10` })}
+            ${getShortcutsIfNotSame({ val1: `${light?.hoverBorderShade}`, val2: `${dark?.hoverBorderShade}`, shortcuts: `dark-hover-border-${color}-${dark?.hoverBorderShade} dark-focus-visible-outline-${color}-${dark?.hoverBorderShade}` })}
+            ${getShortcutsIfNotSame({ val1: `${light?.hoverTextShade}`, val2: `${dark?.hoverTextShade}`, shortcuts: `dark-hover-text-${color}-${dark?.hoverTextShade}` })}`
+            : ""}`
+    return `border-${getConfigValue(borderSize_)} ${variantLight} ${useLightForBoth ? "" : variantDark}`
 }
 
 export const genBtnVariantSoftOrGost = ({ color, appearance, ghostOrSoft, graySoftGhost, variant }: { color: string, appearance: Appearance, ghostOrSoft: BtnGhostOrSoft, graySoftGhost: BtnGhostOrSoft, variant: "soft" | "ghost" }) => {
@@ -123,7 +125,6 @@ const genBtnNeutralSoft = (appearance: Appearance) => {
         "bg-white/4 hover-bg-white active-bg-gray-50 text-white hover-text-gray-900" :
         appearance === "both" ? "dark-bg-white/4 dark-hover-bg-white dark-active-bg-gray-50 dark-text-white dark-hover-text-gray-900" :
             ""}`
-
     return `${lightV} ${darkV}`
 }
 
@@ -140,15 +141,20 @@ export const genBtnVariantSolidNeutralGradient = ({ appearance }: { appearance: 
 }
 
 export const genBtnVariantSolidGradient = ({ color, gradient, grayGradient, appearance }: { color: string, gradient: SolidGradientBtn, grayGradient: SolidGradientBtn, appearance: Appearance }) => {
-    if (color === "neutral")  return `${genBtnVariantSolidNeutralGradient({ appearance })}`
-    const { light, dark } = color === "gray" ? grayGradient : gradient
+    if (color === "neutral") return `${genBtnVariantSolidNeutralGradient({ appearance })}`
+    const { light, dark, useLightForBoth } = color === "gray" ? grayGradient : gradient
 
     const btnvariantLight = `${appearance === "light" || appearance === "both" ?
-        `bg-gradient-to-bl b b-${color}-${light?.borderShade} from-${color}-${light?.bgShadeFrom} to-${color}-${light?.bgShadeTo} hover-from-${color}-${light?.hoverShadeFrom} hover-to-${color}-${light?.hoverShadeTo} text-white focus-b-transparent focus-visible-outline-${color}-${light?.bgShadeFrom}` : ""} `
+        `b-${color}-${light?.borderShade} from-${color}-${light?.bgShadeFrom} to-${color}-${light?.bgShadeTo} hover-from-${color}-${light?.hoverShadeFrom} hover-to-${color}-${light?.hoverShadeTo} text-white focus-b-transparent focus-visible-outline-${color}-${light?.bgShadeFrom}` : ""} `
 
     const variantDark = `${appearance === "dark" ?
-        `bg-gradient-to-bl b b-${color}-${dark?.borderShade} from-${color}-${dark?.bgShadeFrom} to-${color}-${dark?.bgShadeTo} hover-from-${color}-${dark?.hoverShadeFrom} hover-to-${color}-${dark?.hoverShadeTo} text-white focus-b-transparent focus-visible-outline-${color}-${dark?.bgShadeFrom}` :
+        `b-${color}-${dark?.borderShade} from-${color}-${dark?.bgShadeFrom} to-${color}-${dark?.bgShadeTo} hover-from-${color}-${dark?.hoverShadeFrom} hover-to-${color}-${dark?.hoverShadeTo} text-white focus-b-transparent focus-visible-outline-${color}-${dark?.bgShadeFrom}` :
         appearance === "both" ?
-            `dark-b-${color}-${dark?.borderShade} dark-from-${color}-${dark?.bgShadeFrom} dark-to-${color}-${dark?.bgShadeTo} dark-hover-from-${color}-${dark?.hoverShadeFrom} dark-hover-to-${color}-${dark?.hoverShadeTo} dark-focus-visible-outline-${color}-${dark?.bgShadeFrom}` : ""}`
-    return `active-opacity-90 ${btnvariantLight} ${variantDark}`
+            `${getShortcutsIfNotSame({ val1: `${light?.borderShade}`, val2: `${dark?.borderShade}`, shortcuts: `dark-b-${color}-${dark?.borderShade}` })} 
+            ${getShortcutsIfNotSame({ val1: `${light?.bgShadeFrom}`, val2: `${dark?.bgShadeFrom}`, shortcuts: `dark-from-${color}-${dark?.bgShadeFrom}  dark-focus-visible-outline-${color}-${dark?.bgShadeFrom}` })}
+            ${getShortcutsIfNotSame({ val1: `${light?.bgShadeTo}`, val2: `${dark?.bgShadeTo}`, shortcuts: `dark-to-${color}-${dark?.bgShadeTo}` })}
+            ${getShortcutsIfNotSame({ val1: `${light?.hoverShadeFrom}`, val2: `${dark?.hoverShadeFrom}`, shortcuts: `dark-hover-from-${color}-${dark?.hoverShadeFrom}` })}
+            ${getShortcutsIfNotSame({ val1: `${light?.hoverShadeTo}`, val2: `${dark?.hoverShadeTo}`, shortcuts: `dark-hover-to-${color}-${dark?.hoverShadeTo}` })}
+             ` : ""}`
+    return `bg-gradient-to-b b active-opacity-90 ${btnvariantLight} ${useLightForBoth ? '' : variantDark}`
 }

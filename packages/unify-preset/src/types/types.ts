@@ -30,6 +30,7 @@ export type formOutlineBase = {
 }
 
 export type formOutline = {
+    useLightForBoth?: boolean,
     borderSize?: number | string,
     light?: formOutlineBase,
     dark?: formOutlineBase

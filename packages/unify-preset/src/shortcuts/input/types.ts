@@ -35,6 +35,9 @@ export type Input = {
         xl?: InputBaseSize,
     },
     solidGray?: SolidShade,
+    lightGray?:SolidShade,
+    highGray?:SolidShade,
+    higherGray?:SolidShade,
     outline?: { color?:string, light?: ColorShade, dark?: ColorShade }
     focusGray?: InputOutline,
     focusColor?: InputOutline,

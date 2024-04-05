@@ -1,5 +1,5 @@
-import type { Appearance, BorderVariant, BorderPrefix, ColorShade, OutlineVariant, Soft, SolidShade, Subtle } from "@/types"
-import { getConfigValue } from "@/utils"
+import type { Appearance, BorderVariant, BorderPrefix, ColorShade, OutlineVariant, Soft, SolidShade, Subtle, BgBackdropBlur } from "@/types"
+import { getConfigValue, getShortcutsIfNotSame } from "@/utils"
 
 import { helperDefaultValues } from "./helper-const"
 
@@ -9,18 +9,19 @@ const getTextColorSolid = (color: "white" | "gray", shades: { light: ColorShade,
     const dark = color === "white" ? "white" : `gray-${shades.dark}`
     return { light, dark }
 }
-export const genVariantSolid = ({ color, appearance, solidShades, graySolid }: { solidShades: SolidShade, graySolid: SolidShade, color: string, appearance: Appearance }) => {
+export const genVariantSolid = ({ color, appearance, colorShades, grayShades }: { colorShades: SolidShade, grayShades: SolidShade, color: string, appearance: Appearance }) => {
     if (color === "neutral") {
         return `${genVariantSolidNeutral({ appearance })}`
     }
-    const { light, dark } = color === "gray" ? graySolid : solidShades
+    const { light, dark } = color === "gray" ? grayShades : colorShades
 
-    const textColor = getTextColorSolid(color === "gray" ? "gray" : "white", { light: graySolid.light?.textShade || "700", dark: graySolid.dark?.textShade || "300" })
+    const textColor = getTextColorSolid(color === "gray" ? "gray" : "white", { light: grayShades.light?.textShade || "700", dark: grayShades.dark?.textShade || "300" })
     const variantLight = `${appearance === "light" || appearance === "both" ?
         `bg-${color}-${light?.bgShade} text-${textColor.light}` : ""} `
 
     const variantDark = `${appearance === "dark" ? `bg-${color}-${dark?.bgShade} text-${textColor.dark}`
-        : appearance === "both" ? `dark-bg-${color}-${dark?.bgShade} dark-text-${textColor.dark}` : ""}`
+        : appearance === "both" ? `${getShortcutsIfNotSame({ val1: `${light?.bgShade}`, val2: `${dark?.bgShade}`, shortcuts: `dark-bg-${color}-${dark?.bgShade}` })
+            } ${getShortcutsIfNotSame({ val1: `${light?.textShade}`, val2: `${dark?.textShade}`, shortcuts: `dark-text-${textColor.dark}` })} ` : ""}`
     return `${variantLight} ${variantDark}`
 }
 
@@ -39,12 +40,13 @@ export const genOutline = ({ color, appearance, border, colorBorder, prefix = "b
     const borderSize_ = borderSize ? borderSize : 1
     const variantLight = `${appearance === "light" || appearance === "both" ? `${prefix}-${color}-${light}` : ""}`
 
-    const variantDark = `${appearance === "dark" ? `${prefix}-${color}-${dark}` : appearance === "both" ? `dark-${prefix}-${color}-${dark}` : ""}`
+    const variantDark = `${appearance === "dark" ? `${prefix}-${color}-${dark}` : appearance === "both" ?
+        `${getShortcutsIfNotSame({ val1: `${light}`, val2: `${dark}`, shortcuts: `dark-${prefix}-${color}-${dark}` })}` : ""}`
     return `${prefix}-${getConfigValue(borderSize_)} ${variantLight} ${variantDark}`
 }
 
-export const genVariantOutline = ({ color, appearance, outline, grayOutline }: { color: string, appearance: Appearance, outline: OutlineVariant, grayOutline: OutlineVariant }) => {
-    const { borderSize, light, dark } = color === "gray" ? grayOutline : outline
+export const genVariantOutline = ({ color, appearance, outlineColor, outlineGray }: { color: string, appearance: Appearance, outlineColor: OutlineVariant, outlineGray: OutlineVariant }) => {
+    const { borderSize, light, dark } = color === "gray" ? outlineGray : outlineColor
     const borderSize_ = borderSize ? borderSize : 1
     if (color === "neutral") return `${genVariantOutlineNeutral({ appearance, outline: { borderSize: borderSize_ } })}`
 
@@ -55,7 +57,7 @@ export const genVariantOutline = ({ color, appearance, outline, grayOutline }: {
     const variantDark = `${appearance === "dark" ?
         `bg-transparent text-${color}-${dark?.textShade}` :
         appearance === "both" ?
-            `dark-text-${color}-${dark?.textShade}` : ""}`
+            `${getShortcutsIfNotSame({ val1: `${light?.textShade}`, val2: `${dark?.textShade}`, shortcuts: `dark-text-${color}-${dark?.textShade}` })}` : ""}`
     const getBorder = { borderSize: borderSize_, light: light?.borderShade, dark: dark?.borderShade }
     const getBorderValue = genOutline({ color, appearance, prefix: "border", border: getBorder, colorBorder: getBorder })
 
@@ -73,11 +75,10 @@ export const genVariantSoft = ({ color: color_, soft, graySoft, appearance }: { 
     const variantDark = `${appearance === "dark" ?
         `bg-${color}-${dark?.bgShade}/${getConfigValue(dark?.bgOpacity)} text-${color}-${dark?.textShade}` :
         appearance === "both" ?
-            `dark-bg-${color}-${dark?.bgShade}/${getConfigValue(dark?.bgOpacity)} dark-text-${color}-${dark?.textShade}` : ""}`
+            `${getShortcutsIfNotSame({ val1: `${light?.textShade}`, val2: `${dark?.textShade}`, shortcuts: `dark-text-${color}-${dark?.textShade}` })}
+            ${getShortcutsIfNotSame({ val1: `${dark?.bgShade}/${getConfigValue(dark?.bgOpacity)} `, val2: `${light?.bgShade}/${getConfigValue(light?.bgOpacity)}`, shortcuts: `dark-bg-${color}-${dark?.bgShade}/${getConfigValue(dark?.bgOpacity)}` })}` : ""}`
     return `${variantLight} ${variantDark}`
 }
-
-
 
 
 
@@ -87,12 +88,17 @@ export const genVariantSubtle = ({ color: color_, appearance, subtle, graySubtle
     const { borderWidth, light, dark } = color === "gray" ? graySubtle : subtle
 
     const variantLight = `${appearance === "light" || appearance === "both" ?
-        ` border-${color}-${light?.borderShade}/${getConfigValue(light?.borderOpacity)}` : ""}`
+        `border-${color}-${light?.borderShade}/${getConfigValue(light?.borderOpacity)}` : ""}`
 
     const variantDark = `${appearance === "dark" ?
         `border-${color}-${dark?.borderShade}/${getConfigValue(dark?.borderOpacity)}`
         : appearance === "both" ?
-            `dark-border-${color}-${dark?.borderShade}/${getConfigValue(dark?.borderOpacity)}` : ""}`
+            `
+            ${getShortcutsIfNotSame({
+                val1: `${light?.borderShade}/${getConfigValue(light?.borderOpacity)}`,
+                val2: `${dark?.borderShade}/${getConfigValue(dark?.borderOpacity)}`,
+                shortcuts: `dark-border-${color}-${dark?.borderShade}/${getConfigValue(dark?.borderOpacity)}`
+            })}` : ""}`
     return `${genVariantSoft({ color, appearance, soft: { light: subtle.light, dark: subtle.dark }, graySoft: { light: graySubtle.light, dark: graySubtle.dark } })}  border-${getConfigValue(borderWidth)} ${variantLight} ${variantDark}`
 }
 
@@ -127,7 +133,6 @@ export const genVariantOutlineNeutral = ({ appearance, outline }: { appearance: 
     const variantLight = `${appearance === "light" || appearance === "both" ? `bg-transparent border-gray-800/40 text-gray-800` : ""}`
 
     const variantDark = `${appearance === "dark" ? `bg-transparent border-white  text-white` : appearance === "both" ?
-
         `dark-border-white dark-text-white` : ""}`
     return `border-${getConfigValue(borderSize_)} ${variantLight} ${variantDark}`
 }
@@ -158,4 +163,14 @@ export const genVariantSubtleNeutral = ({ appearance, subtle = helperDefaultValu
 
     const variantDark = `${appearance === "dark" ? `border-gray-800/60 text-white` : appearance === "both" ? `dark-border-gray-white/60 dark-text-white` : ""}`
     return `${genNeutralSoft(appearance)} border-${getConfigValue(borderWidth)} ${variantLight} ${variantDark}`
+}
+
+
+export const genBluredBackground = ({ backdrop, appearance }: { appearance: Appearance, backdrop: BgBackdropBlur }) => {
+    const { light, dark, useLightForBoth, blur } = backdrop
+    const lightV = `${appearance === "light" || appearance === "both" ? `bg-${light.color}/${light.opacity}` : ""}`
+
+    const darkV = `${appearance === "dark" ? `bg-${dark.color}/${dark.opacity}` : appearance === "both" ?
+        `${getShortcutsIfNotSame({ val1: `${light.color}/${light.opacity}`, val2: `${dark.color}/${dark.opacity}`, shortcuts: `dark-bg-${dark.color}/${dark.opacity}` })}` : ""}`
+    return `backdrop-blur-${blur} ${lightV} ${useLightForBoth ? "" : darkV}`
 }
