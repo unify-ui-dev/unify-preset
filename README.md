@@ -9,6 +9,10 @@
 
 Unify-Preset stands at the forefront of UI customization, offering a comprehensive theming library designed to empower developers and designers alike. At its core, Unify-Preset leverages the power and flexibility of UnoCSS and provides a variety of themes that can be easily customized to match your brand and style.
 
+
+> **Not** : This project is a WIP, you can test it and report bug... Your contribution is much valualed for us, help us to make it better.
+
+
 ## Concepts 🧠
 
 - **🖌️ Component-Level Theming:**  Customize each component independently, allowing for detailed personalization while maintaining overall harmony.
@@ -26,7 +30,7 @@ Unify-Preset stands at the forefront of UI customization, offering a comprehensi
   
 - **🎨 Consistent Yet Flexible:** Achieve a consistent look and feel without sacrificing the creativity and uniqueness of individual components.
   
-- **Dark Mode Support:** Dark mode is supported
+- **Dark Mode Support:** Automatic Dark mode support
   
 - **Freedom on Appearance:** Customize your styles to match your preferences. Whether you prefer only dark style, light and dark styles, or only light styles, Unify Preset accommodates your needs. The generated CSS will contain only what you decide to have.
 
@@ -106,6 +110,34 @@ export default defineConfig({
 ### Use it
 
 
+```html
+<div class="space-y-6">
+  <h1 class="text-xl font-semibold ui-title">
+      Badges
+  </h1>
+  <div class="p6 flex flex-wrap gap4 rd-lg bdr-gray">
+      <span class="badge-md badge-solid">
+          badge
+      </span>
+      <span un-badge="md solig" rd-sm>
+          badge
+      </span>
+      <span class="badge-md badge-solid rd-md">
+          badge
+      </span>
+      <span class="badge-md badge-solid rd-lg">
+          badge
+      </span>
+      <span class="badge-md badge-solid rd-xl">
+          badge
+      </span>
+      <span class="badge-md badge-solid rd-full">
+          badge
+      </span>
+  </div>
+</div>
+```
+
 ## Contributing
 
 If you're interested in contributing to Unify-UI, please read our [contributing docs](CONTRIBUTING.MD) before submitting a pull request.
@@ -118,17 +150,17 @@ Contribute, collaborate, and become a part of our mission 🚀
 
 ## Acknowledgments 🌟
 
-- [Antfu](https://github.com/antfu) - The creator of UnoCSS.
-- [UnoCSS](https://github.com/unocss/unocss) - The project is powered by UnoCSS.
-- [Méschac Irung](https://github.com/Meschacirung) - Whose theming ideas have significantly shaped our approach, check [Tailus Themer](https://github.com/Tailus-UI/themer).
-- [Nuxt UI](https://github.com/nuxt/ui) - Much like Tailus Themer,  Nuxt UI has been instrumental in helping us leverage themable UI components.
-- [Phojie Rengel](https://github.com/phojie) - Our thanks go out to his exceptional work on [Una UI](https://github.com/una-ui/una-ui), which inspired us to create our Atomic Theming Toolkit. His amazing code has been instrumental in our development process.
-- [Saadeghi](https://github.com/saadeghi) - For creating [DaisyUI](https://github.com/saadeghi/daisyui), whose idea of using semantic class names has been a key inspiration in our pursuit.
+- [Antfu](https://github.com/antfu) 
+- [UnoCSS](https://github.com/unocss/unocss)
+- [Méschac Irung](https://github.com/Meschacirung) - [Tailus Themer](https://github.com/Tailus-UI/themer).
+- [Nuxt UI](https://github.com/nuxt/ui) -
+- [Phojie Rengel](https://github.com/phojie) - [Una UI](https://github.com/una-ui/una-ui)
+- [Saadeghi](https://github.com/saadeghi) - [DaisyUI](https://github.com/saadeghi/daisyui)
 
 
 ## Support Us
 
-If you like this project and want to support us, feel free to get in touch with us : 
+If you like this project and want to support us, feel free to get in touch with one of maintainers : 
 
 - [johnkatembue4@gmail.com](mailto:johnkatembue4@gmail.com)
 
