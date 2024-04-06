@@ -1,6 +1,6 @@
 {
   "name": "@unifyui/unify-variant",
-  "version": "0.0.0",
+  "version": "0.0.1-0.0.0.0",
   "description": "UnifyUI Variants",
   "publishConfig": {
     "access": "public"
@@ -31,13 +31,13 @@
   "author": "Johnkat MJ",
   "license": "MIT",
   "devDependencies": {
-    "unbuild": "^2.0.0",
+    "@biomejs/biome": "1.6.2",
     "@types/node": "^20.11.27",
     "@unocss/reset": "^0.58.6",
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2",
-    "unocss": "^0.58.6",
-    "@biomejs/biome": "1.6.2"
+    "unbuild": "^2.0.0",
+    "unocss": "^0.58.6"
   }
 }
