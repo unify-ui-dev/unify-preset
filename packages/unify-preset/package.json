@@ -1,6 +1,6 @@
 {
   "name": "@unifydev/unify-preset",
-  "version": "0.0.0",
+  "version": "0.0.0-beta",
   "description": "Variants for unify-preset : The atomic UI Library",
   "publishConfig": {
     "access": "public"
@@ -33,7 +33,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.6.2",
     "@types/node": "^20.11.27",
-    "@unifyui/unify-variant": "^0.0.1-0.0.0.0",
+    "@unifydev/unify-variant": "latest",
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2",

@@ -38,11 +38,11 @@ Unify-Preset stands at the forefront of UI customization, offering a comprehensi
 ### Installation 
 
 ```bash
-npm i -D @unifyui/unify-preset
+npm i -D @unifydev/unify-preset
 # or
-yarn add @unifyui/unify-preset -D
+yarn add @unifydev/unify-preset -D
 # or
-pnpm add @unifyui/unify-preset -D
+pnpm add @unifydev/unify-preset -D
 ```
 
 Install also `@julr/unocss-preset-forms` in case you'll form controls.
@@ -65,7 +65,7 @@ import { colors } from "@unocss/preset-mini/colors";
 
 import { presetForms } from "@julr/unocss-preset-forms";
 // import the preset
-import {unifyUI} from "@unifyui/unify-preset"
+import {unifyUI} from "@unifydev/unify-preset"
 
 
 export default defineConfig({

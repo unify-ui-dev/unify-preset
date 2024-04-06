@@ -1,5 +1,5 @@
 
-import { presetVariants, componentVariants } from "@unifyui/unify-variant";
+import { presetVariants, componentVariants } from "@unifydev/unify-variant";
 import type { Variant } from "unocss";
 import type { Theme } from "@unocss/preset-uno"
 
