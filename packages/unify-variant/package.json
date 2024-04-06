@@ -1,6 +1,6 @@
 {
-  "name": "@unifyui/unify-variant",
-  "version": "0.0.1-0.0.0.0",
+  "name": "@unifydev/unify-variant",
+  "version": "0.0.0",
   "description": "UnifyUI Variants",
   "publishConfig": {
     "access": "public"

@@ -1,6 +1,6 @@
 {
-  "name": "@unifyui/unify-preset",
-  "version": "0.0.0-beta",
+  "name": "@unifydev/unify-preset",
+  "version": "0.0.0",
   "description": "Variants for unify-preset : The atomic UI Library",
   "publishConfig": {
     "access": "public"
