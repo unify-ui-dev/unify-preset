@@ -31,7 +31,6 @@ body:
       label: Validations
       description: Before submitting the issue, please make sure you do the following
       options:
-          required: true
         - label: Read the `README.md` of using the package.
           required: true
         - label: Check that there isn't already an issue that request the same feature to avoid creating a duplicate.

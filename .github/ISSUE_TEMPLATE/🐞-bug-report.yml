@@ -1,12 +1,21 @@
 name: 🐞 Bug report
-description: Report an issue with Unify Preset (Preset UI)
+description: Report an issue with Unify Preset
 labels: [pending triage]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
+        Thanks for taking the time to fill out this bug report! If you have a usage question
+        or are unsure if this is really a bug, make sure to:
 
+        - Read the `README.md` of using the package
+
+  - type: input
+    id: version
+    attributes:
+      label: UnoCSS version
+    validations:
+      required: true
   - type: input
     id: version
     attributes:
@@ -25,7 +34,7 @@ body:
     id: reproduction
     attributes:
       label: Reproduction
-      description: Please provide a link to [StackBlitz](https://stackblitz.com/fork/github/unify-ui-dev/uno-vuejs-boilerplate) or a github repo that can reproduce the problem you ran into. A [minimal reproduction](https://stackoverflow.com/help/minimal-reproducible-example) is required unless you are absolutely sure that the issue is obvious and the provided information is enough to understand the problem. [Why reproduction is required](https://antfu.me/posts/why-reproductions-are-required).
+      description: Please provide a link to [StackBlitz](https://stackblitz.com/) or a github repo that can reproduce the problem you ran into. A [minimal reproduction](https://stackoverflow.com/help/minimal-reproducible-example) is required unless you are absolutely sure that the issue is obvious and the provided information is enough to understand the problem. [Why reproduction is required](https://antfu.me/posts/why-reproductions-are-required).
       placeholder: Reproduction
     validations:
       required: true
@@ -45,6 +54,8 @@ body:
         - label: Read the [Contributing Guidelines](https://github.com/unify-ui-dev/unify-preset/blob/main/CONTRIBUTING.MD).
           required: true
         - label: Check that there isn't [already an issue](https://github.com/unify-ui-dev/unify-preset/issues) that reports the same bug to avoid creating a duplicate.
+          required: true
+        - label: Check that this is a concrete bug. For Q&A open a [GitHub Discussion](https://github.com/unify-ui-dev/unify-preset/discussions) or join our [Discord Chat Server](https://discord.gg/ytgYghjnCc).
           required: true
         - label: The provided reproduction is a [minimal reproducible example](https://stackoverflow.com/help/minimal-reproducible-example) of the bug.
           required: true
