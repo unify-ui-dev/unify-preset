@@ -1,17 +1,11 @@
-import { Variant } from "unocss";
+import type { Variant } from "unocss";
 
-export type ComponentVariantOptions = {
-    /**
-     * 
-     */
+export type BrowserVariantOptions = {
     prefix?: string;
-    /**
-     * 
-     */
     variants: Record<string, string>,
 };
 
-export const componentVariants = (options: ComponentVariantOptions): Variant => {
+export const browserVariants = (options: BrowserVariantOptions): Variant => {
     const { prefix = '', variants } = options;
 
     const prefix_ = prefix !== '' ? `${prefix}-` : ''
@@ -22,7 +16,6 @@ export const componentVariants = (options: ComponentVariantOptions): Variant => 
     }
 
     return {
-        //
         name: 'unify-components',
         match: (matcher: string) => {
 
@@ -35,6 +28,7 @@ export const componentVariants = (options: ComponentVariantOptions): Variant => 
 
             return {
                 matcher: matcher.slice(match[0].length),
+                // biome-ignore lint/suspicious/noExplicitAny: <explanation>
                 selector: (s: any) => `${s}${aliasPseudo}`,
             }
         },

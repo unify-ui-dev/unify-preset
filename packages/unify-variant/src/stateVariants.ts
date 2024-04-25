@@ -1,27 +1,18 @@
-import { Variant } from "unocss";
+import type { Variant } from "unocss";
 
-export type VariantGenOptions = {
-    /**
-     * @default 'u'
-     */
+export type DataStateVariantOptions = {
     prefix?: string;
-    /**
-     * @default 'visible|hidden|active|inactive|open|close'
-     */
-    variants?: string;
-    /**
-     * @default 'data-state'
-     */
-    selector?: string;
+    variants: string;
+    selector: string;
     isAttrBoolean?: boolean;
 };
 
-export const presetVariants = (options: VariantGenOptions = {}): Variant => {
+export const dataStateVariants = (options: DataStateVariantOptions): Variant => {
     const {
-        prefix = 'u',
-        variants = 'visible|hidden|active|inactive|open|close',
-        selector = 'data-state',
-        isAttrBoolean = false,
+        prefix = 'fx',
+        variants,
+        selector,
+        isAttrBoolean,
     } = options;
 
     return {

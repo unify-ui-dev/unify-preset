@@ -1,2 +1,2 @@
-export { presetVariants, type VariantGenOptions } from "./gen-variant"
-export { componentVariants, type ComponentVariantOptions } from "./components"
+export { dataStateVariants , type DataStateVariantOptions  } from "./stateVariants"
+export { browserVariants, type BrowserVariantOptions } from "./browser-pseudo"
