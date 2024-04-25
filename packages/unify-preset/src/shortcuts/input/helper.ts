@@ -1,6 +1,6 @@
 
 import type { Appearance, ColorShade, SolidShade } from "@/types";
-import { getConfigValue, getShortcutsIfNotSame } from "@/utils";
+import { getShortcutsIfNotSame } from "@/utils";
 import { genTextColor } from "../helpers";
 
 
@@ -51,23 +51,16 @@ export const getInputGrayVariant = ({ appearance, shades }: { appearance: Appear
 
 export const getInputOutlineFocus = ({ color, appearance, shades }: { color: string, appearance: Appearance, shades?: { light: string, dark: string } }) => {
     const lightVariant = `${appearance === "light" ||
-        appearance === "both" ? `focus-outline-${color}-${shades?.light}` : ""
+        appearance === "both" ? `focus-b-${color}-${shades?.light}` : ""
         }`
-    const darkVariant = `${appearance === "dark" ? `focus-outline-${color}-${shades?.dark}` :
+    const darkVariant = `${appearance === "dark" ? `focus-b-${color}-${shades?.dark}` :
         appearance === "both" ? `
         ${getShortcutsIfNotSame({
             val1: `${color}-${shades?.light}`,
             val2: `${color}-${shades?.dark}`,
-            shortcuts: `dark-focus-outline-${color}-${shades?.dark}`
+            shortcuts: `dark-focus-b-${color}-${shades?.dark}`
         })
             }` : ""}`
 
-    return `focus-outline-offset-0 focus-b-transparent ${lightVariant} ${darkVariant}`
-}
-
-export const getInputRingBase = (appearance: Appearance, size?: number | string, offset?: number | string) => {
-    const lightV = `${appearance === "light" || appearance === "both" ? "ring-offset-white" : ""}`
-    const darkV = `${appearance === "dark" ? "ring-offset-gray-950" : appearance === "both" ? `dark-ring-offset-gray-950` : ""}`
-
-    return ` ring-transparent  focus-ring-${getConfigValue(size)} focus-ring-offset-${getConfigValue(offset || 4)} ${lightV} ${darkV}`
+    return `focus-outline-offset-0 focus-outline-transparent ${lightVariant} ${darkVariant}`
 }

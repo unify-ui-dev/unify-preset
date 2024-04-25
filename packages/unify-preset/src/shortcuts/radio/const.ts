@@ -1,15 +1,22 @@
-import type {  VariantSizeBoth } from "@/types"
+import type { RingBase, RingColorShades } from "@/types"
 
-
-
-const sizes: VariantSizeBoth = {
-    sm: 4,
-    md: 6,
-    lg: 8,
-    xl: 10
+const ringBase: RingBase = {
+    size: 2,
+    offset: 4,
 }
 
+const ringConfig: RingColorShades = {
+
+    light: "600",
+    dark: "500"
+}
+const ringGrayConfig: RingColorShades = {
+    light: "200",
+    dark: "800"
+}
 
 export const radioCongig = {
-    sizes,
+    ringBase,
+    ringConfig,
+    ringGrayConfig
 }

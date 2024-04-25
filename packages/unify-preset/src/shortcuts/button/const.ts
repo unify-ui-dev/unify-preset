@@ -3,28 +3,22 @@ import type { BtnSizes, BtnGhostOrSoft, SolidBtnShade, BtnIconSizes, BtnWhite, S
 
 const ghostConfig: BtnGhostOrSoft = {
     light: {
-        bgShade: "100",
-        bgOpacity: 2,
         hoverBgShade: "100",
         hoverBgOpacity: 50,
         pressBgShade: "100",
         pressOpacity: 70,
-        textShade: "700"
+        textShade: "900"
     },
     dark: {
-        bgShade: "900",
-        bgOpacity: 1,
-        hoverBgShade: "900",
+        hoverBgShade: "600",
         hoverBgOpacity: 30,
-        pressBgShade: "900",
-        pressOpacity: 50,
-        textShade: "700"
+        pressOpacity: 25,
+        pressBgShade: "600",
+        textShade: "300"
     }
 }
 const ghostGrayCongif: BtnGhostOrSoft = {
     light: {
-        bgShade: "100",
-        bgOpacity: 1,
         hoverBgShade: "200",
         hoverBgOpacity: 40,
         pressBgShade: "200",
@@ -32,40 +26,36 @@ const ghostGrayCongif: BtnGhostOrSoft = {
         textShade: "800"
     },
     dark: {
-        bgShade: "600",
-        bgOpacity: 1,
-        hoverBgShade: "900",
-        hoverBgOpacity: 30,
+        hoverBgShade: "800",
+        hoverBgOpacity: 40,
         pressBgShade: "900",
         pressOpacity: 20,
-        textShade: "200"
+        textShade: '100'
     }
 }
 
 const softConfig: BtnGhostOrSoft = {
     light: {
-        bgShade: "100",
-        bgOpacity: 50,
-        hoverBgShade: "100",
-        hoverBgOpacity: 70,
-        pressOpacity: 90,
-        pressBgShade: "100",
-        textShade: "700"
+        bgShade: "50",
+        hoverBgShade: "400",
+        hoverBgOpacity: 60,
+        pressOpacity: 40,
+        pressBgShade: "400",
+        textShade: "800"
     },
     dark: {
-        bgShade: "950",
-        bgOpacity: 20,
-        hoverBgShade: "900",
-        hoverBgOpacity: 20,
-        pressOpacity: 70,
-        pressBgShade: "950",
-        textShade: "700"
+        bgShade: "600",
+        bgOpacity: 15,
+        hoverBgShade: "600",
+        hoverBgOpacity: 30,
+        pressOpacity: 25,
+        pressBgShade: "600",
+        textShade: "300"
     }
 }
 const softGrayConfig: BtnGhostOrSoft = {
     light: {
-        bgShade: "100",
-        bgOpacity: 70,
+        bgShade: "50",
         hoverBgShade: "200",
         hoverBgOpacity: 75,
         pressBgShade: "200",
@@ -73,12 +63,12 @@ const softGrayConfig: BtnGhostOrSoft = {
         textShade: "800"
     },
     dark: {
-        bgShade: "700",
+        bgShade: "600",
         bgOpacity: 20,
-        hoverBgShade: "800",
+        hoverBgShade: "600",
         hoverBgOpacity: 40,
-        pressBgShade: "900",
-        pressOpacity: 20,
+        pressBgShade: "600",
+        pressOpacity: 25,
         textShade: '100'
     }
 }
@@ -92,14 +82,14 @@ const btnOutline: formOutline = {
         borderShade: "300",
         hoverBorderShade: "400",
         activeBorderShade: "300",
-        textShade: "700",
-        hoverTextShade: "600",
+        textShade: "800",
+        hoverTextShade: "900",
     },
     dark: {
         borderShade: "400",
         hoverBorderShade: "300",
         activeBorderShade: "500",
-        textShade: "500",
+        textShade: "300",
         hoverTextShade: "400"
     }
 }
@@ -110,15 +100,15 @@ const btnGrayOutline: formOutline = {
         borderShade: "500",
         hoverBorderShade: "600",
         activeBorderShade: "700",
-        textShade: "700",
-        hoverTextShade: "800"
+        textShade: "800",
+        hoverTextShade: "900"
     },
     dark: {
         borderShade: "500",
         hoverBorderShade: "600",
         activeBorderShade: "700",
         textShade: "300",
-        hoverTextShade: "300"
+        hoverTextShade: "400"
     }
 }
 
@@ -262,7 +252,6 @@ const solidGradientGray: SolidGradientBtn = {
 }
 
 export const btnCongig = {
-    useRing: false,
     ghostConfig,
     ghostGrayCongif,
     softConfig,

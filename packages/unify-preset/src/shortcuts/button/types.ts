@@ -2,7 +2,7 @@ import type { RingColorShades, ColorShade, formOutline, TextSizes, RingBase } fr
 
 export type GhostSoftBase = {
     bgShade?: ColorShade,
-    bgOpacity?: number | string,
+    bgOpacity?: number,
     hoverBgOpacity?: number | string,
     hoverBgShade?: ColorShade,
     pressBgShade?: ColorShade,

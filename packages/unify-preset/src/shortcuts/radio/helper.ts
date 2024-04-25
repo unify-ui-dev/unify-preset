@@ -1,4 +1,4 @@
-import { Appearance } from "@/types";
+import type { Appearance } from "@/types";
 
 export const getRadioBase = (appearance: Appearance, color:string) => {
     const lightV = `${appearance === "light" || appearance === "both" ?

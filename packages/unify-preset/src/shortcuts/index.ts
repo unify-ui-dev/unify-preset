@@ -1,7 +1,7 @@
 
-import { Preset, StaticShortcutMap } from "unocss";
+import type { Preset, StaticShortcutMap } from "unocss";
 import { flexillaShortcuts } from "./flexilla-utils";
-import { Components } from "./types";
+import type { Components } from "./types";
 import { getBtnShortcuts } from "./button";
 import { getBadgeShortcuts } from "./badge";
 import type { Appearance, BaseUI, SharedFormConfig, SharedVariant } from "../types";
@@ -23,6 +23,7 @@ import { getProgressBarShortcuts } from "./progress";
 import { getSwitchShortcuts } from "./switch";
 
 export const getAllShortcut = ({ components, sharedElementVariant, baseUI, form, appearance }: { components?: Components, sharedElementVariant?: SharedVariant, baseUI?: BaseUI, form?: SharedFormConfig, appearance: Appearance }) => {
+
     const generalShortcuts = getGeneralShortcuts({ sharedConfig: sharedElementVariant, globalElement: baseUI, uiConfig: { appearance: appearance || "both" } })
 
     const button = getBtnShortcuts({ button: components?.button, uiConfig: { appearance }, formConfig: form })
@@ -33,7 +34,7 @@ export const getAllShortcut = ({ components, sharedElementVariant, baseUI, form,
     const aspectRatio = getAspectRatioShortcuts()
     const avatar = getAvatarShortcuts(components?.avatar, sharedElementVariant, { appearance, })
     const card = getCardShortcuts(components?.card, sharedElementVariant, baseUI, { appearance })
-    const checkbox = getFormCheckboxShortcuts({ input: components?.checbox, uiConfig: { appearance }, formConfig: form })
+    const checkbox = getFormCheckboxShortcuts({ checkbox: components?.checbox, uiConfig: { appearance }, formConfig: form })
     const divider = getDividerShortcuts({ divider: components?.divider, appearance })
     const dropdown = getDropdownShortcuts({ dropdown: components?.drodpown, sharedConfig: sharedElementVariant, baseUI: baseUI, uiConfig: { appearance } })
     const inputForm = getFormInputShortcuts({ input: components?.input, uiConfig: { appearance } })
@@ -47,7 +48,6 @@ export const getAllShortcut = ({ components, sharedElementVariant, baseUI, form,
     const shortcuts = [
         ...[flexillaShortcuts],
         ...generalShortcuts,
-
         ...accordion,
         ...alert,
         ...aspectRatio,
@@ -65,14 +65,6 @@ export const getAllShortcut = ({ components, sharedElementVariant, baseUI, form,
         ...radio,
         ...range,
         ...switchShortcuts,
-
-
-
-
-        // pill
-
-
     ] as Exclude<Preset['shortcuts'], undefined | StaticShortcutMap>
-
     return shortcuts
 }

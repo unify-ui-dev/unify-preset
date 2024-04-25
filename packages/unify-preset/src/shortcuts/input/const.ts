@@ -1,4 +1,4 @@
-import { RingBase } from "@/types"
+import type { RingBase } from "@/types"
 import type { Input } from "."
 
 
@@ -8,9 +8,8 @@ export const defRingBase: RingBase = {
 }
 
 export const defaultInput: Input = {
-    borderSize: 1,
+    borderSize: 2,
     focusOutlineSize:2,
-    useRing:false,
     solidGray: {
         light: {
             bgShade: "100",
@@ -50,14 +49,6 @@ export const defaultInput: Input = {
             bgShade: "800",
             textShade: "300"
         }
-    },
-    ring: {
-        light: "600",
-        dark: "500"
-    },
-    ringGray: {
-        light: "300",
-        dark: "700"
     },
     outline: {
         light: "200",

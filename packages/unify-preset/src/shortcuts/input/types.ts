@@ -1,4 +1,4 @@
-import type { ColorShade, RingBase, RingColorShades, SolidShade } from "@/types"
+import type { ColorShade, SolidShade } from "@/types"
 
 export type InputBaseSize = {
     padding?: {
@@ -17,7 +17,6 @@ export type InputOutline = {
 export type Input = {
     borderSize?: number,
     focusOutlineSize?:number,
-    useRing?:boolean,
     textColor?: {
         light?: ColorShade,
         dark?: ColorShade
@@ -40,8 +39,5 @@ export type Input = {
     higherGray?:SolidShade,
     outline?: { color?:string, light?: ColorShade, dark?: ColorShade }
     focusGray?: InputOutline,
-    focusColor?: InputOutline,
-    ring?:RingColorShades,
-    ringGray?:RingColorShades,
-    ringBase?:RingBase
+    focusColor?: InputOutline
 }
