@@ -10,13 +10,12 @@ export type VariantSizeBoth = {
 }
 
 export type SharedFormConfig = {
-    useRingForAll?: boolean
     ringBase?: RingBase
     ring: RingColorShades,
     grayRing: RingColorShades,
 }
 
-export type SharedConfig = {
+export type SharedUiConfig = {
     element?: SharedVariant,
     form?: SharedFormConfig,
 }
@@ -40,8 +39,8 @@ export type formOutline = {
 
 export type UnifyUIConfig = {
     appearance?: Appearance,
-    prefixState?: string,
-    sharedConfig?: SharedConfig,
+    prefixDataStateVariant?: string,
+    ui?: SharedUiConfig,
     components?: Components,
-    globalElement?: BaseUI
+    baseUi?: BaseUI
 }

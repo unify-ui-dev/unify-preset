@@ -1,8 +1,4 @@
-
-
 const getProgressBarShortcuts = () => {
-
-
     const progress = {
         'progress-bar': `appearance-none w-full h-[--progressbar-height] 
                 w-progress-bar:w-full
@@ -24,18 +20,13 @@ const getProgressBarShortcuts = () => {
                         w-indeterminate-p-value:h-full
         `,
 
-        'progress-bar-indeterminate-marquee': `indeterminate:after:animate-marquee`,
-        'progress-bar-indeterminate-carousel': `indeterminate:after:animate-carousel`,
-        'progress-bar-indeterminate-swing': `indeterminate:after:animate-swing`,
+        'progress-bar-indeterminate-marquee': "indeterminate:after:animate-marquee",
+        'progress-bar-indeterminate-carousel': "indeterminate:after:animate-carousel",
+        'progress-bar-indeterminate-swing': "indeterminate:after:animate-swing",
     }
 
-    const dynamicProgress: [RegExp, (params: RegExpExecArray) => string][] = [
-
-    ]
-
     return [
-        progress,
-        ...dynamicProgress
+        progress
     ]
 }
 

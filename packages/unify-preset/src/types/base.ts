@@ -53,7 +53,7 @@ export type RingColorShades = {
 
 export type SoftBase = {
     bgShade?: ColorShade,
-    bgOpacity?: number | string,
+    bgOpacity?: number,
     textShade?: ColorShade
 }
 

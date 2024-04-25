@@ -1,6 +1,6 @@
 import type { OutlineVariant, SizeVariants, Soft, SolidShade, Subtle } from "@/types"
 
-export type Kdb = {
+export type Kbd = {
     sizes?: SizeVariants,
     solid?:SolidShade,
     graySolid?:SolidShade,

@@ -1,4 +1,4 @@
-import { DividerShadeBase } from "./types";
+import type { DividerShadeBase } from "./types";
 
 export const divideGray:DividerShadeBase = {
     light:"300",

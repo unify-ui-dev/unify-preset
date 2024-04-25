@@ -1,4 +1,4 @@
-import type { RingBase, RingColorShades, VariantSizeBoth } from "@/types"
+import type { RingBase, RingColorShades } from "@/types"
 
 const ringBase:RingBase = {
     size: 2,
@@ -15,17 +15,8 @@ const ringGrayConfig: RingColorShades = {
     dark: "800"
 }
 
-const sizes: VariantSizeBoth = {
-    sm: 4,
-    md: 6,
-    lg: 8,
-    xl: 10
-}
-
-
 export const checkboxCongig = {
     ringConfig,
     ringGrayConfig,
-    sizes,
     ringBase
 }
