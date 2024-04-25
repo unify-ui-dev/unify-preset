@@ -8,20 +8,20 @@ import type { Checkbox } from "./checkbox"
 import type { Divider } from "./divider"
 import type { Dropdown } from "./dropdown/types"
 import type { Input } from "./input"
-import type { Kdb as Kdb } from "./kbd"
+import type { Kbd } from "./kbd"
 import type { Radio } from "./radio"
 
 export type Components = {
-    accordion?:Accordion,
+    accordion?: Accordion,
     alert?: Alert,
     avatar?: Avatar,
     badge?: Badge,
     button?: Button,
-    card?:Card,
-    checbox?:Checkbox
-    divider?:Divider,
-    drodpown?:Dropdown
-    input?:Input,
-    kbd?:Kdb,
-    radio?:Radio,
+    card?: Card,
+    checbox?: Checkbox
+    divider?: Divider,
+    drodpown?: Dropdown
+    input?: Input,
+    kbd?: Kbd,
+    radio?: Radio,
 }

@@ -1,7 +1,7 @@
 {
   "name": "@unifydev/unify-preset",
   "version": "0.0.0-beta.1",
-  "description": "Variants for unify-preset : The atomic UI Library",
+  "description": "UnoCSS Theming Toolkit, create modern and beautifull Web Ui",
   "publishConfig": {
     "access": "public"
   },
@@ -21,6 +21,8 @@
   },
   "files": [
     "dist",
+    "!dist/index.d.cts",
+    "!dist/index.d.mts",
     "README.md",
     "favicon-dark.png",
     "package.json",
@@ -38,6 +40,28 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2",
     "unbuild": "^2.0.0",
-    "unocss": "^0.58.6"
+    "unocss": "^0.59.0"
+  },
+  "peerDependencies": {
+    "unocss": ">= 0.58.0 < 1"
+  },
+  "keywords": [
+    "unify preset",
+    "atomic ui library",
+    "unocss ui",
+    "theming ui library",
+    "unocss components",
+    "modern ui",
+    "Preset UI",
+    "component library",
+    "unify ui",
+    "unifyui"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unify-ui-dev/unify-preset"
+  },
+  "bugs": {
+    "url": "https://github.com/unify-ui-dev/unify-preset/issues"
   }
 }

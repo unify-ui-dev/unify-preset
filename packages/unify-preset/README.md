@@ -83,14 +83,7 @@ export default defineConfig({
   presets: [
     presetUno(),
     presetAttributify(),
-    unifyUI({
-      appearance: "both", // choose the appearance, light, dark or both, by default it's fault
-      components: {
-        button: {
-          // customize the button as needed
-        },
-      },
-    }),
+    unifyUI({}),
     presetForms({
       strategy: "base", // Only add preflights and not new rules
     }),

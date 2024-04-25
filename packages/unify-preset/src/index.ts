@@ -1,4 +1,4 @@
-import { Preset } from 'unocss'
+import type { Preset } from 'unocss'
 
 import type { UnifyUIConfig } from './types'
 import { getAllShortcut } from './shortcuts/'
@@ -9,22 +9,18 @@ import { theme } from './ui-theme'
 
 
 function unifyUI(config?: UnifyUIConfig): Preset {
-
-
     const appearance = config?.appearance || "both"
-
-
 
     const shortcuts = getAllShortcut({
         components: config?.components,
-        sharedElementVariant: config?.sharedConfig?.element,
+        sharedElementVariant: config?.ui?.element,
         appearance,
-        baseUI: config?.globalElement,
-        form: config?.sharedConfig?.form
+        baseUI: config?.baseUi,
+        form: config?.ui?.form
     })
 
     const rules = getAllRules(appearance)
-    const variants = getAllVariants()
+    const variants = getAllVariants(config?.prefixDataStateVariant || "fx")
 
     return {
         name: 'unify-preset',

@@ -3,8 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "../../dist/oldHelperValues.ts", "../../dist/old.ts"]
 }

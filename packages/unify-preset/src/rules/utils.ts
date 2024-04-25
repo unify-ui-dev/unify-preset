@@ -25,3 +25,8 @@ export const getVariableBgValue = (body: string, theme: Theme) => {
 export const getBarShades = (val: BarShade) => {
     return barShades[val]
 }
+
+export const extractColorAndShades = (text: string) => {
+    const parts = text.split("-");
+    return { colorName: parts[0], shade: parts[1] };
+}

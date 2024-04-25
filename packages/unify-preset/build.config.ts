@@ -1,7 +1,5 @@
-import { resolve } from 'path'
+import { resolve } from 'node:path'
 import { defineBuildConfig } from 'unbuild'
-
-
 
 
 export default defineBuildConfig({
@@ -13,12 +11,13 @@ export default defineBuildConfig({
         alias: {
             entries: {
                 "@/types": resolve(__dirname, './src/types'),
-                "@/utils":resolve(__dirname, './src/utils/')
+                "@/utils": resolve(__dirname, './src/utils/')
             }
-        }
+        },
+        inlineDependencies: true
     },
 
     failOnWarn: false,
 
-    externals: ['unocss', "@unifyui/unify-variant", '@unocss/preset-mini/utils','@unocss/rule-utils','@unocss/core','magic-string','@jridgewell/sourcemap-codec'],
+    externals: ['unocss', "@unifydev/unify-variant", '@unocss/preset-mini/utils', '@unocss/rule-utils', '@unocss/core', 'magic-string', '@jridgewell/sourcemap-codec'],
 })

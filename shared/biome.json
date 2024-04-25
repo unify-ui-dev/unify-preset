@@ -15,11 +15,12 @@
 		"indentStyle": "tab",
 		"ignore": []
 	},
-	"files":{
-		"ignore":[
+	"files": {
+		"ignore": [
 			"node_modules/**",
 			"/node_modules/**",
-			"/dist/**/*.js"
+			"/dist/**",
+			"dist/**"
 		]
 	}
 }
