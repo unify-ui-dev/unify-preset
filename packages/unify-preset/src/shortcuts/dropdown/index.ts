@@ -3,22 +3,19 @@ import { genVariantOutline, genVariantSolid, genVariantWhiteBlack, genBluredBack
 import { helperDefaultValues } from "../helpers"
 import type { Dropdown } from "./types"
 import { dropdownDefault } from "./const"
+import { isValidColor } from "@/utils/colors-utils"
+import type { Shortcut } from "unocss"
 
 const getDropdownShortcuts = ({ dropdown, sharedConfig, baseUI, uiConfig }: { dropdown?: Dropdown, sharedConfig?: SharedVariant, baseUI?: BaseUI, uiConfig?: { appearance?: Appearance } }) => {
     const outline = dropdown?.outline || sharedConfig?.outline || helperDefaultValues.defaultOutlineGrayELement
-
     const appearance = uiConfig?.appearance || "both"
-
     const blurWhite = dropdown?.bgWhiteBlured || dropdownDefault.whiteBlured
     const grayBlured = dropdown?.bgGrayBlured || dropdownDefault.grayBlured
     const innerGrayBlured = dropdown?.bgInnerGrayBlured || dropdownDefault.grayInnerBlured
-
     const solid = dropdown?.bgColor || sharedConfig?.solid || dropdownDefault.bgGray || helperDefaultValues.defaultSolidGrayShades
-
     const gray = dropdown?.bgColor || sharedConfig?.solidGray || dropdownDefault.bgGray || helperDefaultValues.defaultSolidGrayShades
     const innerGray = dropdown?.bgInnerGray || dropdownDefault.innerBgGray
     const subInnerGray = dropdown?.bgSubInnerGray || dropdownDefault.subInnerBgGray
-
     const background = dropdown?.white || dropdownDefault.whiteBg || baseUI?.bodyBg || helperDefaultValues.bodyBg
     const backgroundInverse = baseUI?.bodyBgInverse || helperDefaultValues.bodyBgInverse
 
@@ -30,15 +27,23 @@ const getDropdownShortcuts = ({ dropdown, sharedConfig, baseUI, uiConfig }: { dr
         'dropdown-wrapper-gray-inner-blured': `${genBluredBackground({ backdrop: innerGrayBlured, appearance })}`
     }
 
-    const dynamicDropdowns: [RegExp, (params: RegExpExecArray) => string][] = [
-        [/^dropdown-wrapper-solid(-(\S+))?$/, ([, , color = "gray"]) => `${genVariantSolid({ color, appearance, colorShades: solid, grayShades: gray })}`],
-        [/^dropdown-wrapper-inner(-(\S+))?$/, ([, , color = "gray"]) => `${genVariantSolid({ color, appearance, colorShades: solid, grayShades: innerGray })}`],
-        [/^dropdown-wrapper-sub-inner(-(\S+))?$/, ([, , color = "gray"]) => `${genVariantSolid({ color, appearance, colorShades: solid, grayShades: subInnerGray })}`],
-        [/^dropdown-wrapper-outline(-(\S+))?$/, ([, , color = "gray"]) => `${genVariantOutline({ color, appearance, outlineColor: outline, outlineGray: outline })}`],
+    const dynamicDropdowns: Shortcut[] = [
+        [/^dropdown-wrapper-solid(-(\S+))?$/, ([, , color = "gray"], { theme }) => {
+            if (isValidColor(color, theme)) return `${genVariantSolid({ color, appearance, colorShades: solid, grayShades: gray })}`
+        }, { autocomplete: ['dropdown', 'dropdown-wrapper-solid-$colors'] }],
+        [/^dropdown-wrapper-inner(-(\S+))?$/, ([, , color = "gray"], { theme }) => {
+            if (isValidColor(color, theme)) return `${genVariantSolid({ color, appearance, colorShades: solid, grayShades: innerGray })}`
+        }, { autocomplete: ['dropdown-wrapper-inner', 'dropdown-wrapper-inner-$colors'] }],
+        [/^dropdown-wrapper-sub-inner(-(\S+))?$/, ([, , color = "gray"], { theme }) => {
+            if (isValidColor(color, theme)) return `${genVariantSolid({ color, appearance, colorShades: solid, grayShades: subInnerGray })}`
+        }, { autocomplete: ['dropdown-wrapper-sub-inner', 'dropdown-wrapper-sub-inner-$colors'] }],
+        [/^dropdown-wrapper-outline(-(\S+))?$/, ([, , color = "gray"], { theme }) => {
+            if (isValidColor(color, theme)) return `${genVariantOutline({ color, appearance, outlineColor: outline, outlineGray: outline })}`
+        }, { autocomplete: ['dropdown-wrapper-outline', 'dropdown-wrapper-outline-$colors'] }],
     ]
     return [
         dropdowns,
         ...dynamicDropdowns
     ]
 }
-export { getDropdownShortcuts, Dropdown as Card }
+export { getDropdownShortcuts, type Dropdown }

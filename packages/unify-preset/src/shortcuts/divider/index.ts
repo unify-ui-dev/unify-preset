@@ -1,7 +1,9 @@
-import { Appearance } from "@/types"
+import type { Appearance } from "@/types"
 import { divideGray, dividerShade } from "./const"
 import { getDivider } from "./helper"
 import type { Divider } from "./types"
+import type { Shortcut } from "unocss"
+import { isValidColor } from "@/utils/colors-utils"
 
 const getDividerShortcuts = ({ divider, appearance: appearance_ }: { divider?: Divider, appearance?: Appearance | undefined }) => {
     const appearance = appearance_ || "both"
@@ -14,7 +16,6 @@ const getDividerShortcuts = ({ divider, appearance: appearance_ }: { divider?: D
         'divider-hr-4': "border-4",
         'divider-hr-6': "border-6",
         'divider-hr-8': "border-8",
-        'divider-hr-gray': `${getDivider({ color: "gray", appearance, shades: grayShades, prefix: "border" })}`,
 
         'divider-custom': 'relative before-absolute before-content-empty before-inset-x-0 flex items-center',
         'divider-custom-1': "before-h-px ",
@@ -22,14 +23,17 @@ const getDividerShortcuts = ({ divider, appearance: appearance_ }: { divider?: D
         'divider-custom-3': "before-h-3px",
         'divider-custom-4': "before-h-4px",
         'divider-custom-6': "before-h-6px",
-        'divider-custom-8': "before-h-8px",
-        'divider-custom-gray': `${getDivider({ color: "gray", appearance, shades: grayShades, prefix: "before-bg" })}`,
-
+        'divider-custom-8': "before-h-8px"
     }
-    const dynamicDividers: [RegExp, (params: RegExpExecArray) => string][] = [
-        [/^divider-hr-border(-(\S+))?$/, ([, , color = 'primary']) => `${getDivider({ color, appearance, shades, prefix: "border" })}`],
-        [/^divider-custom-bg(-(\S+))?$/, ([, , color = 'primary']) => `${getDivider({ color, appearance, shades, prefix: "before-bg" })}`],
-
+    const dynamicDividers: Shortcut[] = [
+        [/^divider-hr-border(-(\S+))?$/, ([, , color = 'primary'], { theme }) => {
+            const shades_ = color === "gray" ? grayShades : shades
+            if (isValidColor(color, theme)) return `${getDivider({ color, appearance, shades: shades_, prefix: "border" })}`
+        }],
+        [/^divider-custom-bg(-(\S+))?$/, ([, , color = 'primary'], { theme }) => {
+            const shades_ = color === "gray" ? grayShades : shades
+            if (isValidColor(color, theme)) return `${getDivider({ color, appearance, shades: shades_, prefix: "before-bg" })}`
+        }],
     ]
     return [
         dividers,
@@ -37,4 +41,4 @@ const getDividerShortcuts = ({ divider, appearance: appearance_ }: { divider?: D
     ]
 }
 
-export { getDividerShortcuts, Divider }
+export { getDividerShortcuts, type Divider }

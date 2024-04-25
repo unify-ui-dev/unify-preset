@@ -34,53 +34,50 @@ const defaultSolidGrayInheritShades: SolidShade = {
 const defaultSubtle: Subtle = {
     borderWidth: 1,
     light: {
-        bgShade: "200",
-        bgOpacity: 60,
+        bgShade: "50",
         borderShade: "600",
         borderOpacity: 25,
-        textShade: "600"
+        textShade: "800"
     },
     dark: {
-        bgShade: "900",
-        bgOpacity: 30,
+        bgShade: "600",
+        bgOpacity: 15,
         borderShade: "500",
-        borderOpacity: 25,
-        textShade: "500"
+        borderOpacity: 40,
+        textShade: "300"
     }
 }
 const generalSoft: Soft = defaultSubtle
 const defaultSubtleInherit: Subtle = {
     borderWidth: 1,
     light: {
-        bgShade: "200",
-        bgOpacity: 50,
+        bgShade: "100",
         borderShade: "600",
-        borderOpacity: 25,
-        textShade: "600"
+        borderOpacity: 35,
+        textShade: "800"
     },
     dark: {
-        bgShade: "800",
-        bgOpacity: 10,
+        bgShade: "600",
+        bgOpacity: 20,
         borderShade: "600",
-        borderOpacity: 15,
-        textShade: "600"
+        borderOpacity: 40,
+        textShade: "300"
     }
 }
 
 const defaultSubtleGray: Subtle = {
     borderWidth: 1,
     light: {
-        bgShade: "200",
-        bgOpacity: 60,
+        bgShade: "50",
         borderShade: "400",
         borderOpacity: 30,
-        textShade: "700"
+        textShade: "800"
     },
     dark: {
-        bgShade: "900",
-        bgOpacity: 30,
-        borderShade: "600",
-        borderOpacity: 25,
+        bgShade: "600",
+        bgOpacity: 20,
+        borderShade: "500",
+        borderOpacity: 40,
         textShade: "300"
     }
 }
@@ -89,17 +86,16 @@ const defaultSubtleGrayActive: Subtle = {
     borderWidth: 1,
     light: {
         bgShade: "100",
-        bgOpacity: 90,
         borderShade: "400",
         borderOpacity: 60,
         textShade: "700"
     },
     dark: {
-        bgShade: "900",
-        bgOpacity: 70,
-        borderShade: "700",
-        borderOpacity: 70,
-        textShade: "300"
+        bgShade: "600",
+        bgOpacity: 50,
+        borderShade: "500",
+        borderOpacity: 60,
+        textShade: "200"
     }
 }
 
@@ -110,15 +106,14 @@ const generalSoftGrayActive: Soft = defaultSubtleGrayActive
 const defaultSubtleGrayInherit: Subtle = {
     borderWidth: 1,
     light: {
-        bgShade: "300",
-        bgOpacity: 40,
+        bgShade: "100",
+        bgOpacity:70,
         borderShade: "300",
         borderOpacity: 15,
         textShade: "700"
     },
     dark: {
-        bgShade: "300",
-        bgOpacity: 20,
+        bgShade: "800",
         borderShade: "500",
         borderOpacity: 20,
         textShade: "300"

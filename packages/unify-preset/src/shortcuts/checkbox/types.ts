@@ -1,4 +1,4 @@
-import { RingBase, RingColorShades} from "@/types"
+import type { RingBase, RingColorShades} from "@/types"
 
 export type Checkbox = {
     ring?:RingColorShades,

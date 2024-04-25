@@ -4,6 +4,8 @@ import { genVariantOutline, genVariantSoft, genVariantSolid, genVariantSubtle } 
 import { helperDefaultValues } from "../helpers"
 
 import type { Alert } from "./types"
+import type { Shortcut } from "unocss"
+import { isValidColor } from "@/utils/colors-utils"
 
 
 
@@ -24,14 +26,22 @@ const getAlertShortcuts = (alert?: Alert, sharedConfig?: SharedVariant, uiConfig
     const appearance = uiConfig?.appearance || "both"
 
     const alerts = {
-        'alert': `p-${getConfigValue(padding)}`,
+        alert: `p-${getConfigValue(padding)}`,
     }
 
-    const dynamicAlerts: [RegExp, (params: RegExpExecArray) => string][] = [
-        [/^alert-solid(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSolid({ color, appearance,  colorShades: solidShade, grayShades: graySolid })}`],
-        [/^alert-outline(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantOutline({ color, appearance,  outlineColor: outline, outlineGray: grayOutline })}`],
-        [/^alert-subtle(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSubtle({ color, appearance,  subtle, graySubtle })}`],
-        [/^alert-soft(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSoft({ color, appearance,  soft, graySoft })}`],
+    const dynamicAlerts: Shortcut[] = [
+        [/^alert-solid(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genVariantSolid({ color, appearance, colorShades: solidShade, grayShades: graySolid })}`
+        },{autocomplete:['alert-solid','alert-solid-(primary|secondary|accent|success|warning|info|danger|gray|neutral)']}],
+        [/^alert-outline(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genVariantOutline({ color, appearance, outlineColor: outline, outlineGray: grayOutline })}`
+        },{autocomplete:['alert-outline','alert-outline-(primary|secondary|accent|success|warning|info|danger|gray|neutral)']}],
+        [/^alert-subtle(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genVariantSubtle({ color, appearance, subtle, graySubtle })}`
+        },{autocomplete:['alert-subtle','alert-subtle-(primary|secondary|accent|success|warning|info|danger|gray|neutral)']}],
+        [/^alert-soft(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genVariantSoft({ color, appearance, soft, graySoft })}`
+        },{autocomplete:['alert-soft','alert-soft-(primary|secondary|accent|success|warning|info|danger|gray|neutral)']}],
     ]
 
     return [
@@ -40,4 +50,4 @@ const getAlertShortcuts = (alert?: Alert, sharedConfig?: SharedVariant, uiConfig
     ]
 }
 
-export { getAlertShortcuts, Alert }
+export { getAlertShortcuts, type Alert }

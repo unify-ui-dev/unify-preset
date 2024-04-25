@@ -1,12 +1,12 @@
 
 import type { Appearance, BaseUI, SharedVariant } from "@/types"
-import { genVariantSolid, genVariantOutline, genVariantSubtle, genVariantSoft, genGratientText, genTextColor, genVariantWhiteBlack, genOutline } from "./../helpers"
+import { genVariantSolid, genGratientText, genTextColor, genVariantWhiteBlack, genOutline } from "./../helpers"
 import { helperDefaultValues } from "./../helpers"
+import { isValidColor } from "@/utils/colors-utils"
+import type { Shortcut } from "unocss"
 
 const getGeneralShortcuts = ({ sharedConfig, uiConfig, globalElement }: { sharedConfig?: SharedVariant, globalElement?: BaseUI, uiConfig: { appearance: Appearance } }) => {
     const { appearance } = uiConfig
-    const soft = sharedConfig?.soft || helperDefaultValues.generalSoft
-    const subtle = sharedConfig?.subtle || helperDefaultValues.defaultSubtle
     const outline = sharedConfig?.outline || helperDefaultValues.defaultOutlineELement
     const colorBorder = globalElement?.borderColor || helperDefaultValues.bdrUI
 
@@ -18,12 +18,7 @@ const getGeneralShortcuts = ({ sharedConfig, uiConfig, globalElement }: { shared
     const grayLight = globalElement?.grayBg?.grayLight || helperDefaultValues.bgSoligUI.grayLight
     const grayHigh = globalElement?.grayBg?.grayHigh || helperDefaultValues.bgSoligUI.grayHigh
     const grayHigher = globalElement?.grayBg?.grayHigher || helperDefaultValues.bgSoligUI.grayHigher
-
-
-    const graySoft = sharedConfig?.softGray || helperDefaultValues.generalSoftGray
     const graySolid = sharedConfig?.solidGray || helperDefaultValues.defaultSolidGrayShades
-    const grayOutline = sharedConfig?.outlineGray || helperDefaultValues.defaultOutlineGrayELement
-    const graySubtle = sharedConfig?.subtleGray || helperDefaultValues.defaultSubtleGray
 
 
     const typoGray = globalElement?.bodyColor || helperDefaultValues.defaultTypoGray
@@ -67,12 +62,11 @@ const getGeneralShortcuts = ({ sharedConfig, uiConfig, globalElement }: { shared
         'text-gradient-to-rb': `${genGratientText(helperDefaultValues.defaultTextGradient, "to-rb", appearance)}`,
 
         //flex
-        'flex-justify-center': `flex justify-center`,
-        'flex-justify-start': 'flex justify-start',
-        'flex-justify-end': 'flex justify-end',
-        'flex-between': 'flex justify-between',
-        'flex-place-center': `flex justify-center items-center`,
-
+        'd-flex-justify-center': "flex justify-center",
+        'd-flex-justify-start': 'flex justify-start',
+        'd-flex-justify-end': 'flex justify-end',
+        'd-flex-between': 'flex justify-between',
+        'd-flex-place-center': "flex justify-center items-center",
     }
 
     const colorBdr = { borderSize: outline.borderSize, light: colorBorder?.default?.light, dark: colorBorder?.default?.dark }
@@ -84,55 +78,112 @@ const getGeneralShortcuts = ({ sharedConfig, uiConfig, globalElement }: { shared
     const higherColorBdr = { borderSize: outline.borderSize, light: colorBorder?.higher?.light, dark: colorBorder?.higher?.light }
     const higherGrayBdr = { borderSize: globBorderSize, light: borderGray.higher?.light, dark: borderGray.higher?.dark }
 
-    const dynamicUtils: [RegExp, (params: RegExpExecArray) => string][] = [
-        [/^bg-solid(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSolid({ color, appearance, colorShades: solidShades, grayShades: graySolid })}`],
-        [/^bg-light-solid(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSolid({ color, appearance, colorShades: solidShades, grayShades: { ...grayLight } })}`],
-        [/^bg-high-solid(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSolid({ color, appearance, colorShades: solidShades, grayShades: { ...grayHigh } })}`],
-        [/^bg-higher-solid(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSolid({ color, appearance, colorShades: solidShades, grayShades: { ...grayHigher } })}`],
+    const dynamicUtils: Shortcut[] = [
+        [/^bg-solid(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genVariantSolid({ color, appearance, colorShades: solidShades, grayShades: graySolid })}`
+        }],
+        [/^bg-light-solid(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genVariantSolid({ color, appearance, colorShades: solidShades, grayShades: { ...grayLight } })}`
+        }],
+        [/^bg-high-solid(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genVariantSolid({ color, appearance, colorShades: solidShades, grayShades: { ...grayHigh } })}`
+        }],
+        [/^bg-higher-solid(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genVariantSolid({ color, appearance, colorShades: solidShades, grayShades: { ...grayHigher } })}`
+        }],
 
-        [/^bg-outline(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantOutline({ color, appearance, outlineColor: outline, outlineGray: grayOutline })}`],
-        [/^bg-subtle(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSubtle({ color, appearance, subtle, graySubtle })}`],
-        [/^bg-soft(-(\S+))?$/, ([, , color = 'gray']) => `${genVariantSoft({ color, appearance, soft, graySoft })}`],
-        [/^bdr(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: colorBdr, border: grayBdr })}`],
-        [/^bdr_x(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: colorBdr, border: grayBdr, prefix: "border-x" })}`],
-        [/^bdr_y(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: colorBdr, border: grayBdr, prefix: "border-y" })}`],
-        [/^bdr_t(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: colorBdr, border: grayBdr, prefix: "border-t" })}`],
-        [/^bdr_b(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: colorBdr, border: grayBdr, prefix: "border-b" })}`],
-        [/^bdr_r(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: colorBdr, border: grayBdr, prefix: "border-r" })}`],
-        [/^bdr_l(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: colorBdr, border: grayBdr, prefix: "border-l" })}`],
+        [/^bdr(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: colorBdr, border: grayBdr })}`
+        }, { autocomplete: ['bdr', 'bdr-$colors'] }],
+        [/^bdr_x(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: colorBdr, border: grayBdr, prefix: "border-x" })}`
+        }, { autocomplete: ['bdr_x', 'bdr_x-$colors'] }],
+        [/^bdr_y(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: colorBdr, border: grayBdr, prefix: "border-y" })}`
+        }, { autocomplete: ['bdr_y', 'bdr_y-$colors'] }],
+        [/^bdr_t(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: colorBdr, border: grayBdr, prefix: "border-t" })}`
+        }, { autocomplete: ['bdr_t', 'bdr_t-$colors'] }],
+        [/^bdr_b(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: colorBdr, border: grayBdr, prefix: "border-b" })}`
+        }, { autocomplete: ['bdr_b', 'bdr_b-$colors'] }],
+        [/^bdr_r(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: colorBdr, border: grayBdr, prefix: "border-r" })}`
+        }, { autocomplete: ['bdr_r', 'bdr_r-$colors'] }],
+        [/^bdr_l(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: colorBdr, border: grayBdr, prefix: "border-l" })}`
+        }, { autocomplete: ['bdr_l', 'bdr_l-$colors'] }],
 
-        [/^bdr_light(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: lightColorBdr, border: lightGrayBdr })}`],
-        [/^bdr_light_x(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: lightColorBdr, border: lightGrayBdr, prefix: "border-x" })}`],
-        [/^bdr_light_y(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: lightColorBdr, border: lightGrayBdr, prefix: "border-y" })}`],
-        [/^bdr_light_t(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: lightColorBdr, border: lightGrayBdr, prefix: "border-t" })}`],
-        [/^bdr_light_b(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: lightColorBdr, border: lightGrayBdr, prefix: "border-b" })}`],
-        [/^bdr_light_r(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: lightColorBdr, border: lightGrayBdr, prefix: "border-r" })}`],
-        [/^bdr_light_l(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: lightColorBdr, border: lightGrayBdr, prefix: "border-l" })}`],
+        [/^bdr_light(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: lightColorBdr, border: lightGrayBdr })}`
+        }, { autocomplete: ['bdr_light', 'bdr_light-$colors'] }],
+        [/^bdr_light_x(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: lightColorBdr, border: lightGrayBdr, prefix: "border-x" })}`
+        }, { autocomplete: ['bdr_light_x', 'bdr_light_x-$colors'] }],
+        [/^bdr_light_y(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: lightColorBdr, border: lightGrayBdr, prefix: "border-y" })}`
+        }, { autocomplete: ['bdr_light_y', 'bdr_light_y-$colors'] }],
+        [/^bdr_light_t(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: lightColorBdr, border: lightGrayBdr, prefix: "border-t" })}`
+        }, { autocomplete: ['bdr_light_t', 'bdr_light_t-$colors'] }],
+        [/^bdr_light_b(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: lightColorBdr, border: lightGrayBdr, prefix: "border-b" })}`
+        }, { autocomplete: ['bdr_light_b', 'bdr_light_b-$colors'] }],
+        [/^bdr_light_r(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: lightColorBdr, border: lightGrayBdr, prefix: "border-r" })}`
+        }, { autocomplete: ['bdr_light_r', 'bdr_light_r-$colors'] }],
+        [/^bdr_light_l(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: lightColorBdr, border: lightGrayBdr, prefix: "border-l" })}`
+        }, { autocomplete: ['bdr_light_l', 'bdr_light_l-$colors'] }],
 
-        [/^bdr_high(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: highColorBdr, border: highGrayBdr })}`],
-        [/^bdr_high_x(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: highColorBdr, border: highGrayBdr, prefix: "border-x" })}`],
-        [/^bdr_high_y(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: highColorBdr, border: highGrayBdr, prefix: "border-y" })}`],
-        [/^bdr_high_t(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: highColorBdr, border: highGrayBdr, prefix: "border-t" })}`],
-        [/^bdr_high_b(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: highColorBdr, border: highGrayBdr, prefix: "border-b" })}`],
-        [/^bdr_high_r(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: highColorBdr, border: highGrayBdr, prefix: "border-r" })}`],
-        [/^bdr_high_l(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: highColorBdr, border: highGrayBdr, prefix: "border-l" })}`],
+        [/^bdr_high(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: highColorBdr, border: highGrayBdr })}`
+        }, { autocomplete: ['bdr_high', 'bdr_high-$colors'] }],
+        [/^bdr_high_x(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: highColorBdr, border: highGrayBdr, prefix: "border-x" })}`
+        }, { autocomplete: ['bdr_high_x', 'bdr_high_x-$colors'] }],
+        [/^bdr_high_y(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: highColorBdr, border: highGrayBdr, prefix: "border-y" })}`
+        }, { autocomplete: ['bdr_high_y', 'bdr_high_y-$colors'] }],
+        [/^bdr_high_t(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: highColorBdr, border: highGrayBdr, prefix: "border-t" })}`
+        }, { autocomplete: ['bdr_high_t', 'bdr_high_t-$colors'] }],
+        [/^bdr_high_b(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: highColorBdr, border: highGrayBdr, prefix: "border-b" })}`
+        }, { autocomplete: ['bdr_high', 'bdr_high-$colors'] }],
+        [/^bdr_high_r(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: highColorBdr, border: highGrayBdr, prefix: "border-r" })}`
+        }, { autocomplete: ['bdr_high_b', 'bdr_high_b-$colors'] }],
+        [/^bdr_high_l(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: highColorBdr, border: highGrayBdr, prefix: "border-l" })}`
+        }, { autocomplete: ['bdr_high_l', 'bdr_high_l-$colors'] }],
 
-        [/^bdr_higher(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: higherColorBdr, border: higherGrayBdr })}`],
-        [/^bdr_higher_x(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: higherColorBdr, border: higherGrayBdr, prefix: "border-x" })}`],
-        [/^bdr_higher_y(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: higherColorBdr, border: higherGrayBdr, prefix: "border-y" })}`],
-        [/^bdr_higher_t(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: higherColorBdr, border: higherGrayBdr, prefix: "border-t" })}`],
-        [/^bdr_higher_b(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: higherColorBdr, border: higherGrayBdr, prefix: "border-b" })}`],
-        [/^bdr_higher_r(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: higherColorBdr, border: higherGrayBdr, prefix: "border-r" })}`],
-        [/^bdr_higher_l(-(\S+))?$/, ([, , color = 'gray']) => `${genOutline({ color, appearance, colorBorder: higherColorBdr, border: higherGrayBdr, prefix: "border-l" })}`],
-
+        [/^bdr_higher(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: higherColorBdr, border: higherGrayBdr })}`
+        }, { autocomplete: ['bdr_higher', 'bdr_higher-$colors'] }],
+        [/^bdr_higher_x(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: higherColorBdr, border: higherGrayBdr, prefix: "border-x" })}`
+        }, { autocomplete: ['bdr_higher_x', 'bdr_higher_x-$colors'] }],
+        [/^bdr_higher_y(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: higherColorBdr, border: higherGrayBdr, prefix: "border-y" })}`
+        }, { autocomplete: ['bdr_higher_y', 'bdr_higher_y-$colors'] }],
+        [/^bdr_higher_t(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: higherColorBdr, border: higherGrayBdr, prefix: "border-t" })}`
+        }, { autocomplete: ['bdr_higher_t', 'bdr_higher_t-$colors'] }],
+        [/^bdr_higher_b(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: higherColorBdr, border: higherGrayBdr, prefix: "border-b" })}`
+        }, { autocomplete: ['bdr_higher_b', 'bdr_higher_b-$colors'] }],
+        [/^bdr_higher_r(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: higherColorBdr, border: higherGrayBdr, prefix: "border-r" })}`
+        }, { autocomplete: ['bdr_higher_r', 'bdr_higher_r-$colors'] }],
+        [/^bdr_higher_l(-(\S+))?$/, ([, , color = 'gray'], { theme }) => {
+            if (isValidColor(color, theme)) return `${genOutline({ color, appearance, colorBorder: higherColorBdr, border: higherGrayBdr, prefix: "border-l" })}`
+        }, { autocomplete: ['bdr_higher_l', 'bdr_higher_l-$colors'] }],
     ]
 
     return [
         utils,
         ...dynamicUtils
     ]
-
 }
-
-
 export { getGeneralShortcuts }

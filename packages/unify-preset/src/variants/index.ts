@@ -1,15 +1,17 @@
 
-import { presetVariants, componentVariants } from "@unifydev/unify-variant";
+import { browserVariants, dataStateVariants} from "@unifydev/unify-variant";
 import type { Variant } from "unocss";
 import type { Theme } from "@unocss/preset-uno"
 
 export const getAllVariants = (prefixState?: string) => {
 
     const variants = [
-        presetVariants({
-            prefix: prefixState
+        dataStateVariants({
+            prefix: prefixState,
+            variants: "visible|hidden|active|inactive|open|close|resize|minimize|maximaze",
+            selector: "data-state"
         }),
-        componentVariants({
+        browserVariants({
             variants: {
                 "meter-inner-el": "::-webkit-meter-inner-element",
                 "meter-optimum-val": "::-webkit-meter-optimum-value",
@@ -17,7 +19,7 @@ export const getAllVariants = (prefixState?: string) => {
                 "moz-meter-bar": "::-moz-meter-bar"
             }
         }),
-        componentVariants({
+        browserVariants({
             variants: {
                 'range-slider-thumb': '::-webkit-slider-thumb',
                 'moz-range-thumb': "::-moz-range-thumb",
@@ -25,7 +27,7 @@ export const getAllVariants = (prefixState?: string) => {
                 'moz-range-track': '::-moz-range-track'
             }
         }),
-        componentVariants({
+        browserVariants({
             variants: {
                 'w-progress-bar': '::-webkit-progress-bar',
                 'w-progress-value': "::-webkit-progress-value",
