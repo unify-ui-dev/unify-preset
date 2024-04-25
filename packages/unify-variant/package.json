@@ -1,7 +1,7 @@
 {
   "name": "@unifydev/unify-variant",
   "version": "0.0.0",
-  "description": "UnifyUI Variants",
+  "description": "UnoCSS Variants",
   "publishConfig": {
     "access": "public"
   },
@@ -21,8 +21,10 @@
   },
   "files": [
     "dist",
-    "favicon-dark.png",
+    "!dist/index.d.cts",
+    "!dist/index.d.mts",
     "README.md",
+    "favicon-dark.png",
     "package.json",
     "!.gitignore",
     "!tsconfig.json",
@@ -38,6 +40,21 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2",
     "unbuild": "^2.0.0",
-    "unocss": "^0.58.6"
+    "unocss": "^0.59.0"
+  },
+  "keywords": [
+    "variants",
+    "unocss preset",
+    "unocss variant",
+    "custom variants",
+    "unifyui",
+    "unify-preset"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unify-ui-dev/unify-preset"
+  },
+  "bugs": {
+    "url": "https://github.com/unify-ui-dev/unify-preset/issues"
   }
 }
