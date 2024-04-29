@@ -9,7 +9,6 @@ import type { Divider } from "./divider"
 import type { Dropdown } from "./dropdown/types"
 import type { Input } from "./input"
 import type { Kbd } from "./kbd"
-import type { Radio } from "./radio"
 
 export type Components = {
     accordion?: Accordion,
@@ -23,5 +22,4 @@ export type Components = {
     drodpown?: Dropdown
     input?: Input,
     kbd?: Kbd,
-    radio?: Radio,
 }

@@ -14,7 +14,6 @@ export default defineBuildConfig({
                 "@/utils": resolve(__dirname, './src/utils/')
             }
         },
-        inlineDependencies: true
     },
 
     failOnWarn: false,

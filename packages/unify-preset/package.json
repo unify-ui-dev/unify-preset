@@ -1,6 +1,6 @@
 {
   "name": "@unifydev/unify-preset",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "UnoCSS Theming Toolkit, create modern and beautifull Web Ui",
   "publishConfig": {
     "access": "public"
@@ -21,8 +21,6 @@
   },
   "files": [
     "dist",
-    "!dist/index.d.cts",
-    "!dist/index.d.mts",
     "README.md",
     "favicon-dark.png",
     "package.json",
@@ -32,10 +30,12 @@
   ],
   "author": "Johnkat MJ",
   "license": "MIT",
+  "dependencies": {
+    "@unifydev/unify-variant": "^0.0.1"
+  },
   "devDependencies": {
     "@biomejs/biome": "1.6.2",
     "@types/node": "^20.11.27",
-    "@unifydev/unify-variant": "latest",
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2",
