@@ -1,8 +1,9 @@
 import { getConfigValue } from "@/utils"
 import { switchInfos } from "./const"
-import { getInderteminSwitch, getRingOffsetBg } from "./helpers"
+import { getInderteminSwitch } from "./helpers"
 import type { Appearance } from "@/types"
 import type { switchSize } from "./types"
+import { getRingOffsetBg } from "../shortcut_helper"
 
 const getSwitchSize = (value: switchSize) => {
     return switchInfos[value]
