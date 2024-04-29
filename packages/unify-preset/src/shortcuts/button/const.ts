@@ -165,7 +165,7 @@ const btnIconSizes: BtnIconSizes = {
 
 const ringBase:RingBase = {
     size: 2,
-    offset: 4,
+    offset: 2,
 }
 const ringConfig: RingColorShades = {
     light: "600",
