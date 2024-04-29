@@ -18,7 +18,8 @@ const getRangeSlideShortcuts = () => {
                      slider-runnable-track:bg-[--range-track-bg]  
                      slider-runnable-track:h-[--range-track-height]
                      moz-range-thumb:moz-range-slide-thumb 
-                     moz-range-track:moz-range-slide-track`,
+                     moz-range-track:moz-range-slide-track outline-0 outline-transparent focus-visible-outline focus-visible:outline-2 focus-visible:outline-current outline-transparent 
+                     focus-visible:outline-offset-2`,
     }
     return [
         ranges

@@ -1,8 +1,8 @@
 import type { RingBase, RingColorShades} from "@/types"
 
 export type Checkbox = {
-    ring?:RingColorShades,
-    ringBase?:RingBase,
+    focusVisibleOutline?:RingColorShades,
+    outlineBase?:RingBase,
     size?:{
         sm?:number | string,
         md?:number | string,

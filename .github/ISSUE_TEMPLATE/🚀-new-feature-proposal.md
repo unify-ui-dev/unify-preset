@@ -1,6 +1,6 @@
 ---
-name: "\U0001F680 New feature proposal"
-about: Propose a new feature to be addedd
+name: "\U0001F680 New feature(Feature, Components, Variants and improvements) proposal"
+about: Suggest a new feature to be addedd
 title: ''
 labels: ''
 assignees: ''

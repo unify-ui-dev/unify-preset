@@ -34,7 +34,7 @@ export const getAllShortcut = ({ components, sharedElementVariant, baseUI, form,
     const aspectRatio = getAspectRatioShortcuts()
     const avatar = getAvatarShortcuts(components?.avatar, sharedElementVariant, { appearance, })
     const card = getCardShortcuts(components?.card, sharedElementVariant, baseUI, { appearance })
-    const checkbox = getFormCheckboxShortcuts({ checkbox: components?.checbox, uiConfig: { appearance }, formConfig: form })
+    const checkbox = getFormCheckboxShortcuts({  uiConfig: { appearance } })
     const divider = getDividerShortcuts({ divider: components?.divider, appearance })
     const dropdown = getDropdownShortcuts({ dropdown: components?.drodpown, sharedConfig: sharedElementVariant, baseUI: baseUI, uiConfig: { appearance } })
     const inputForm = getFormInputShortcuts({ input: components?.input, uiConfig: { appearance } })
@@ -42,7 +42,7 @@ export const getAllShortcut = ({ components, sharedElementVariant, baseUI, form,
 
     const meter = getMeterShortcuts()
     const progress = getProgressBarShortcuts()
-    const radio = getFormRadioShortcuts({ input: components?.radio, uiConfig: { appearance }, formConfig: form })
+    const radio = getFormRadioShortcuts({ uiConfig: { appearance } })
     const range = getRangeSlideShortcuts()
     const switchShortcuts = getSwitchShortcuts({ appearance })
     const shortcuts = [
