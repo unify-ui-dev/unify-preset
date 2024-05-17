@@ -1,0 +1,71 @@
+---
+import {
+  repoContentLocation,
+  repositoryUrl,
+  startDiscussion,
+} from "@/const/index";
+
+interface Props {
+  fileName: string;
+  contribLink: string;
+}
+
+const { fileName: fileName, contribLink } = Astro.props;
+
+const contribLinks = [
+  {
+    href: `${contribLink}`,
+    text: "Contributing",
+    icon: "i-ph-chats-circle",
+  },
+  {
+    href: `${repoContentLocation}/${fileName}`,
+    text: "Edit this page",
+    icon: "i-ph-pencil-simple-line",
+  },
+  {
+    href: `${repositoryUrl}`,
+    text: "Star On github",
+    icon: "i-ph-star",
+  },
+];
+---
+
+<div class="mb2 pt-3 bdr_t b-dashed">
+  <h2 class="text-sm font-semibold hidden lg-flex text-title">Community</h2>
+  <nav aria-label="Contribute Links" mt-3>
+    <ol un-flex flex-col space-y-2 text-sub-body text-sm>
+      {
+        contribLinks.map((link) => (
+          <li class="flex">
+            <a
+              href={`${link.href}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Link to ${link.text}`}
+              class="flex items-center gap-x2 justify-between hover-text-title ease-linear duration-200"
+            >
+              <span un-flex items-center gap-x2>
+                <span aria-hidden="true" class={`flex ${link.icon}`} />
+                {link.text}
+              </span>
+              <span
+                aria-hidden="true"
+                class="flex i-ph-arrow-up-right text-10px"
+              />
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+    <a
+      href={startDiscussion}
+      aria-label="Start a discussion"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mt3 wmax flex items-center justify-center btn btn-sm rd-lg btn-white"
+    >
+      Start a discussion
+    </a>
+  </nav>
+</div>
