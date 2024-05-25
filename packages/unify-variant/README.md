@@ -5,7 +5,7 @@
 </p>
 
 
-## UnifyUI-Preset 
+## UnifyUI-Variant
 
 This is a preset package that provides variants for Components Libraries based on data-state attribute value, and help to create custom variant selector.
 
