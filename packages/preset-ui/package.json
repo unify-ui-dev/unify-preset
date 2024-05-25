@@ -17,7 +17,7 @@
   },
   "scripts": {
     "format": "biome format --write ./src",
-    "build": "npm run format && rimraf dist && unbuild"
+    "build": "rimraf dist && unbuild"
   },
   "files": [
     "dist",

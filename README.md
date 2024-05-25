@@ -54,7 +54,7 @@ import { colors } from "@unocss/preset-mini/colors";
 
 import { presetForms } from "@julr/unocss-preset-forms";
 // import the preset
-import {presetUi} from "@unifydev/preset-ui"
+import {presetUI} from "@unifydev/preset-ui"
 
 
 export default defineConfig({
@@ -72,7 +72,7 @@ export default defineConfig({
   presets: [
     presetUno(),
     presetAttributify(),
-    presetUi({}),
+    presetUI({}),
     presetForms({
       strategy: "base", // Only add preflights and not new rules
     }),
