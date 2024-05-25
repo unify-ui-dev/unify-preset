@@ -1,0 +1,56 @@
+.radial{
+    background: radial-gradient(125% 125% at 50% 10%,#fff 40%,#63e 100%);
+    /* absolute inset-0 h-full w-full bg-white  */
+}
+
+.radial-dark{
+    background: radial-gradient(125% 125% at 50% 10%,#000 40%,#63e 100%);
+    /* absolute inset-0 h-full w-full items-center px-5 py-24  */
+}
+
+.grid-bg{
+    background-image: linear-gradient(to right,#f0f0f0 1px,transparent 1px),linear-gradient(to bottom,#f0f0f0 1px,transparent 1px);
+    background-size: 6rem 4rem;
+    /* absolute inset-0 h-full w-full bg-white */
+}
+
+
+.radial-grid-mask{
+    background-image: linear-gradient(to right,#4f4f4f2e 1px,transparent 1px),linear-gradient(to bottom,#4f4f4f2e 1px,transparent 1px);
+    background-size: 14px 24px;
+    mask-image: radial-gradient(ellipse 80% 50% at 50% 0%,#000 70%,transparent 110%);
+}
+
+/* <div class="absolute bottom-0 left-0 right-0 top-0 
+bg-[linear-gradient(to_right,#171717_1px,transparent_1px),linear-gradient(to_bottom,#171717_1px,transparent_1px)] 
+bg-[size:14px_24px]"></div><div class="absolute left-0 right-0 top-[-10%] size-[1000px] 
+rounded-full bg-[radial-gradient(circle_400px_at_50%_300px,#fbfbfb36,#0a0a0a)]"></div> */
+
+.radial-mask-elipse{
+    background-image: radial-gradient(#e5e7eb 1px,transparent 1px);
+    background-size: 16px 16px;
+    mask-image: radial-gradient(ellipse 50% 50% at 50% 50%,#000 70%,transparent 100%);
+    /* absolute h-full w-full */
+}
+
+.gradient-bg-2-ui-1{
+    background-image: radial-gradient(circle farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0));
+    /* absolute bottom-0 left-[-20%] right-0 top-[-10%] size-[500px] rounded-full */
+
+}
+
+.gradient-bg-2-ui-2{
+    background-image: radial-gradient(circle farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0));
+    /* absolute bottom-0 right-[-20%] top-[-10%] h-[500px] w-[500px] rounded-full */
+}
+
+
+.bg-radial-gradient{
+    background-image: radial-gradient(100% 50% at 50% 0%,rgba(0,163,255,0.13) 0,rgba(0,163,255,0) 50%,rgba(0,163,255,0) 100%);
+    /* absolute top-0 h-screen w-screen bg-gray-950 */
+}
+
+.bg-radial-elipse{
+    background-image: radial-gradient(ellipse 80% 80% at 50% -20%,rgba(120,119,198,0.3),rgba(255,255,255,0));
+    /* absolute top-0 h-screen w-screen bg-neutral-950 */
+}

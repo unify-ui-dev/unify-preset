@@ -1,0 +1,1 @@
+export { bgGradientRules } from "./gradient-bg"

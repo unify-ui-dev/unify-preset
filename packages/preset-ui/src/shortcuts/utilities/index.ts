@@ -206,6 +206,7 @@ const getGeneralShortcuts = ({
 					return `${genVariantSolid({ color, appearance, colorShades })}`;
 				}
 			},
+			{ autocomplete: ["bg-solid", "bg-solid-$colors"] },
 		],
 		[
 			/^bg-light-solid(-(\S+))?$/,
@@ -215,6 +216,7 @@ const getGeneralShortcuts = ({
 					return `${genVariantSolid({ color, appearance, colorShades })}`;
 				}
 			},
+			{ autocomplete: ["bg-light-solid", "bg-light-solid-$colors"] },
 		],
 		[
 			/^bg-high-solid(-(\S+))?$/,
@@ -224,6 +226,7 @@ const getGeneralShortcuts = ({
 					return `${genVariantSolid({ color, appearance, colorShades })}`;
 				}
 			},
+			{ autocomplete: ["bg-high-solid", "bg-high-solid-$colors"] },
 		],
 		[
 			/^bg-higher-solid(-(\S+))?$/,
@@ -234,6 +237,7 @@ const getGeneralShortcuts = ({
 					return `${genVariantSolid({ color, appearance, colorShades })}`;
 				}
 			},
+			{ autocomplete: ["bg-higher-solid", "bg-higher-solid-$colors"] },
 		],
 
 		[
