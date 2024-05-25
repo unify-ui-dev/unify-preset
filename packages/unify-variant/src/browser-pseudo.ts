@@ -16,7 +16,7 @@ export const browserVariants = (options: BrowserVariantOptions): Variant => {
     }
 
     return {
-        name: 'unify-components',
+        name: 'browser-pseudo',
         match: (matcher: string) => {
 
             const regex = new RegExp(`^${prefix_}(${keys})[:-]`);
@@ -30,7 +30,9 @@ export const browserVariants = (options: BrowserVariantOptions): Variant => {
                 matcher: matcher.slice(match[0].length),
                 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
                 selector: (s: any) => `${s}${aliasPseudo}`,
+                
             }
         },
+        autocomplete:[`${prefix_}${variants}`]
     };
 };

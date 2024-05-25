@@ -16,7 +16,7 @@ export const dataStateVariants = (options: DataStateVariantOptions): Variant => 
     } = options;
 
     return {
-        name: 'unify-ui-variant',
+        name: 'state-variant',
         match: (matcher: string) => {
             const regex = new RegExp(`^(peer-|group-|where-)?${prefix}(-not)?-(${variants})[:-]`);
             const match = matcher.match(regex);
@@ -38,9 +38,9 @@ export const dataStateVariants = (options: DataStateVariantOptions): Variant => 
                         ? (
                             beforePrefixSelector === "where-" ? `:where([${selector}]:not(${attrGen})) ${s}` :
                                 (beforePrefixSelector === "peer-" ?
-                                    `.peer:not(${attrGen}) ~ ${s}` : 
-                                    beforePrefixSelector === "group-" ? 
-                                    `.group:not(${attrGen}) ${s}` : `${s}`)
+                                    `.peer:not(${attrGen}) ~ ${s}` :
+                                    beforePrefixSelector === "group-" ?
+                                        `.group:not(${attrGen}) ${s}` : `${s}`)
                         )
                         : (
                             beforePrefixSelector === "where-" ? `:where(${attrGen}) ${s}` :
@@ -49,5 +49,6 @@ export const dataStateVariants = (options: DataStateVariantOptions): Variant => 
                 },
             };
         },
+        autocomplete: [`${prefix}-(${variants})`]
     };
 };
