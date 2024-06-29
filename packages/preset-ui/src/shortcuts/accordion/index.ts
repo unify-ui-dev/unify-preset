@@ -1,10 +1,10 @@
-import type { Appearance, SharedVariant } from "@/types";
+import type { Appearance,  SharedVariant } from "@/types";
 
 import {
 	genOutline,
 	genVariantOutline,
 	genVariantSoft,
-	genVariantSolid,
+	genUiBackground,
 	genVariantSubtle,
 } from "../helpers";
 import { helperDefaultValues } from "../helpers";
@@ -33,7 +33,7 @@ const getAccordionShortcuts = (
 		helperDefaultValues.defaultSubtle;
 	const outline =
 		accordion?.outline ||
-		sharedConfig?.border ||
+		sharedConfig?.outline ||
 		helperDefaultValues.defaultOutlineELement;
 
 	const solidGray =
@@ -77,9 +77,7 @@ const getAccordionShortcuts = (
 	const coloredDivider =
 		accordion?.colorDivider || defaultAcValues.defaultDividerColor;
 	const itemWithBorder =
-		accordion?.itemWithBorderColor || defaultAcValues.itemWithBorderGray;
-	const itemWithBorderColor =
-		accordion?.itemWithBorderColor || defaultAcValues.itemWithBorder;
+		accordion?.itemWithBorder || defaultAcValues.itemWithBorderGray;
 
 	const dynamicAccordions: Shortcut[] = [
 		[
@@ -92,7 +90,7 @@ const getAccordionShortcuts = (
 			([, , color = "gray"], { theme }) => {
 				if (isValidColor(color, theme)) {
 					const colorShades = color === "gray" ? solidGray : solidShade;
-					return `${genVariantSolid({ color, appearance, colorShades })}`;
+					return `${genUiBackground({ color, appearance, colorShades })}`;
 				}
 			},
 			{ autocomplete: ["accordion-solid", "accordion-solid-$colors"] },
@@ -126,8 +124,9 @@ const getAccordionShortcuts = (
 		[
 			/^accordion-soft(-(\S+))?$/,
 			([, , color = "gray"], { theme }) => {
+				const soft_ = color ==="gray" ? graySoft : soft
 				if (isValidColor(color, theme))
-					return `${genVariantSoft({ color, appearance, soft, graySoft })}`;
+					return `${genVariantSoft({ color, appearance, soft:soft_ })}`;
 			},
 			{ autocomplete: ["accordion-soft", "accordion-soft-$colors"] },
 		],
@@ -152,8 +151,7 @@ const getAccordionShortcuts = (
 						appearance,
 						color,
 						prefix: itemWithBorder.prefix,
-						border: { ...itemWithBorder.border },
-						colorBorder: { ...itemWithBorderColor.border },
+						border: {shade:itemWithBorder.border?.shade ,dark:itemWithBorder.border?.dark}
 					})})}`;
 			},
 			{
@@ -166,12 +164,12 @@ const getAccordionShortcuts = (
 		[
 			/^accordion-item-soft-active(-(\S+))?$/,
 			([, , color = "gray"], { theme }) => {
+				const soft_ = color==="gray" ? graySoftActive : softActive
 				if (isValidColor(color, theme))
 					return `${genVariantSoft({
 						color,
 						appearance,
-						soft: softActive,
-						graySoft: graySoftActive,
+						soft: soft_
 					})}`;
 			},
 			{

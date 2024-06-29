@@ -1,7 +1,7 @@
 import { ColorShade } from "@/types";
 
 export type DividerShadeBase = {
-	light?: ColorShade;
+	shade: ColorShade;
 	dark?: ColorShade;
 };
 export type Divider = {

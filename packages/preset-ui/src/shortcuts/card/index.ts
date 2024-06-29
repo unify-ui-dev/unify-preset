@@ -2,7 +2,7 @@ import type { Appearance, BaseUI, SharedVariant } from "@/types";
 import {
 	genVariantOutline,
 	genVariantSoft,
-	genVariantSolid,
+	genUiBackground,
 	genVariantSubtle,
 	genVariantWhiteBlack,
 } from "../helpers";
@@ -28,7 +28,7 @@ const getCardShortcuts = (
 		helperDefaultValues.defaultSubtleGray;
 	const outline =
 		card?.outline ||
-		sharedConfig?.border ||
+		sharedConfig?.outline ||
 		helperDefaultValues.defaultOutlineGrayELement;
 
 	const appearance = uiConfig?.appearance || "both";
@@ -47,15 +47,28 @@ const getCardShortcuts = (
 	const grayInner = card?.innerSolid || cardDefault.cardInnerGray;
 	const subInnerGray = card?.subInner || cardDefault.cardSubInnerGray;
 
-	const background = globalElement?.bodyBg || helperDefaultValues.bodyBg;
-	const backgroundInverse =
-		globalElement?.bodyBgInverse || helperDefaultValues.bodyBgInverse;
+	const body = globalElement?.body || helperDefaultValues.uiBodyColors
 
 	const cards = {
-		"card-body": `${genVariantWhiteBlack({ appearance, colors: background })}`,
+		"card-body": `${genVariantWhiteBlack({
+			appearance, colors: {
+				white: `${body.default?.color_shade}`,
+				black: `${body.default?.dark}`
+			}
+		})}`,
 		"card-body-inverse": `${genVariantWhiteBlack({
 			appearance,
-			colors: backgroundInverse,
+			colors: {
+				white: `${body.defaultReverse?.color_shade}`,
+				black: `${body.defaultReverse?.dark}`
+			}
+		})}`,
+		"card-light-high": `${genVariantWhiteBlack({
+			appearance,
+			colors: {
+				white: `${body["light-high"]?.color_shade}`,
+				black: `${body["light-high"]?.dark}`
+			}
 		})}`,
 	};
 
@@ -65,7 +78,7 @@ const getCardShortcuts = (
 			([, , color = "gray"], { theme }) => {
 				if (isValidColor(color, theme)) {
 					const colorShades = color === "gray" ? gray : solid;
-					return `${genVariantSolid({ color, appearance, colorShades })}`;
+					return `${genUiBackground({ color, appearance, colorShades })}`;
 				}
 			},
 			{ autocomplete: ["card-solid", "card-solid-$colors"] },
@@ -75,7 +88,7 @@ const getCardShortcuts = (
 			([, , color = "gray"], { theme }) => {
 				if (isValidColor(color, theme)) {
 					const colorShades = color === "gray" ? grayInner : solid;
-					return `${genVariantSolid({ color, appearance, colorShades })}`;
+					return `${genUiBackground({ color, appearance, colorShades })}`;
 				}
 			},
 			{ autocomplete: ["card-inner", "card-inner-$colors"] },
@@ -85,7 +98,7 @@ const getCardShortcuts = (
 			([, , color = "gray"], { theme }) => {
 				if (isValidColor(color, theme)) {
 					const colorShades = color === "gray" ? subInnerGray : solid;
-					return `${genVariantSolid({ color, appearance, colorShades })}`;
+					return `${genUiBackground({ color, appearance, colorShades })}`;
 				}
 			},
 			{ autocomplete: ["card-sub-inner", "card-sub-inner-$colors"] },
@@ -123,8 +136,7 @@ const getCardShortcuts = (
 					return `${genVariantSoft({
 						color,
 						appearance,
-						soft,
-						graySoft: soft,
+						soft
 					})}`;
 			},
 			{ autocomplete: ["card-soft", "card-soft-$colors"] },

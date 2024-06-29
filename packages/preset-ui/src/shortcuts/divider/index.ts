@@ -13,7 +13,6 @@ const getDividerShortcuts = ({
 	const shades = divider?.shades || dividerShade;
 	const grayShades = divider?.grayShades || divideGray;
 	const dividers = {
-		"divider-hr": "",
 		"divider-hr-2": "border-2",
 		"divider-hr-3": "border-3",
 		"divider-hr-4": "border-4",
@@ -32,7 +31,7 @@ const getDividerShortcuts = ({
 	const dynamicDividers: Shortcut[] = [
 		[
 			/^divider-hr-border(-(\S+))?$/,
-			([, , color = "primary"], { theme }) => {
+			([, , color = "gray"], { theme }) => {
 				const shades_ = color === "gray" ? grayShades : shades;
 				if (isValidColor(color, theme))
 					return `${getDivider({
@@ -45,7 +44,7 @@ const getDividerShortcuts = ({
 		],
 		[
 			/^divider-custom-bg(-(\S+))?$/,
-			([, , color = "primary"], { theme }) => {
+			([, , color = "gray"], { theme }) => {
 				const shades_ = color === "gray" ? grayShades : shades;
 				if (isValidColor(color, theme))
 					return `${getDivider({

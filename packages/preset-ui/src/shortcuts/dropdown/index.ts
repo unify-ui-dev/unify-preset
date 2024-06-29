@@ -1,9 +1,8 @@
 import type { Appearance, BaseUI, SharedVariant } from "@/types";
 import {
 	genVariantOutline,
-	genVariantSolid,
+	genUiBackground,
 	genVariantWhiteBlack,
-	genBluredBackground,
 } from "../helpers";
 import { helperDefaultValues } from "../helpers";
 import type { Dropdown } from "./types";
@@ -24,13 +23,10 @@ const getDropdownShortcuts = ({
 }) => {
 	const outline =
 		dropdown?.outline ||
-		sharedConfig?.border ||
+		sharedConfig?.outline ||
 		helperDefaultValues.defaultOutlineGrayELement;
 	const appearance = uiConfig?.appearance || "both";
-	const blurWhite = dropdown?.bgWhiteBlured || dropdownDefault.whiteBlured;
-	const grayBlured = dropdown?.bgGrayBlured || dropdownDefault.grayBlured;
-	const innerGrayBlured =
-		dropdown?.bgInnerGrayBlured || dropdownDefault.grayInnerBlured;
+	
 	const solid =
 		dropdown?.bgColor ||
 		sharedConfig?.solid ||
@@ -47,32 +43,11 @@ const getDropdownShortcuts = ({
 	const background =
 		dropdown?.white ||
 		dropdownDefault.whiteBg ||
-		baseUI?.bodyBg ||
-		helperDefaultValues.bodyBg;
-	const backgroundInverse =
-		baseUI?.bodyBgInverse || helperDefaultValues.bodyBgInverse;
-
+		baseUI?.body.default ||
+		helperDefaultValues.uiBodyColors.default
 	const dropdowns = {
-		"dropdown-wrapper-body": `${genVariantWhiteBlack({
-			appearance,
-			colors: background,
-		})}`,
-		"dropdown-wrapper-body-inverse": `${genVariantWhiteBlack({
-			appearance,
-			colors: backgroundInverse,
-		})}`,
-		"dropdown-wrapper-white-blured": `${genBluredBackground({
-			backdrop: blurWhite,
-			appearance,
-		})}`,
-		"dropdown-wrapper-gray-blured": `${genBluredBackground({
-			backdrop: grayBlured,
-			appearance,
-		})}`,
-		"dropdown-wrapper-gray-inner-blured": `${genBluredBackground({
-			backdrop: innerGrayBlured,
-			appearance,
-		})}`,
+		"dropdown-wrapper-body": `${genVariantWhiteBlack({ appearance, colors: { white: `${background.default?.color_shade}`, black: `${background.default?.dark}` } })}`,
+		
 	};
 
 	const dynamicDropdowns: Shortcut[] = [
@@ -81,7 +56,7 @@ const getDropdownShortcuts = ({
 			([, , color = "gray"], { theme }) => {
 				if (isValidColor(color, theme)) {
 					const colorShades = color === "gray" ? gray : solid;
-					return `${genVariantSolid({ color, appearance, colorShades })}`;
+					return `${genUiBackground({ color, appearance, colorShades })}`;
 				}
 			},
 			{ autocomplete: ["dropdown", "dropdown-wrapper-solid-$colors"] },
@@ -91,7 +66,7 @@ const getDropdownShortcuts = ({
 			([, , color = "gray"], { theme }) => {
 				if (isValidColor(color, theme)) {
 					const colorShades = color === "gray" ? innerGray : solid;
-					return `${genVariantSolid({ color, appearance, colorShades })}`;
+					return `${genUiBackground({ color, appearance, colorShades })}`;
 				}
 			},
 			{
@@ -106,7 +81,7 @@ const getDropdownShortcuts = ({
 			([, , color = "gray"], { theme }) => {
 				if (isValidColor(color, theme)) {
 					const colorShades = color === "gray" ? subInnerGray : solid;
-					return `${genVariantSolid({ color, appearance, colorShades })}`;
+					return `${genUiBackground({ color, appearance, colorShades })}`;
 				}
 			},
 			{
