@@ -6,18 +6,36 @@ import type {
 	RingBase,
 } from "@/types";
 
+
+export type SemanticColorNames = 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'danger' | 'gray'
+
+type BaseVariant<T extends object> = {
+	base?: {
+		primary?: T;
+		secondary?: T;
+		accent?: T;
+		success?: T;
+		warning?: T;
+		info?: T;
+		danger?: T;
+		gray?: T;
+	};
+	custom?: Record<string, T>;
+	global?: T;
+};
+
+
 export type GhostSoftBase = {
 	bgShade?: ColorShade;
 	bgOpacity?: number;
-	hoverBgOpacity?: number | string;
-	hoverBgShade?: ColorShade;
-	pressBgShade?: ColorShade;
-	pressOpacity?: number | string;
-	textShade?: ColorShade;
+	hoverBgOpacity: number | string;
+	hoverBgShade: ColorShade;
+	pressBgShade: ColorShade;
+	pressOpacity: number | string;
+	textShade: ColorShade;
 };
 
-export type BtnGhostOrSoft = {
-	light?: GhostSoftBase;
+export type BtnGhostOrSoft = GhostSoftBase & {
 	dark?: GhostSoftBase;
 };
 
@@ -52,22 +70,17 @@ type BaseSoligGradientBtn = {
 	hoverShadeTo: ColorShade;
 };
 
-export type SolidGradientBtn = {
+export type GradientBtn = BaseSoligGradientBtn & {
 	useLightForBoth?: boolean;
-	removeDefaultTextColor?: boolean;
-	light?: BaseSoligGradientBtn;
 	dark?: BaseSoligGradientBtn;
 };
 
 export type SolidBtnShadeBase = {
-	bgShade?: ColorShade;
-	hoverBgShade?: ColorShade;
-	pressBgShade?: ColorShade;
+	bgShade: ColorShade;
+	hoverBgShade: ColorShade;
+	pressBgShade: ColorShade;
 };
-export type SolidBtnShade = {
-	useLightForBoth?: boolean;
-	removeDefaultTextColor?: boolean;
-	light?: SolidBtnShadeBase;
+export type SolidBtnShade = SolidBtnShadeBase & {
 	dark?: SolidBtnShadeBase;
 };
 type BaseBtnWhite = {
@@ -76,34 +89,29 @@ type BaseBtnWhite = {
 	pressBg: string;
 	textColor: string;
 };
-export type BtnWhite = {
-	light: BaseBtnWhite;
-	dark: BaseBtnWhite;
+export type BtnWhite = BaseBtnWhite & {
+	dark?: BaseBtnWhite;
 };
+
+
+export type BtnSolidVariants = BaseVariant<SolidBtnShade>;
+export type BtnSoftVariants = BaseVariant<BtnGhostOrSoft>;
+export type BtnGhostVariants = BaseVariant<BtnGhostOrSoft>;
+export type BtnGradientVariants = BaseVariant<GradientBtn>;
+export type BtnOutlineVariants = BaseVariant<formOutline>
 
 export type Button = {
 	useRing?: boolean;
 	ringBase?: RingBase;
-	size?: BtnSizes;
-	btnIcon?: BtnIconSizes;
-
+	sizes?: BtnSizes;
+	iconSizes?: BtnIconSizes;
 	btnWhite?: BtnWhite;
-
-	solidShade?: SolidBtnShade;
-	solidShadeGray?: SolidBtnShade;
-
-	gradient?: SolidGradientBtn;
-	grayGradient?: SolidGradientBtn;
-
-	ghost?: BtnGhostOrSoft;
-	grayGhost?: BtnGhostOrSoft;
-
-	outline?: formOutline;
-	outlineGray?: formOutline;
-
-	soft?: BtnGhostOrSoft;
-	graySoft?: BtnGhostOrSoft;
-
 	ring?: RingColorShades;
 	ringGray?: RingColorShades;
+
+	solidVariants?: BtnSolidVariants,
+	outlineVariants?: BtnOutlineVariants,
+	softVariants?: BtnSoftVariants,
+	ghostVariants?: BtnGhostVariants,
+	gradientVariants?: BtnGradientVariants
 };

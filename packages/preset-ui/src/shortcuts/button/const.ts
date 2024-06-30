@@ -5,17 +5,21 @@ import type {
 	SolidBtnShade,
 	BtnIconSizes,
 	BtnWhite,
-	SolidGradientBtn,
+	GradientBtn,
+	BtnSolidVariants,
+	BtnSoftVariants,
+	BtnGhostVariants,
+	BtnGradientVariants,
+	BtnOutlineVariants,
+	Button,
 } from "./types";
 
 const ghostConfig: BtnGhostOrSoft = {
-	light: {
-		hoverBgShade: "100",
-		hoverBgOpacity: 50,
-		pressBgShade: "100",
-		pressOpacity: 70,
-		textShade: "900",
-	},
+	hoverBgShade: "100",
+	hoverBgOpacity: 50,
+	pressBgShade: "100",
+	pressOpacity: 70,
+	textShade: "900",
 	dark: {
 		hoverBgShade: "600",
 		hoverBgOpacity: 30,
@@ -25,13 +29,11 @@ const ghostConfig: BtnGhostOrSoft = {
 	},
 };
 const ghostGrayCongif: BtnGhostOrSoft = {
-	light: {
-		hoverBgShade: "200",
-		hoverBgOpacity: 40,
-		pressBgShade: "200",
-		pressOpacity: 75,
-		textShade: "800",
-	},
+	hoverBgShade: "200",
+	hoverBgOpacity: 40,
+	pressBgShade: "200",
+	pressOpacity: 75,
+	textShade: "800",
 	dark: {
 		hoverBgShade: "800",
 		hoverBgOpacity: 40,
@@ -42,14 +44,12 @@ const ghostGrayCongif: BtnGhostOrSoft = {
 };
 
 const softConfig: BtnGhostOrSoft = {
-	light: {
-		bgShade: "50",
-		hoverBgShade: "400",
-		hoverBgOpacity: 60,
-		pressOpacity: 40,
-		pressBgShade: "400",
-		textShade: "800",
-	},
+	bgShade: "50",
+	hoverBgShade: "400",
+	hoverBgOpacity: 60,
+	pressOpacity: 40,
+	pressBgShade: "400",
+	textShade: "800",
 	dark: {
 		bgShade: "600",
 		bgOpacity: 15,
@@ -61,14 +61,12 @@ const softConfig: BtnGhostOrSoft = {
 	},
 };
 const softGrayConfig: BtnGhostOrSoft = {
-	light: {
-		bgShade: "50",
-		hoverBgShade: "200",
-		hoverBgOpacity: 75,
-		pressBgShade: "200",
-		pressOpacity: 80,
-		textShade: "800",
-	},
+	bgShade: "50",
+	hoverBgShade: "200",
+	hoverBgOpacity: 75,
+	pressBgShade: "200",
+	pressOpacity: 80,
+	textShade: "800",
 	dark: {
 		bgShade: "600",
 		bgOpacity: 20,
@@ -79,19 +77,15 @@ const softGrayConfig: BtnGhostOrSoft = {
 		textShade: "100",
 	},
 };
-const generalBtnOuline: formOutline = {
-	borderSize: 1,
-};
+
 
 const btnOutline: formOutline = {
 	borderSize: 1,
-	light: {
-		borderShade: "300",
-		hoverBorderShade: "400",
-		activeBorderShade: "300",
-		textShade: "800",
-		hoverTextShade: "900",
-	},
+	borderShade: "300",
+	hoverBorderShade: "400",
+	activeBorderShade: "300",
+	textShade: "800",
+	hoverTextShade: "900",
 	dark: {
 		borderShade: "400",
 		hoverBorderShade: "300",
@@ -103,13 +97,11 @@ const btnOutline: formOutline = {
 
 const btnGrayOutline: formOutline = {
 	borderSize: 1,
-	light: {
-		borderShade: "500",
-		hoverBorderShade: "600",
-		activeBorderShade: "700",
-		textShade: "800",
-		hoverTextShade: "900",
-	},
+	borderShade: "500",
+	hoverBorderShade: "600",
+	activeBorderShade: "700",
+	textShade: "800",
+	hoverTextShade: "900",
 	dark: {
 		borderShade: "500",
 		hoverBorderShade: "600",
@@ -184,29 +176,17 @@ const ringGrayConfig: RingColorShades = {
 };
 
 const solidShade: SolidBtnShade = {
-	useLightForBoth: true,
-	light: {
-		bgShade: "600",
-		hoverBgShade: "700",
-		pressBgShade: "800",
-	},
-};
-const graySolidShade: SolidBtnShade = {
-	useLightForBoth: true,
-	light: {
-		bgShade: "600",
-		hoverBgShade: "700",
-		pressBgShade: "600",
-	},
+	bgShade: "600",
+	hoverBgShade: "700",
+	pressBgShade: "800",
 };
 
+
 const defaultBtnWhite: BtnWhite = {
-	light: {
-		bg: "white",
-		textColor: "gray-900",
-		hoverBg: "gray-50",
-		pressBg: "gray-100",
-	},
+	bg: "white",
+	textColor: "gray-900",
+	hoverBg: "gray-50",
+	pressBg: "gray-100",
 	dark: {
 		bg: "gray-950",
 		textColor: "white",
@@ -215,14 +195,12 @@ const defaultBtnWhite: BtnWhite = {
 	},
 };
 
-const solidGradient: SolidGradientBtn = {
-	light: {
-		borderShade: "600",
-		bgShadeFrom: "600",
-		bgShadeTo: "500",
-		hoverShadeTo: "600",
-		hoverShadeFrom: "700",
-	},
+const btnGradient: GradientBtn = {
+	borderShade: "600",
+	bgShadeFrom: "600",
+	bgShadeTo: "500",
+	hoverShadeTo: "600",
+	hoverShadeFrom: "700",
 	dark: {
 		borderShade: "600",
 		bgShadeFrom: "600",
@@ -231,39 +209,77 @@ const solidGradient: SolidGradientBtn = {
 		hoverShadeFrom: "700",
 	},
 };
-const solidGradientGray: SolidGradientBtn = {
-	light: {
-		borderShade: "600",
-		bgShadeFrom: "600",
-		bgShadeTo: "500",
-		hoverShadeTo: "600",
-		hoverShadeFrom: "700",
-	},
-	dark: {
-		borderShade: "600",
-		bgShadeFrom: "600",
-		bgShadeTo: "500",
-		hoverShadeTo: "600",
-		hoverShadeFrom: "700",
-	},
-};
 
-export const btnCongig = {
-	ghostConfig,
-	ghostGrayCongif,
-	softConfig,
-	softGrayConfig,
-	generalBtnOuline,
-	btnOutline,
-	btnGrayOutline,
-	btnSizes,
-	btnIconSizes,
-	ringConfig,
-	ringGrayConfig,
-	solidShade,
-	graySolidShade,
-	defaultBtnWhite,
-	solidGradient,
-	solidGradientGray,
+
+const solidVariants: BtnSolidVariants = {
+	
+	base: {
+		primary: solidShade,
+		secondary: solidShade,
+		accent: solidShade,
+		info: solidShade,
+		warning: solidShade,
+		danger: solidShade,
+		success: solidShade,
+		gray: solidShade,
+	},
+	global: solidShade
+}
+const softVariants: BtnSoftVariants = {
+	base: {
+		primary: softConfig,
+		secondary: softConfig,
+		accent: softConfig,
+		info: softConfig,
+		warning: softConfig,
+		danger: softConfig,
+		success: softConfig,
+		gray: softGrayConfig,
+	},
+	global: softConfig
+}
+const ghostVariants: BtnGhostVariants = {
+	
+	base: {
+		primary: ghostConfig,
+		secondary: ghostConfig,
+		accent: ghostConfig,
+		info: ghostConfig,
+		warning: ghostConfig,
+		danger: ghostConfig,
+		success: ghostConfig,
+		gray: ghostGrayCongif,
+	},
+	global: ghostConfig
+}
+const gradientVariants: BtnGradientVariants = {
+	global: btnGradient
+}
+const outlineVariants: BtnOutlineVariants = {
+	
+	base: {
+		primary: btnOutline,
+		secondary: btnOutline,
+		accent: btnOutline,
+		info: btnOutline,
+		warning: btnOutline,
+		danger: btnOutline,
+		success: btnOutline,
+		gray: btnGrayOutline,
+	},
+	global: btnOutline
+}
+
+export const btnCongig: Button = {
+	solidVariants,
+	softVariants,
+	ghostVariants,
+	gradientVariants,
+	outlineVariants,
+	sizes: btnSizes,
+	iconSizes: btnIconSizes,
+	ring: ringConfig,
+	ringGray: ringGrayConfig,
+	btnWhite: defaultBtnWhite,
 	ringBase,
 };
