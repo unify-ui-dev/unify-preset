@@ -1,8 +1,6 @@
 import type {
 	Appearance,
 	BaseTypoColor,
-	BgGradientTo,
-	GradientText,
 } from "@/types";
 import { getShortcutsIfNotSame } from "@/utils";
 
@@ -31,29 +29,4 @@ export const genTextColor = (
 				}
     `;
 	return `${lightVar} ${darkVar}`;
-};
-
-export const genGratientText = (
-	gradient: GradientText,
-	bgGradientTo: BgGradientTo,
-	appearance: Appearance,
-) => {
-	const { light, dark } = gradient;
-	const lightVar = `
-        ${
-					appearance === "light" || appearance === "both"
-						? `from-${light.colorFrom} to-${light.colorTo}`
-						: ""
-				}
-    `;
-	const darkVar = `
-        ${
-					appearance === "dark"
-						? `from-${dark.colorFrom} to-${dark.colorTo}`
-						: appearance === "both"
-							? `dark-from-${dark.colorFrom} dark-to-${dark.colorTo}`
-							: ""
-				}
-    `;
-	return `text-transparent bg-clip-text bg-gradient-${bgGradientTo} ${lightVar} ${darkVar}`;
 };

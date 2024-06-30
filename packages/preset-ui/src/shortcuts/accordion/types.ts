@@ -9,7 +9,7 @@ import type {
 } from "@/types";
 
 export type BaseDividerC = {
-	light?: ColorShade;
+	shade: ColorShade;
 	dark?: ColorShade;
 };
 

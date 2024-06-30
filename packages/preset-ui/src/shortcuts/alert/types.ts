@@ -1,9 +1,9 @@
-import type { Soft, Subtle, OutlineVariant, SolidShade } from "@/types";
+import type { Soft, Subtle, OutlineVariant, BaseColor } from "@/types";
 
 export type Alert = {
 	padding?: number | string;
-	solid?: SolidShade;
-	solidGray?: SolidShade;
+	solid?: BaseColor;
+	solidGray?: BaseColor;
 	soft?: Soft;
 	subtle?: Subtle;
 	outline?: OutlineVariant;

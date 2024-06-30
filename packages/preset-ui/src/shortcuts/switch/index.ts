@@ -28,7 +28,7 @@ const getSwitchShortcuts = ({ appearance }: { appearance: Appearance }) => {
                 focus-visible:ring-offset-2 relative disabled:opacity-50 disabled:cursor-not-allowed 
                 ${getInderteminSwitch(appearance)} rounded-full cursor-pointer before:absolute 
                 before:bg-[--switch-thumb] before:rounded-full before-content-empty
-                before:top-1/2 before:-translate-y-1/2 checked:bg-none checked:!bg-current checked:!border-current 
+                before:top-1/2 before:-translate-y-1/2 checked:bg-none checked:!bg-current 
                 checked:before:bg-[--switch-checked-thumb] before:duration-300 before:ease-linear`,
 		"switch-sm": `${getInfoSizes("sm")}`,
 		"switch-md": `${getInfoSizes("md")}`,

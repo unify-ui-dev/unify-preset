@@ -18,29 +18,6 @@ export type TextSizes = "xs" | "sm" | "base" | "lg" | "xl" | "2xl";
 type BorderPosition = "b" | "t" | "l" | "r" | "x" | "y";
 export type BorderPrefix = "border" | `border-${BorderPosition}`;
 
-type GradientDirection =
-	| "tr"
-	| "t"
-	| "tl"
-	| "b"
-	| "bl"
-	| "br"
-	| "l"
-	| "lt"
-	| "lb"
-	| "r"
-	| "rt"
-	| "rb";
-export type BgGradientTo = `to-${GradientDirection}`;
-
-type BaseGradientText = {
-	colorFrom: string;
-	colorTo: string;
-};
-export type GradientText = {
-	light: BaseGradientText;
-	dark: BaseGradientText;
-};
 
 export type BaseTypoColor = {
 	light: string;
@@ -53,17 +30,16 @@ export type TextTypoColor = {
 	subText: BaseTypoColor;
 };
 
-export type BorderVariant = {
-	borderSize?: number | string;
-	light?: ColorShade;
-	dark?: ColorShade;
-};
-export type SizeVariants = {
-	xs?: { py?: number | string; px?: number | string; textSize?: TextSizes };
-	sm?: { py?: number | string; px?: number | string; textSize?: TextSizes };
-	md?: { py?: number | string; px?: number | string; textSize?: TextSizes };
-	lg?: { py?: number | string; px?: number | string; textSize?: TextSizes };
-	xl?: { py?: number | string; px?: number | string; textSize?: TextSizes };
+export type BorderVariant = BaseColor
+
+export type ElSizeBase = { py: number | string; px: number | string; textSize: TextSizes }
+export type ElSizeVariants = {
+	'2xs'?: ElSizeBase;
+	xs?: ElSizeBase;
+	sm?: ElSizeBase;
+	md?: ElSizeBase;
+	lg?: ElSizeBase;
+	xl?: ElSizeBase;
 };
 
 export type RingBase = {
@@ -78,112 +54,106 @@ export type RingColorShades = {
 };
 
 export type SoftBase = {
-	bgShade?: ColorShade;
+	bgShade: ColorShade;
 	bgOpacity?: number;
-	textShade?: ColorShade;
+	textShade: ColorShade;
 };
 
-export type Soft = {
-	useLightForBoth?: boolean;
-	light?: SoftBase;
+export type Soft = SoftBase & {
 	dark?: SoftBase;
 };
 
-export type SolidShadeBase = {
-	bgShade?: ColorShade;
+export type BaseUiShade = {
+	shade: ColorShade;
 };
 
-export type SolidShade = {
-	useLightForBoth?: boolean;
-	light?: SolidShadeBase;
-	dark?: SolidShadeBase;
-};
+
+
+type UiSolidBase = {
+	bgShade: ColorShade,
+	textShade: ColorShade,
+}
+export type UiSolid = UiSolidBase & {
+	dark?: UiSolidBase
+}
 
 export type SubtleBase = {
-	borderShade?: ColorShade;
-	borderOpacity?: number | string;
+	borderShade: ColorShade;
+	borderOpacity: number | string;
 } & SoftBase;
-export type Subtle = {
-	useLightForBoth?: boolean;
+
+
+export type Subtle = SubtleBase & {
 	borderWidth?: number | string;
-	light?: SubtleBase;
 	dark?: SubtleBase;
 };
 
 export type OutlineBase = {
-	borderShade?: ColorShade;
-	textShade?: ColorShade;
+	shade: ColorShade;
+	textShade: ColorShade;
 };
 
-export type OutlineVariant = {
-	useLightForBoth?: boolean;
+export type OutlineVariant = OutlineBase & {
 	borderSize?: number | string;
-	light?: OutlineBase;
 	dark?: OutlineBase;
 };
 
-type BaseBlurColor = {
-	color: string;
-	opacity: number;
-};
-export type BgBackdropBlur = {
-	useLightForBoth?: boolean;
-	blur: "lg" | "xl" | "2xl" | "3xl";
-	light: BaseBlurColor;
-	dark: BaseBlurColor;
-};
 
 export type SharedVariant = {
-	solid?: SolidShade;
-	solidGray?: SolidShade;
+	solid?: BaseColor;
+	solidGray?: BaseColor;
 	ghost?: Soft;
 	soft?: Soft;
 	softActive?: Soft;
 	softGray?: Soft;
 	graySoftActive?: Soft;
 	outlineGray?: OutlineVariant;
+	outline?: OutlineVariant,
 	subtle?: Subtle;
 	subtleActive?: Subtle;
 	subtleGray?: Subtle;
 	graySubtleActive?: Subtle;
-
-	border?: OutlineVariant;
-	borderLight?: OutlineVariant;
-	borderHigh?: OutlineVariant;
-	borderHigher?: OutlineVariant;
-	borderLightGray?: OutlineVariant;
-	borderHighGray?: OutlineVariant;
-	borderHigherGray?: OutlineVariant;
 };
 
-type BaseColor = {
-	useLightForBoth?: boolean;
-	light?: ColorShade;
-	dark?: ColorShade;
+type UBaseColor = {
+	shade: ColorShade,
+	textShade?: ColorShade
+}
+export type BaseColor = UBaseColor & {
+	dark?: UBaseColor
 };
 
-export type BorderUI = {
-	borderSize?: number | string;
-	high?: BaseColor;
-	higher?: BaseColor;
-	light?: BaseColor;
-	default?: BaseColor;
-	bgBackdropBlur?: BgBackdropBlur;
-};
+type UiColorBaseVariants<T extends object> = {
+	light?: T;
+	lighter?: T,
+	lightest?: T,
+	nm?: T;
+	high?: T;
+	higher?: T;
+	highest?: T;
+	light_nm?: T,
+	nm_light?: T
+}
 
-export type BgUI = {
-	grayHigh?: SolidShade;
-	grayHigher?: SolidShade;
-	grayLight?: SolidShade;
-	gray?: SolidShade;
-};
+export type BorderUI = UiColorBaseVariants<BaseColor>;
+
+export type BgUI = UiColorBaseVariants<BaseColor>;
+
+export type BaseBodyUi = {
+	color_shade: string,
+	dark?: string
+}
+
+export type BgBodyUi = {
+	default?: BaseBodyUi,
+	defaultReverse?: BaseBodyUi,
+	'light-high'?: BaseBodyUi
+}
 export type BaseUI = {
 	bodyColor?: TextTypoColor;
 	bodyColorReverse?: TextTypoColor;
 	bodyNeutral?: TextTypoColor;
-	bodyBg?: { light: string; dark: string };
-	bodyBgInverse?: { light: string; dark: string };
-	borderGray?: BorderUI;
-	borderColor?: BorderUI;
-	grayBg?: BgUI;
+	body: BgBodyUi,
+	border?: BorderUI;
+	bg?: BgUI;
 };

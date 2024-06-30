@@ -1,50 +1,41 @@
-import type {
-	OutlineVariant,
-	GradientText,
-	Soft,
-	SolidShade,
-	Subtle,
-	BgUI,
-	BorderUI,
-	RingBase,
-	RingColorShades,
-} from "@/types";
+import type { OutlineVariant, Soft, Subtle, BgUI, BorderUI, RingBase, RingColorShades, BgBodyUi, BaseColor, ElSizeVariants, } from "@/types";
 
-const defaultSolidShades: SolidShade = {
-	light: {
-		bgShade: "600",
-	},
+
+export const uiSizeVariants: ElSizeVariants = {
+	xs: { py: 0.5, px: 1, textSize: "xs" },
+	sm: { py: 0.5, px: 1.5, textSize: "xs" },
+	md: { py: 1, px: 2, textSize: "sm" },
+	lg: { py: 1, px: 2.5, textSize: "sm" },
+	xl: { py: 1.25, px: 3, textSize: "base" },
+}
+
+const defaultSolidShades: BaseColor = {
+	shade: "600",
 	dark: {
-		bgShade: "500",
-	},
+		shade: "500"
+	}
 };
 
-const defaultSolidGrayShades: SolidShade = {
-	light: {
-		bgShade: "100",
-	},
+const defaultSolidGrayShades: BaseColor = {
+	shade: "100",
 	dark: {
-		bgShade: "900",
-	},
+		shade: "900"
+	}
 };
 
-const defaultSolidGrayInheritShades: SolidShade = {
-	light: {
-		bgShade: "200",
-	},
+const defaultSolidGrayInheritShades: BaseColor = {
+	shade: "200",
 	dark: {
-		bgShade: "800",
-	},
+		shade: "800"
+	}
 };
 
 const defaultSubtle: Subtle = {
 	borderWidth: 1,
-	light: {
-		bgShade: "50",
-		borderShade: "600",
-		borderOpacity: 25,
-		textShade: "800",
-	},
+	bgShade: "50",
+	borderShade: "600",
+	borderOpacity: 25,
+	textShade: "800",
 	dark: {
 		bgShade: "600",
 		bgOpacity: 15,
@@ -54,102 +45,42 @@ const defaultSubtle: Subtle = {
 	},
 };
 const generalSoft: Soft = defaultSubtle;
-const defaultSubtleInherit: Subtle = {
-	borderWidth: 1,
-	light: {
-		bgShade: "100",
-		borderShade: "600",
-		borderOpacity: 35,
-		textShade: "800",
-	},
-	dark: {
-		bgShade: "600",
-		bgOpacity: 20,
-		borderShade: "600",
-		borderOpacity: 40,
-		textShade: "300",
-	},
-};
+
 
 const defaultSubtleGray: Subtle = {
 	borderWidth: 1,
-	light: {
-		bgShade: "50",
-		borderShade: "400",
-		borderOpacity: 30,
-		textShade: "800",
-	},
+	bgShade: "50",
+	borderShade: "400",
+	borderOpacity: 30,
+	textShade: "800",
 	dark: {
 		bgShade: "600",
 		bgOpacity: 20,
 		borderShade: "500",
 		borderOpacity: 40,
 		textShade: "300",
-	},
-};
-
-const defaultSubtleGrayActive: Subtle = {
-	borderWidth: 1,
-	light: {
-		bgShade: "100",
-		borderShade: "400",
-		borderOpacity: 60,
-		textShade: "700",
-	},
-	dark: {
-		bgShade: "600",
-		bgOpacity: 50,
-		borderShade: "500",
-		borderOpacity: 60,
-		textShade: "200",
 	},
 };
 
 const generalSoftGray: Soft = defaultSubtleGray;
 
-const generalSoftGrayActive: Soft = defaultSubtleGrayActive;
-
-const defaultSubtleGrayInherit: Subtle = {
-	borderWidth: 1,
-	light: {
-		bgShade: "100",
-		bgOpacity: 70,
-		borderShade: "300",
-		borderOpacity: 15,
-		textShade: "700",
-	},
-	dark: {
-		bgShade: "800",
-		borderShade: "500",
-		borderOpacity: 20,
-		textShade: "300",
-	},
-};
-
-const getOutlineELement: OutlineVariant = {
-	borderSize: 1,
-};
 
 const defaultOutlineELement: OutlineVariant = {
 	borderSize: 1,
-	light: {
-		borderShade: "600",
-		textShade: "600",
-	},
+	shade: "600",
+	textShade: "600",
 	dark: {
-		borderShade: "500",
+		shade: "500",
 		textShade: "500",
 	},
 };
 
 const defaultOutlineGrayELement: OutlineVariant = {
 	borderSize: 1,
-	light: {
-		borderShade: "200",
-		textShade: "700",
-	},
+	shade: "200",
+	textShade: "700",
 	dark: {
-		borderShade: "900",
+		shade: "900",
 		textShade: "300",
 	},
 };
@@ -211,82 +142,77 @@ const defaultTypoNeutral = {
 	},
 };
 
-const defaultTextGradient: GradientText = {
-	light: {
-		colorFrom: "gray-900",
-		colorTo: "gray-600",
-	},
-	dark: {
-		colorFrom: "gray-50",
-		colorTo: "gray-300",
-	},
-};
 
-const bodyBg = {
-	light: "white",
-	dark: "gray-950",
-};
-const bodyBgInverse = {
-	light: "gray-950",
-	dark: "white",
-};
 
-const bgSoligUI: BgUI = {
-	gray: {
-		light: { bgShade: "100" },
-		dark: { bgShade: "900" },
-	},
-	grayHigh: {
-		light: { bgShade: "200" },
-		dark: { bgShade: "800" },
-	},
-	grayHigher: {
-		light: { bgShade: "100" },
-		dark: { bgShade: "900" },
-	},
-	grayLight: {
-		light: { bgShade: "50" },
-		dark: { bgShade: "950" },
-	},
-};
 
-const grayBdrUI: BorderUI = {
-	borderSize: 1,
-	default: {
-		light: "100",
-		dark: "900",
+
+const uiBodyColors: BgBodyUi = {
+	default: { color_shade: "white", dark: "gray-950" },
+	defaultReverse: { color_shade: "gray-950", dark: "white" },
+	"light-high": { color_shade: "white", dark: "gray-900" }
+}
+
+const uiBackground: BgUI = {
+	nm: {
+		shade: "100",
+		dark: { shade: "900" }
 	},
 	high: {
-		light: "300",
-		dark: "800",
+		shade: "200",
+		dark: { shade: "800" }
 	},
 	higher: {
-		light: "400",
-		dark: "700",
+		shade: "100",
+		dark: { shade: "900" },
 	},
 	light: {
-		light: "50",
-		dark: "900",
+		shade: "50",
+		dark: { shade: "950" }
+	},
+	lighter: {
+		shade: "50",
+		dark: { shade: "900" }
+	},
+	nm_light: {
+		shade: "100",
+		dark: { shade: "950" }
+	},
+	light_nm: {
+		shade: "50",
+		dark: { shade: "900" }
 	},
 };
+
+
 const bdrUI: BorderUI = {
-	borderSize: 1,
-	default: {
-		light: "600",
-		dark: "600",
+	light: {
+		shade: "50",
+		dark: { shade: "950" },
+	},
+	lighter: {
+		shade: "100",
+		dark: { shade: "950" }
+	},
+	lightest: {
+		shade: "50",
+		dark: { shade: "900" }
+	},
+	nm: {
+		shade: "100",
+		dark: { shade: "900" },
 	},
 	high: {
-		light: "700",
-		dark: "700",
+		shade: "200",
+		dark: { shade: "800" },
 	},
 	higher: {
-		light: "700",
-		dark: "700",
+		shade: "300",
+		dark: { shade: "700" },
 	},
-	light: {
-		light: "400",
-		dark: "600",
-	},
+	highest: {
+		shade: "400",
+		dark: { shade: "600" }
+	}
 };
 
 const ringBase: RingBase = {
@@ -313,21 +239,13 @@ export const helperDefaultValues = {
 	defaultSolidGrayInheritShades,
 	defaultSolidShades,
 	defaultSubtle,
-	defaultSubtleGrayInherit,
-	defaultSubtleInherit,
 	defaultSubtleGray,
-	defaultSubtleGrayActive,
 	generalSoft,
 	generalSoftGray,
-	generalSoftGrayActive,
-	getOutlineELement,
 	defaultTypoGray,
 	textTypoColorReverse,
 	defaultTypoNeutral,
-	defaultTextGradient,
-	bodyBg,
-	bodyBgInverse,
-	bgSoligUI,
-	grayBdrUI,
+	bgSoligUI: uiBackground,
 	bdrUI,
+	uiBodyColors,
 };

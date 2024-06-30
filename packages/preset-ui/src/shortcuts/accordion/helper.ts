@@ -1,28 +1,25 @@
-import type { Appearance, ColorShade } from "@/types";
+import type { Appearance } from "@/types";
+import { BaseDividerC } from "./types";
 
 export const genDividerY = ({
 	color,
 	appearance,
 	divider,
-	colorDivider,
 }: {
 	color: string;
 	appearance: Appearance;
-	divider: { light?: ColorShade; dark?: ColorShade };
-	colorDivider: { light?: ColorShade; dark?: ColorShade };
+	divider: BaseDividerC
 }) => {
-	const { light, dark } = color === "gray" ? divider : colorDivider;
-	const lightVar = `${
-		appearance === "light" || appearance === "both"
-			? `divide-${color}-${light}`
+	const { shade, dark } = divider;
+	const lightVar = `${appearance === "light" || appearance === "both"
+			? `divide-${color}-${shade}`
 			: ""
-	}`;
-	const darkVar = `${
-		appearance === "dark"
+		}`;
+	const darkVar = dark ? `${appearance === "dark"
 			? `divide-${color}-${dark}`
 			: appearance === "both"
 				? `dark-divide-${color}-${dark}`
 				: ""
-	} `;
+		} ` : '';
 	return `${lightVar} ${darkVar}`;
 };

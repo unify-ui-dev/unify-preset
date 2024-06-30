@@ -3,7 +3,7 @@ import { getConfigValue } from "@/utils";
 import {
 	genVariantOutline,
 	genVariantSoft,
-	genVariantSolid,
+	genUiBackground,
 	genVariantSubtle,
 } from "../helpers";
 import { helperDefaultValues } from "../helpers";
@@ -37,7 +37,7 @@ const getAvatarShortcuts = (
 		helperDefaultValues.defaultSubtle;
 	const outline =
 		avatar?.placeHolderOutline ||
-		sharedConfig?.border ||
+		sharedConfig?.outline ||
 		helperDefaultValues.defaultOutlineELement;
 	const solidGray =
 		avatar?.placeHolderSolidGray ||
@@ -58,7 +58,6 @@ const getAvatarShortcuts = (
 
 	const appearance = uiConfig?.appearance || "both";
 	const avatars = {
-		avatar: "relative",
 		"avatar-fit-none": "object-none",
 		"avatar-fit-fill": "object-fill",
 		"avatar-fit-cover": "object-cover",
@@ -83,7 +82,7 @@ const getAvatarShortcuts = (
 			([, , color = "gray"], { theme }) => {
 				if (isValidColor(color, theme)) {
 					const colorShades = color === "gray" ? solidGray : solid;
-					return `${genVariantSolid({ color, appearance, colorShades })}`;
+					return `${genUiBackground({ color, appearance, colorShades })}`;
 				}
 			},
 			{
@@ -132,12 +131,12 @@ const getAvatarShortcuts = (
 		[
 			/^avatar-placeholder-soft(-(\S+))?$/,
 			([, , color = "gray"], { theme }) => {
+				const soft_ = color === "gray"?softGray : soft
 				if (isValidColor(color, theme))
 					return `${genVariantSoft({
 						color,
 						appearance,
-						soft,
-						graySoft: softGray,
+						soft:soft_,
 					})}`;
 			},
 			{

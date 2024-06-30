@@ -1,98 +1,99 @@
-import type { RingBase } from "@/types";
-import type { Input } from ".";
+import type { ElSizeVariants, RingBase } from "@/types";
+import type { InputBorder, InputPlaceHolder } from "./types";
 
 export const defRingBase: RingBase = {
 	size: 2,
 	offset: 6,
 };
 
-export const defaultInput: Input = {
-	borderSize: 1,
-	focusBorderSize: 1,
-	solidGray: {
-		light: {
-			bgShade: "100",
-			textShade: "700",
-		},
-		dark: {
-			bgShade: "900",
-			textShade: "300",
-		},
+export const InputSizes: ElSizeVariants = {
+	"2xs": {
+		px: 2,
+		py: 1,
+		textSize: "xs",
+	},
+	xs: {
+		px: 2.5,
+		py: 1.5,
+		textSize: "xs",
+	},
+	sm: {
+		px: 2.5,
+		py: 1.5,
+		textSize: "sm",
+	},
+	md: {
+		px: 3,
+		py: 2,
+		textSize: "sm",
+	},
+	lg: {
+		px: 3.5,
+		py: 2.5,
+		textSize: "sm",
+	},
+	xl: {
+		px: 3.5,
+		py: 2.5,
+		textSize: "base",
+	},
+}
+
+export const InputBg = {
+	normalGray: {
+		shade: "100",
+		dark: { shade: "900" }
 	},
 	lightGray: {
-		light: {
-			bgShade: "50",
-			textShade: "700",
-		},
-		dark: {
-			bgShade: "950",
-			textShade: "300",
-		},
+		shade: "50",
+		dark: { shade: "950" }
 	},
 	higherGray: {
-		light: {
-			bgShade: "300",
-			textShade: "800",
-		},
-		dark: {
-			bgShade: "700",
-			textShade: "300",
-		},
+		shade: "300",
+		dark: { shade: "700" }
 	},
 	highGray: {
-		light: {
-			bgShade: "200",
-			textShade: "200",
-		},
-		dark: {
-			bgShade: "800",
-			textShade: "300",
-		},
+		shade: "200",
+		dark: { shade: "800" }
+	}
+}
+
+
+export const inputPlaceHolder: InputPlaceHolder = {
+	light: {
+		shade: "600",
+		dark: "400"
 	},
-	border: {
-		light: "100",
+	lighter: {
+		shade: "500",
+		dark: "500"
+	},
+	lightest: {
+		shade: "400",
+		dark: "600"
+	}
+}
+
+export const focusColor = {
+	color: "primary",
+	shade: "600",
+	dark: "500",
+}
+export const InputBdr: InputBorder = {
+	normal: {
+		shade: "100",
 		dark: "900",
 	},
-	focusColor: {
-		light: "600",
-		dark: "500",
+	light: {
+		shade: "50",
+		dark: "950",
 	},
-	focusGray: {
-		light: "300",
+	high: {
+		shade: "200",
+		dark: "800",
+	},
+	higher: {
+		shade: "300",
 		dark: "700",
-	},
-	textColor: {
-		light: "700",
-		dark: "300",
-	},
-	placeHolder: {
-		light: "400",
-		dark: "500",
-	},
-	size: {
-		"2xs": {
-			padding: { x: 2, y: 1 },
-			textSize: "xs",
-		},
-		xs: {
-			padding: { x: 2.5, y: 1.5 },
-			textSize: "xs",
-		},
-		sm: {
-			padding: { x: 2.5, y: 1.5 },
-			textSize: "sm",
-		},
-		md: {
-			padding: { x: 3, y: 2 },
-			textSize: "sm",
-		},
-		lg: {
-			padding: { x: 3.5, y: 2.5 },
-			textSize: "sm",
-		},
-		xl: {
-			padding: { x: 3.5, y: 2.5 },
-			textSize: "base",
-		},
-	},
-};
+	}
+}

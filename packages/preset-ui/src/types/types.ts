@@ -28,17 +28,15 @@ export type SharedUiConfig = {
 };
 
 export type formOutlineBase = {
-	borderShade?: ColorShade;
-	hoverBorderShade?: ColorShade;
-	activeBorderShade?: ColorShade;
-	textShade?: ColorShade;
-	hoverTextShade?: ColorShade;
+	borderShade: ColorShade;
+	hoverBorderShade: ColorShade;
+	activeBorderShade: ColorShade;
+	textShade: ColorShade;
+	hoverTextShade: ColorShade;
 };
 
-export type formOutline = {
-	useLightForBoth?: boolean;
+export type formOutline = formOutlineBase & {
 	borderSize?: number | string;
-	light?: formOutlineBase;
 	dark?: formOutlineBase;
 };
 
