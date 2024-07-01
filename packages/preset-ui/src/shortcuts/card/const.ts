@@ -1,33 +1,27 @@
-import type { SolidShade } from "@/types";
+import type { BaseColor } from "@/types";
 
-const cardGray: SolidShade = {
-	light: {
-		bgShade: "100",
-		textShade: "700",
-	},
+const cardGray: BaseColor = {
+	shade: "100",
+	textShade: "700",
 	dark: {
-		bgShade: "900",
+		shade: "900",
 		textShade: "300",
 	},
 };
-const cardInnerGray: SolidShade = {
-	light: {
-		bgShade: "200",
-		textShade: "800",
-	},
+const cardInnerGray: BaseColor = {
+	shade: "200",
+	textShade: "800",
 	dark: {
-		bgShade: "800",
+		shade: "800",
 		textShade: "200",
 	},
 };
 
-const cardSubInnerGray: SolidShade = {
-	light: {
-		bgShade: "300",
-		textShade: "800",
-	},
+const cardSubInnerGray: BaseColor = {
+	shade: "300",
+	textShade: "800",
 	dark: {
-		bgShade: "700",
+		shade: "700",
 		textShade: "100",
 	},
 };

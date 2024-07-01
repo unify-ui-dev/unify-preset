@@ -2,14 +2,14 @@ import type {
 	OutlineVariant,
 	VariantSizeBoth,
 	Soft,
-	SolidShade,
+	BaseColor,
 	Subtle,
 } from "@/types";
 
 export type Avatar = {
 	sizes?: VariantSizeBoth;
-	placeHolderSolid?: SolidShade;
-	placeHolderSolidGray: SolidShade;
+	placeHolderSolid?: BaseColor;
+	placeHolderSolidGray: BaseColor;
 	placeHolderSoft?: Soft;
 	placeHoldersubtle?: Subtle;
 	placeHolderOutline?: OutlineVariant;

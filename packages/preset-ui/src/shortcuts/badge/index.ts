@@ -1,13 +1,6 @@
-import type { Appearance, SharedVariant } from "@/types";
-import { getConfigValue } from "@/utils";
-import {
-	genVariantOutline,
-	genVariantSoft,
-	genVariantSolid,
-	genVariantSubtle,
-} from "../helpers";
+import type { Appearance, SharedVariant, ElSizeBase } from "@/types";
+import { genVariantOutline, genVariantSoft, genUiBackground, genVariantSubtle, uiSizeVariants, genUiSizes, } from "../helpers";
 import { helperDefaultValues } from "../helpers";
-import { defaultBadgeSizes } from "./const";
 import type { Badge } from "./types";
 import type { Shortcut } from "unocss";
 import { isValidColor } from "@/utils/colors-utils";
@@ -17,7 +10,7 @@ const getBadgeShortcuts = (
 	sharedConfig?: SharedVariant,
 	uiConfig?: { appearance?: Appearance },
 ) => {
-	const { xs, sm, md, xl, lg } = badge?.sizes || defaultBadgeSizes;
+	const { xs, sm, md, xl, lg } = badge?.sizes || uiSizeVariants;
 	const solidShades =
 		badge?.solid ||
 		sharedConfig?.solid ||
@@ -28,7 +21,7 @@ const getBadgeShortcuts = (
 		badge?.subtle || sharedConfig?.subtle || helperDefaultValues.defaultSubtle;
 	const outline =
 		badge?.outline ||
-		sharedConfig?.border ||
+		sharedConfig?.outline ||
 		helperDefaultValues.defaultOutlineELement;
 
 	const graySolid =
@@ -50,21 +43,11 @@ const getBadgeShortcuts = (
 
 	const appearance = uiConfig?.appearance || "both";
 	const badges = {
-		"badge-xs": `py-${getConfigValue(xs?.py)} px-${getConfigValue(
-			xs?.px,
-		)} text-${xs?.textSize}`,
-		"badge-sm": `py-${getConfigValue(sm?.py)} px-${getConfigValue(
-			sm?.px,
-		)} text-${sm?.textSize}`,
-		"badge-md": `py-${getConfigValue(md?.py)} px-${getConfigValue(
-			md?.px,
-		)} text-${md?.textSize}`,
-		"badge-lg": `py-${getConfigValue(lg?.py)} px-${getConfigValue(
-			lg?.px,
-		)} text-${lg?.textSize}`,
-		"badge-xl": `py-${getConfigValue(xl?.py)} px-${getConfigValue(
-			xl?.px,
-		)} text-${xl?.textSize}`,
+		"badge-xs": `${genUiSizes(xs as ElSizeBase)}`,
+		"badge-sm": `${genUiSizes(sm as ElSizeBase)}`,
+		"badge-md": `${genUiSizes(md as ElSizeBase)}`,
+		"badge-lg": `${genUiSizes(lg as ElSizeBase)}`,
+		"badge-xl": `${genUiSizes(xl as ElSizeBase)}`,
 	};
 
 	const dynamicBadges: Shortcut[] = [
@@ -73,7 +56,7 @@ const getBadgeShortcuts = (
 			([, , color = "gray"], { theme }) => {
 				if (isValidColor(color, theme)) {
 					const colorShades = color === "gray" ? graySolid : solidShades;
-					return `${genVariantSolid({ color, appearance, colorShades })}`;
+					return `${genUiBackground({ color, appearance, colorShades })}`;
 				}
 			},
 			{
@@ -122,8 +105,9 @@ const getBadgeShortcuts = (
 		[
 			/^badge-soft(-(\S+))?$/,
 			([, , color = "gray"], { theme }) => {
+				const soft_ = color === "gray" ? graySoft : soft
 				if (isValidColor(color, theme))
-					return `${genVariantSoft({ color, appearance, soft, graySoft })}`;
+					return `${genVariantSoft({ color, appearance, soft: soft_ })}`;
 			},
 			{
 				autocomplete: [

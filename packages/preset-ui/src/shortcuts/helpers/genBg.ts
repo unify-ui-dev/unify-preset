@@ -4,109 +4,85 @@ import type {
 	BorderPrefix,
 	OutlineVariant,
 	Soft,
-	SolidShade,
 	Subtle,
-	BgBackdropBlur,
+	ColorShade,
+	BaseColor,
 } from "@/types";
 import { getConfigValue, getShortcutsIfNotSame } from "@/utils";
 
 import { helperDefaultValues } from "./helper-const";
 import { getBackgroundOpacity } from "../shortcut_helper";
 
-export const genVariantSolid = ({
+export const genUiBackground = ({
 	color,
 	appearance,
 	colorShades,
-}: { colorShades: SolidShade; color: string; appearance: Appearance }) => {
+}: { colorShades: BaseColor; color: string; appearance: Appearance }) => {
 	if (color === "neutral") {
 		return `${genVariantSolidNeutral({ appearance })}`;
 	}
-	const { light, dark } = colorShades;
+	const { shade, dark } = colorShades;
 
-	const variantLight = `${
-		appearance === "light" || appearance === "both"
-			? `bg-${color}-${light?.bgShade}`
-			: ""
-	} `;
+	const variantLight = `${appearance === "light" || appearance === "both" ? `bg-${color}-${shade}` : ""} `;
 
-	const variantDark = `${
-		appearance === "dark"
-			? `bg-${color}-${dark?.bgShade}`
-			: appearance === "both"
-				? `${getShortcutsIfNotSame({
-						val1: `${light?.bgShade}`,
-						val2: `${dark?.bgShade}`,
-						shortcuts: `dark-bg-${color}-${dark?.bgShade}`,
-					})}`
-				: ""
-	}`;
+	const variantDark = dark ? `${appearance === "dark"
+		? `bg-${color}-${dark.shade}` : appearance === "both" ? `${getShortcutsIfNotSame({
+			val1: `${shade}`,
+			val2: `${dark.shade}`,
+			shortcuts: `dark-bg-${color}-${dark.shade}`
+		})}` : ""}` : '';
 	return `${variantLight} ${variantDark}`;
 };
 
 const genOutlineNeutral = ({
 	appearance,
-	border,
 	prefix = "border",
 }: {
 	prefix?: BorderPrefix;
 	appearance: Appearance;
-	border: BorderVariant;
 }) => {
-	const { borderSize } = border;
-	const borderSize_ = borderSize ? borderSize : 1;
-	const variantLight = `${
-		appearance === "light" || appearance === "both" ? `${prefix}-gray-900` : ""
-	}`;
+	const variantLight = `${appearance === "light" || appearance === "both" ? `${prefix}-gray-900` : ""
+		}`;
 
-	const variantDark = `${
-		appearance === "dark"
-			? `${prefix}-white`
-			: appearance === "both"
-				? `dark-${prefix}-white`
-				: ""
-	}`;
-	return `${prefix}-${getConfigValue(
-		borderSize_,
-	)} ${variantLight} ${variantDark}`;
+	const variantDark = `${appearance === "dark"
+		? `${prefix}-white`
+		: appearance === "both"
+			? `dark-${prefix}-white`
+			: ""
+		}`;
+	return `${variantLight} ${variantDark}`;
 };
 export const genOutline = ({
 	color,
 	appearance,
 	border,
-	colorBorder,
 	prefix = "border",
 }: {
 	prefix?: BorderPrefix;
 	color: string;
 	appearance: Appearance;
 	border: BorderVariant;
-	colorBorder: BorderVariant;
 }) => {
 	if (color === "neutral")
-		return `${genOutlineNeutral({ appearance, border, prefix })}`;
-	const { light, dark, borderSize } = color === "gray" ? border : colorBorder;
+		return `${genOutlineNeutral({ appearance, prefix })}`;
+	const { shade, dark } = border
 
-	const borderSize_ = borderSize ? borderSize : 1;
-	const variantLight = `${
-		appearance === "light" || appearance === "both"
-			? `${prefix}-${color}-${light}`
+	const variantLight = `${appearance === "light" || appearance === "both"
+		? `${prefix}-${color}-${shade}`
+		: ""
+		}`;
+
+	const variantDark = dark ? `${appearance === "dark"
+		? `${prefix}-${color}-${dark.shade}`
+		: appearance === "both"
+			? `${getShortcutsIfNotSame({
+				val1: `${shade}`,
+				val2: `${dark.shade}`,
+				shortcuts: `dark-${prefix}-${color}-${dark.shade}`,
+			})}`
 			: ""
-	}`;
-
-	const variantDark = `${
-		appearance === "dark"
-			? `${prefix}-${color}-${dark}`
-			: appearance === "both"
-				? `${getShortcutsIfNotSame({
-						val1: `${light}`,
-						val2: `${dark}`,
-						shortcuts: `dark-${prefix}-${color}-${dark}`,
-					})}`
-				: ""
-	}`;
-	return `${prefix}-${getConfigValue(
-		borderSize_,
-	)} ${variantLight} ${variantDark}`;
+		}` : "";
+	return `${variantLight} ${variantDark}`;
 };
 
 export const genVariantOutline = ({
@@ -120,81 +96,101 @@ export const genVariantOutline = ({
 	outlineColor: OutlineVariant;
 	outlineGray: OutlineVariant;
 }) => {
-	const { borderSize, light, dark } =
+	const { borderSize, shade, textShade, dark } =
 		color === "gray" ? outlineGray : outlineColor;
 	const borderSize_ = borderSize ? borderSize : 1;
 	if (color === "neutral")
 		return `${genVariantOutlineNeutral({
 			appearance,
-			outline: { borderSize: borderSize_ },
+			borderSize: borderSize_,
 		})}`;
 
-	const variantLight = `${
-		appearance === "light" || appearance === "both"
-			? `bg-transparent text-${color}-${light?.textShade}`
-			: ""
-	}`;
+	const variantLight = `${appearance === "light" || appearance === "both"
+		? `text-${color}-${textShade}`
+		: ""
+		}`;
 
-	const variantDark = `${
-		appearance === "dark"
-			? `bg-transparent text-${color}-${dark?.textShade}`
-			: appearance === "both"
-				? `${getShortcutsIfNotSame({
-						val1: `${light?.textShade}`,
-						val2: `${dark?.textShade}`,
-						shortcuts: `dark-text-${color}-${dark?.textShade}`,
-					})}`
-				: ""
-	}`;
+	const variantDark = dark ? `${appearance === "dark"
+		? `text-${color}-${dark?.textShade}`
+		: appearance === "both"
+			? `${getShortcutsIfNotSame({
+				val1: `${textShade}`,
+				val2: `${dark?.textShade}`,
+				shortcuts: `dark-text-${color}-${dark?.textShade}`,
+			})}`
+			: ""
+		}` : '';
 	const getBorder = {
-		borderSize: borderSize_,
-		light: light?.borderShade,
-		dark: dark?.borderShade,
+		light: shade,
+		dark: dark?.shade,
 	};
 	const getBorderValue = genOutline({
 		color,
 		appearance,
 		prefix: "border",
-		border: getBorder,
-		colorBorder: getBorder,
+		border: { shade: getBorder.light as ColorShade, dark: { shade: getBorder?.dark as ColorShade } }
 	});
 
-	return `${getBorderValue}  ${variantLight} ${variantDark}`;
+	return `b ${getBorderValue}  ${variantLight} ${variantDark}`;
+};
+
+export const genBorderColor = ({
+	appearance,
+	color,
+	border,
+}: {
+	appearance: Appearance;
+	color: string,
+	border: { shade: ColorShade; dark?: ColorShade };
+}) => {
+	const { shade, dark } = border;
+	const lightUtilities = `
+        ${appearance === "light" || appearance === "both"
+			? `border-${color}-${shade} `
+			: ""
+		}`;
+
+	const darkUtilities = dark ? `
+        ${appearance === "dark" ? `border-${color}-${dark}`
+			: appearance === "both" ? ` ${getShortcutsIfNotSame({
+				val1: shade,
+				val2: dark,
+				shortcuts: `dark-border-${color}-${dark}`,
+			})}` : ""}` : '';
+
+	return `${lightUtilities} ${darkUtilities}`;
 };
 
 export const genVariantSoft = ({
 	color: color_,
 	soft,
-	graySoft,
 	appearance,
-}: { color: string; appearance: Appearance; soft: Soft; graySoft: Soft }) => {
+}: { color: string; appearance: Appearance; soft: Soft; }) => {
 	const color = color_ === "neutral" ? "gray" : color_;
-	const { light, dark } = color === "gray" ? graySoft : soft;
+	const { bgOpacity, bgShade, textShade, dark } = soft;
 
-	const variantLight = `${
-		appearance === "light" || appearance === "both"
-			? `bg-${color}-${light?.bgShade}${getBackgroundOpacity(
-					light?.bgOpacity,
-				)}  text-${color}-${light?.textShade}`
+	const variantLight = `${appearance === "light" || appearance === "both"
+		? `bg-${color}-${bgShade}${getBackgroundOpacity(
+			bgOpacity,
+		)}  text-${color}-${textShade}`
+		: ""
+		}`;
+
+	const variantDark = dark ? `${appearance === "dark"
+		? `bg-${color}-${dark.bgShade}${getBackgroundOpacity(
+			dark.bgOpacity,
+		)} text-${color}-${dark.textShade}`
+		: appearance === "both"
+			? `${getShortcutsIfNotSame({
+				val1: `${textShade}`,
+				val2: `${dark.textShade}`,
+				shortcuts: `dark-text-${color}-${dark.textShade}`,
+			})}
+            dark-bg-${color}-${dark.bgShade}${getBackgroundOpacity(
+				dark.bgOpacity,
+			)}`
 			: ""
-	}`;
-
-	const variantDark = `${
-		appearance === "dark"
-			? `bg-${color}-${dark?.bgShade}${getBackgroundOpacity(
-					dark?.bgOpacity,
-				)} text-${color}-${dark?.textShade}`
-			: appearance === "both"
-				? `${getShortcutsIfNotSame({
-						val1: `${light?.textShade}`,
-						val2: `${dark?.textShade}`,
-						shortcuts: `dark-text-${color}-${dark?.textShade}`,
-					})}
-            dark-bg-${color}-${dark?.bgShade}${getBackgroundOpacity(
-							dark?.bgOpacity,
-						)}`
-				: ""
-	}`;
+		}` : '';
 	return `${variantLight} ${variantDark}`;
 };
 
@@ -212,99 +208,83 @@ export const genVariantSubtle = ({
 	const color = color_ === "neutral" ? "gray" : color_;
 	if (color_ === "neutral")
 		return `${genVariantSubtleNeutral({ appearance, subtle })}`;
-	const { borderWidth, light, dark } = color === "gray" ? graySubtle : subtle;
+	const { borderWidth, bgShade, textShade, borderShade, borderOpacity, bgOpacity, dark } = color === "gray" ? graySubtle : subtle;
 
-	const variantLight = `${
-		appearance === "light" || appearance === "both"
-			? `border-${color}-${light?.borderShade}/${getConfigValue(
-					light?.borderOpacity,
-				)}`
-			: ""
-	}`;
+	const variantLight = `${appearance === "light" || appearance === "both"
+		? `border-${color}-${borderShade}/${getConfigValue(
+			borderOpacity,
+		)}`
+		: ""
+		}`;
 
-	const variantDark = `${
-		appearance === "dark"
-			? `border-${color}-${dark?.borderShade}/${getConfigValue(
-					dark?.borderOpacity,
-				)}`
-			: appearance === "both"
-				? `
+	const variantDark = dark ? `${appearance === "dark"
+		? `border-${color}-${dark?.borderShade}/${getConfigValue(
+			dark?.borderOpacity,
+		)}`
+		: appearance === "both"
+			? `
             ${getShortcutsIfNotSame({
-							val1: `${light?.borderShade}/${getConfigValue(
-								light?.borderOpacity,
-							)}`,
-							val2: `${dark?.borderShade}/${getConfigValue(
-								dark?.borderOpacity,
-							)}`,
-							shortcuts: `dark-border-${color}-${
-								dark?.borderShade
-							}/${getConfigValue(dark?.borderOpacity)}`,
-						})}`
-				: ""
-	}`;
+				val1: `${borderShade}/${getConfigValue(borderOpacity)}`,
+				val2: `${dark.borderShade}/${getConfigValue(dark.borderOpacity)}`,
+				shortcuts: `dark-border-${color}-${dark.borderShade}/${getConfigValue(dark.borderOpacity)}`
+			})}`
+			: ""
+		}` : "";
 	return `${genVariantSoft({
 		color,
 		appearance,
-		soft: { light: subtle.light, dark: subtle.dark },
-		graySoft: { light: graySubtle.light, dark: graySubtle.dark },
+		soft: { bgOpacity: bgOpacity as number, textShade: textShade as ColorShade, bgShade: bgShade as ColorShade, dark: dark }
 	})}  border-${getConfigValue(borderWidth)} ${variantLight} ${variantDark}`;
 };
 
 export const genVariantSolidNeutral = ({
 	appearance,
 }: { appearance: Appearance }) => {
-	const variantLight = `${
-		appearance === "light" || appearance === "both" ? "bg-gray-900" : ""
-	} `;
+	const variantLight = `${appearance === "light" || appearance === "both" ? "bg-gray-900" : ""
+		} `;
 
-	const variantDark = `${
-		appearance === "dark"
-			? "bg-white"
-			: appearance === "both"
-				? "dark-bg-white0"
-				: ""
-	}`;
+	const variantDark = `${appearance === "dark"
+		? "bg-white"
+		: appearance === "both"
+			? "dark-bg-white"
+			: ""
+		}`;
 	return `${variantLight} ${variantDark}`;
 };
 
 export const genVariantWhiteBlack = ({
 	appearance,
 	colors,
-}: { appearance: Appearance; colors: { light: string; dark: string } }) => {
-	const { light: white, dark } = colors;
-	const variantLight = `${
-		appearance === "light" || appearance === "both" ? `bg-${white}` : ""
-	} `;
+}: { appearance: Appearance; colors: { white: string; black: string } }) => {
+	const { white, black } = colors;
+	const variantLight = `${appearance === "light" || appearance === "both" ? `bg-${white}` : ""
+		} `;
 
-	const variantDark = `${
-		appearance === "dark"
-			? `bg-${dark}`
-			: appearance === "both"
-				? `dark-bg-${dark}`
-				: ""
-	}`;
+	const variantDark = `${appearance === "dark"
+		? `bg-${black}`
+		: appearance === "both"
+			? `dark-bg-${black}`
+			: ""
+		}`;
 	return `${variantLight} ${variantDark}`;
 };
 
 export const genVariantOutlineNeutral = ({
 	appearance,
-	outline,
-}: { appearance: Appearance; outline: OutlineVariant }) => {
-	const { borderSize } = outline;
+	borderSize,
+}: { appearance: Appearance; borderSize: string | number }) => {
 	const borderSize_ = borderSize ? borderSize : 1;
-	const variantLight = `${
-		appearance === "light" || appearance === "both"
-			? "border-gray-800/40 text-gray-800"
-			: ""
-	}`;
+	const variantLight = `${appearance === "light" || appearance === "both"
+		? "border-gray-800/40 text-gray-800"
+		: ""
+		}`;
 
-	const variantDark = `${
-		appearance === "dark"
-			? "border-white  text-white"
-			: appearance === "both"
-				? "dark-border-white dark-text-white"
-				: ""
-	}`;
+	const variantDark = `${appearance === "dark"
+		? "border-white  text-white"
+		: appearance === "both"
+			? "dark-border-white dark-text-white"
+			: ""
+		}`;
 	return `border-${getConfigValue(borderSize_)} ${variantLight} ${variantDark}`;
 };
 
@@ -318,33 +298,29 @@ export const genNeutralSoftGhost = (
 };
 
 const genNeutralGhost = (appearance: Appearance) => {
-	const lightV = `${
-		appearance === "light" || appearance === "both" ? "text-gray-900" : ""
-	}`;
-	const darkV = `${
-		appearance === "dark"
-			? "text-white"
-			: appearance === "both"
-				? "dark-text-white"
-				: ""
-	}`;
+	const lightV = `${appearance === "light" || appearance === "both" ? "text-gray-900" : ""
+		}`;
+	const darkV = `${appearance === "dark"
+		? "text-white"
+		: appearance === "both"
+			? "dark-text-white"
+			: ""
+		}`;
 
 	return `${lightV} ${darkV}`;
 };
 
 const genNeutralSoft = (appearance: Appearance) => {
-	const lightV = `${
-		appearance === "light" || appearance === "both"
-			? "bg-gray-950/10 text-gray-900"
+	const lightV = `${appearance === "light" || appearance === "both"
+		? "bg-gray-950/10 text-gray-900"
+		: ""
+		}`;
+	const darkV = `${appearance === "dark"
+		? "bg-gray-50/20 text-white"
+		: appearance === "both"
+			? "dark-bg-gray-50/20 dark-text-gray-950"
 			: ""
-	}`;
-	const darkV = `${
-		appearance === "dark"
-			? "bg-gray-50/20 text-white"
-			: appearance === "both"
-				? "dark-bg-gray-50/20 dark-text-gray-950"
-				: ""
-	}`;
+		}`;
 
 	return `${lightV} ${darkV}`;
 };
@@ -354,45 +330,19 @@ export const genVariantSubtleNeutral = ({
 	subtle = helperDefaultValues.defaultSubtle,
 }: { appearance: Appearance; subtle: Subtle }) => {
 	const { borderWidth } = subtle;
-	const variantLight = `${
-		appearance === "light" || appearance === "both"
-			? "border-gray-900/70 text-gray-900"
-			: ""
-	}`;
+	const variantLight = `${appearance === "light" || appearance === "both"
+		? "border-gray-900/70 text-gray-900"
+		: ""
+		}`;
 
-	const variantDark = `${
-		appearance === "dark"
-			? "border-gray-800/60 text-white"
-			: appearance === "both"
-				? "dark-border-gray-800/60 dark-text-white"
-				: ""
-	}`;
+	const variantDark = `${appearance === "dark"
+		? "border-gray-800/60 text-white"
+		: appearance === "both"
+			? "dark-border-gray-800/60 dark-text-white"
+			: ""
+		}`;
 	return `${genNeutralSoft(appearance)} border-${getConfigValue(
 		borderWidth,
 	)} ${variantLight} ${variantDark}`;
 };
 
-export const genBluredBackground = ({
-	backdrop,
-	appearance,
-}: { appearance: Appearance; backdrop: BgBackdropBlur }) => {
-	const { light, dark, useLightForBoth, blur } = backdrop;
-	const lightV = `${
-		appearance === "light" || appearance === "both"
-			? `bg-${light.color}/${light.opacity}`
-			: ""
-	}`;
-
-	const darkV = `${
-		appearance === "dark"
-			? `bg-${dark.color}/${dark.opacity}`
-			: appearance === "both"
-				? `${getShortcutsIfNotSame({
-						val1: `${light.color}/${light.opacity}`,
-						val2: `${dark.color}/${dark.opacity}`,
-						shortcuts: `dark-bg-${dark.color}/${dark.opacity}`,
-					})}`
-				: ""
-	}`;
-	return `backdrop-blur-${blur} ${lightV} ${useLightForBoth ? "" : darkV}`;
-};

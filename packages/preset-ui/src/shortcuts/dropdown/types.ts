@@ -1,16 +1,11 @@
-import type { BgBackdropBlur, OutlineVariant, SolidShade } from "@/types";
-
-export type WhiteBG = { light: string; dark: string };
+import type { BgBodyUi, OutlineVariant, BaseColor } from "@/types";
 
 export type Dropdown = {
-	white?: WhiteBG;
-	bgGray?: SolidShade;
-	bgInnerGray?: SolidShade;
-	bgSubInnerGray?: SolidShade;
-	bgColor?: SolidShade;
+	white?: BgBodyUi;
+	bgGray?: BgBodyUi;
+	bgInnerGray?: BaseColor;
+	bgSubInnerGray?: BaseColor;
+	bgColor?: BaseColor;
 
 	outline?: OutlineVariant;
-	bgGrayBlured?: BgBackdropBlur;
-	bgInnerGrayBlured?: BgBackdropBlur;
-	bgWhiteBlured?: BgBackdropBlur;
 };

@@ -1,17 +1,15 @@
-import type { Appearance, BaseUI, SharedVariant } from "@/types";
+import type { Appearance, BaseColor, BaseUI, BorderPrefix, SharedVariant } from "@/types";
 import {
-	genVariantSolid,
-	genGratientText,
 	genTextColor,
 	genVariantWhiteBlack,
 	genOutline,
+	genUiBackground,
 } from "../helpers";
 import { helperDefaultValues } from "../helpers";
 import { isValidColor } from "@/utils/colors-utils";
 import type { Shortcut } from "unocss";
 
 const getGeneralShortcuts = ({
-	sharedConfig,
 	uiConfig,
 	globalElement,
 }: {
@@ -20,26 +18,10 @@ const getGeneralShortcuts = ({
 	uiConfig: { appearance: Appearance };
 }) => {
 	const { appearance } = uiConfig;
-	const border =
-		sharedConfig?.border || helperDefaultValues.defaultOutlineELement;
-	const colorBorder = globalElement?.borderColor || helperDefaultValues.bdrUI;
 
-	const globBorderSize =
-		globalElement?.borderGray?.borderSize ||
-		helperDefaultValues.grayBdrUI.borderSize;
-	const borderGray = globalElement?.borderGray || helperDefaultValues.grayBdrUI;
+	const bg = globalElement?.bg || helperDefaultValues.bgSoligUI
+	const border = globalElement?.border || helperDefaultValues.bdrUI
 
-	const solidShades =
-		sharedConfig?.solid || helperDefaultValues.defaultSolidShades;
-	const grayLight =
-		globalElement?.grayBg?.grayLight || helperDefaultValues.bgSoligUI.grayLight;
-	const grayHigh =
-		globalElement?.grayBg?.grayHigh || helperDefaultValues.bgSoligUI.grayHigh;
-	const grayHigher =
-		globalElement?.grayBg?.grayHigher ||
-		helperDefaultValues.bgSoligUI.grayHigher;
-	const graySolid =
-		sharedConfig?.solidGray || helperDefaultValues.defaultSolidGrayShades;
 
 	const typoGray =
 		globalElement?.bodyColor || helperDefaultValues.defaultTypoGray;
@@ -48,17 +30,13 @@ const getGeneralShortcuts = ({
 
 	const typoNeutral =
 		globalElement?.bodyNeutral || helperDefaultValues.defaultTypoNeutral;
-	const bodyBg = globalElement?.bodyBg || helperDefaultValues.bodyBg;
-	const bodyBgInverse =
-		globalElement?.bodyBgInverse || helperDefaultValues.bodyBgInverse;
+	const bodyBgUi = globalElement?.body || helperDefaultValues.uiBodyColors
 
 	const utils: Record<string, string> = {
 		// bg
-		"bg-body": `${genVariantWhiteBlack({ appearance, colors: bodyBg })}`,
-		"bg-body-inverse": `${genVariantWhiteBlack({
-			appearance,
-			colors: bodyBgInverse,
-		})}`,
+		"bg-body": `${genVariantWhiteBlack({ appearance, colors: { white: `${bodyBgUi.default?.color_shade}`, black: `${bodyBgUi.default?.dark}` } })}`,
+		"bg-body-reverse": `${genVariantWhiteBlack({ appearance, colors: { white: `${bodyBgUi.defaultReverse?.color_shade}`, black: `${bodyBgUi.defaultReverse?.dark}` } })}`,
+		"bg-body-light-high": `${genVariantWhiteBlack({ appearance, colors: { white: `${bodyBgUi["light-high"]?.color_shade}`, black: `${bodyBgUi["light-high"]?.dark}` } })}`,
 
 		// typo
 		"text-title": `${genTextColor(appearance, typoGray.title)}`,
@@ -84,66 +62,7 @@ const getGeneralShortcuts = ({
 		"text-sub-body-neutral": `${genTextColor(appearance, typoNeutral.subText)}`,
 
 		//gradient
-		"text-gradient-to-t": `${genGratientText(
-			helperDefaultValues.defaultTextGradient,
-			"to-t",
-			appearance,
-		)}`,
-		"text-gradient-to-tl": `${genGratientText(
-			helperDefaultValues.defaultTextGradient,
-			"to-tl",
-			appearance,
-		)}`,
-		"text-gradient-to-tr": `${genGratientText(
-			helperDefaultValues.defaultTextGradient,
-			"to-tr",
-			appearance,
-		)}`,
-		"text-gradient-to-b": `${genGratientText(
-			helperDefaultValues.defaultTextGradient,
-			"to-b",
-			appearance,
-		)}`,
-		"text-gradient-to-bl": `${genGratientText(
-			helperDefaultValues.defaultTextGradient,
-			"to-bl",
-			appearance,
-		)}`,
-		"text-gradient-to-br": `${genGratientText(
-			helperDefaultValues.defaultTextGradient,
-			"to-br",
-			appearance,
-		)}`,
-		"text-gradient-to-l": `${genGratientText(
-			helperDefaultValues.defaultTextGradient,
-			"to-l",
-			appearance,
-		)}`,
-		"text-gradient-to-lt": `${genGratientText(
-			helperDefaultValues.defaultTextGradient,
-			"to-lt",
-			appearance,
-		)}`,
-		"text-gradient-to-lb": `${genGratientText(
-			helperDefaultValues.defaultTextGradient,
-			"to-lb",
-			appearance,
-		)}`,
-		"text-gradient-to-r": `${genGratientText(
-			helperDefaultValues.defaultTextGradient,
-			"to-r",
-			appearance,
-		)}`,
-		"text-gradient-to-rt": `${genGratientText(
-			helperDefaultValues.defaultTextGradient,
-			"to-rt",
-			appearance,
-		)}`,
-		"text-gradient-to-rb": `${genGratientText(
-			helperDefaultValues.defaultTextGradient,
-			"to-rb",
-			appearance,
-		)}`,
+		"text-gradient": "text-transparent bg-clip-text",
 
 		//flex
 		"d-flex-justify-center": "flex justify-center",
@@ -156,480 +75,45 @@ const getGeneralShortcuts = ({
 		"d-flex-place-center": "flex justify-center items-center",
 	};
 
-	const colorBdr = {
-		borderSize: border.borderSize,
-		light: colorBorder?.default?.light,
-		dark: colorBorder?.default?.dark,
-	};
-	const grayBdr = {
-		borderSize: globBorderSize,
-		light: borderGray.default?.light,
-		dark: borderGray.default?.dark,
-	};
-	const lightColorBdr = {
-		borderSize: globBorderSize,
-		light: colorBorder?.light?.light,
-		dark: colorBorder?.light?.dark,
-	};
-	const lightGrayBdr = {
-		borderSize: globBorderSize,
-		light: borderGray.light?.light,
-		dark: borderGray.light?.dark,
-	};
-	const highColorBdr = {
-		borderSize: border.borderSize,
-		light: colorBorder?.high?.light,
-		dark: colorBorder?.high?.light,
-	};
-	const highGrayBdr = {
-		borderSize: globBorderSize,
-		light: borderGray.high?.light,
-		dark: borderGray.high?.dark,
-	};
-	const higherColorBdr = {
-		borderSize: border.borderSize,
-		light: colorBorder?.higher?.light,
-		dark: colorBorder?.higher?.light,
-	};
-	const higherGrayBdr = {
-		borderSize: globBorderSize,
-		light: borderGray.higher?.light,
-		dark: borderGray.higher?.dark,
-	};
 
 	const dynamicUtils: Shortcut[] = [
 		[
-			/^bg-solid(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme)) {
-					const colorShades = color === "gray" ? graySolid : solidShades;
-					return `${genVariantSolid({ color, appearance, colorShades })}`;
-				}
+			/^bg-(light_nm|light|nm_light|nm|high|higher)(-(\S+))?$/,
+			([, type, , color = "gray"], { theme }) => {
+				const uiBg = bg[type as "light" | "nm" | "light_nm" | "nm_light" | "high" | "higher"] as BaseColor
+				if (["light", "nm", "high", "higher", "highest"].includes(type) && isValidColor(color, theme))
+					return `${genUiBackground({
+						color, appearance, colorShades: { shade: uiBg.shade, dark: uiBg.dark }
+					})}`;
 			},
-			{ autocomplete: ["bg-solid", "bg-solid-$colors"] },
-		],
-		[
-			/^bg-light-solid(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme)) {
-					const colorShades = color === "gray" ? { ...grayLight } : solidShades;
-					return `${genVariantSolid({ color, appearance, colorShades })}`;
-				}
-			},
-			{ autocomplete: ["bg-light-solid", "bg-light-solid-$colors"] },
-		],
-		[
-			/^bg-high-solid(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme)) {
-					const colorShades = color === "gray" ? { ...grayHigh } : solidShades;
-					return `${genVariantSolid({ color, appearance, colorShades })}`;
-				}
-			},
-			{ autocomplete: ["bg-high-solid", "bg-high-solid-$colors"] },
-		],
-		[
-			/^bg-higher-solid(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme)) {
-					const colorShades =
-						color === "gray" ? { ...grayHigher } : solidShades;
-					return `${genVariantSolid({ color, appearance, colorShades })}`;
-				}
-			},
-			{ autocomplete: ["bg-higher-solid", "bg-higher-solid-$colors"] },
+			{ autocomplete: ["bg-(light_nm|light|nm_light|nm|high|higher)", "bg-(light_nm|light|nm_light|nm|high|higher)-$colors"] },
 		],
 
-		[
-			/^bdr(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
+		[/^bdr-(light|nm|high|higher|highest)(-(\S+))?$/,
+			([, type, , color = "gray"], { theme }) => {
+				const bdr_ = border[type as "light" | "nm" | "high" | "higher" | "highest"] as BaseColor
+				if (["light", "nm", "high", "higher", "highest"].includes(type) && isValidColor(color, theme))
 					return `${genOutline({
 						color,
 						appearance,
-						colorBorder: colorBdr,
-						border: grayBdr,
+						border: bdr_,
 					})}`;
 			},
-			{ autocomplete: ["bdr", "bdr-$colors"] },
+			{ autocomplete: ["bdr-(light|nm|high|higher|highest)-$colors", "bdr_<directions>-(light|nm|high|higher|highest)-$colors"] },
 		],
-		[
-			/^bdr_x(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
+		[/^bdr_(x|y|l|r|t|b)-(light|nm|high|higher|highest)(-(\S+))?$/,
+			([, position, type, , color = "gray"], { theme }) => {
+				if (["light", "nm", "high", "higher", "highest"].includes(type) && isValidColor(color, theme)) {
+					const borderPosition = `border-${position}` as BorderPrefix
+					const bdr_ = border[type as "light" | "nm" | "high" | "higher" | "highest"] as BaseColor
 					return `${genOutline({
 						color,
 						appearance,
-						colorBorder: colorBdr,
-						border: grayBdr,
-						prefix: "border-x",
+						border: bdr_,
+						prefix: borderPosition
 					})}`;
+				}
 			},
-			{ autocomplete: ["bdr_x", "bdr_x-$colors"] },
-		],
-		[
-			/^bdr_y(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: colorBdr,
-						border: grayBdr,
-						prefix: "border-y",
-					})}`;
-			},
-			{ autocomplete: ["bdr_y", "bdr_y-$colors"] },
-		],
-		[
-			/^bdr_t(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: colorBdr,
-						border: grayBdr,
-						prefix: "border-t",
-					})}`;
-			},
-			{ autocomplete: ["bdr_t", "bdr_t-$colors"] },
-		],
-		[
-			/^bdr_b(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: colorBdr,
-						border: grayBdr,
-						prefix: "border-b",
-					})}`;
-			},
-			{ autocomplete: ["bdr_b", "bdr_b-$colors"] },
-		],
-		[
-			/^bdr_r(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: colorBdr,
-						border: grayBdr,
-						prefix: "border-r",
-					})}`;
-			},
-			{ autocomplete: ["bdr_r", "bdr_r-$colors"] },
-		],
-		[
-			/^bdr_l(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: colorBdr,
-						border: grayBdr,
-						prefix: "border-l",
-					})}`;
-			},
-			{ autocomplete: ["bdr_l", "bdr_l-$colors"] },
-		],
-
-		[
-			/^bdr_light(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: lightColorBdr,
-						border: lightGrayBdr,
-					})}`;
-			},
-			{ autocomplete: ["bdr_light", "bdr_light-$colors"] },
-		],
-		[
-			/^bdr_light_x(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: lightColorBdr,
-						border: lightGrayBdr,
-						prefix: "border-x",
-					})}`;
-			},
-			{ autocomplete: ["bdr_light_x", "bdr_light_x-$colors"] },
-		],
-		[
-			/^bdr_light_y(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: lightColorBdr,
-						border: lightGrayBdr,
-						prefix: "border-y",
-					})}`;
-			},
-			{ autocomplete: ["bdr_light_y", "bdr_light_y-$colors"] },
-		],
-		[
-			/^bdr_light_t(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: lightColorBdr,
-						border: lightGrayBdr,
-						prefix: "border-t",
-					})}`;
-			},
-			{ autocomplete: ["bdr_light_t", "bdr_light_t-$colors"] },
-		],
-		[
-			/^bdr_light_b(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: lightColorBdr,
-						border: lightGrayBdr,
-						prefix: "border-b",
-					})}`;
-			},
-			{ autocomplete: ["bdr_light_b", "bdr_light_b-$colors"] },
-		],
-		[
-			/^bdr_light_r(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: lightColorBdr,
-						border: lightGrayBdr,
-						prefix: "border-r",
-					})}`;
-			},
-			{ autocomplete: ["bdr_light_r", "bdr_light_r-$colors"] },
-		],
-		[
-			/^bdr_light_l(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: lightColorBdr,
-						border: lightGrayBdr,
-						prefix: "border-l",
-					})}`;
-			},
-			{ autocomplete: ["bdr_light_l", "bdr_light_l-$colors"] },
-		],
-
-		[
-			/^bdr_high(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: highColorBdr,
-						border: highGrayBdr,
-					})}`;
-			},
-			{ autocomplete: ["bdr_high", "bdr_high-$colors"] },
-		],
-		[
-			/^bdr_high_x(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: highColorBdr,
-						border: highGrayBdr,
-						prefix: "border-x",
-					})}`;
-			},
-			{ autocomplete: ["bdr_high_x", "bdr_high_x-$colors"] },
-		],
-		[
-			/^bdr_high_y(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: highColorBdr,
-						border: highGrayBdr,
-						prefix: "border-y",
-					})}`;
-			},
-			{ autocomplete: ["bdr_high_y", "bdr_high_y-$colors"] },
-		],
-		[
-			/^bdr_high_t(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: highColorBdr,
-						border: highGrayBdr,
-						prefix: "border-t",
-					})}`;
-			},
-			{ autocomplete: ["bdr_high_t", "bdr_high_t-$colors"] },
-		],
-		[
-			/^bdr_high_b(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: highColorBdr,
-						border: highGrayBdr,
-						prefix: "border-b",
-					})}`;
-			},
-			{ autocomplete: ["bdr_high", "bdr_high-$colors"] },
-		],
-		[
-			/^bdr_high_r(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: highColorBdr,
-						border: highGrayBdr,
-						prefix: "border-r",
-					})}`;
-			},
-			{ autocomplete: ["bdr_high_b", "bdr_high_b-$colors"] },
-		],
-		[
-			/^bdr_high_l(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: highColorBdr,
-						border: highGrayBdr,
-						prefix: "border-l",
-					})}`;
-			},
-			{ autocomplete: ["bdr_high_l", "bdr_high_l-$colors"] },
-		],
-
-		[
-			/^bdr_higher(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: higherColorBdr,
-						border: higherGrayBdr,
-					})}`;
-			},
-			{ autocomplete: ["bdr_higher", "bdr_higher-$colors"] },
-		],
-		[
-			/^bdr_higher_x(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: higherColorBdr,
-						border: higherGrayBdr,
-						prefix: "border-x",
-					})}`;
-			},
-			{ autocomplete: ["bdr_higher_x", "bdr_higher_x-$colors"] },
-		],
-		[
-			/^bdr_higher_y(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: higherColorBdr,
-						border: higherGrayBdr,
-						prefix: "border-y",
-					})}`;
-			},
-			{ autocomplete: ["bdr_higher_y", "bdr_higher_y-$colors"] },
-		],
-		[
-			/^bdr_higher_t(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: higherColorBdr,
-						border: higherGrayBdr,
-						prefix: "border-t",
-					})}`;
-			},
-			{ autocomplete: ["bdr_higher_t", "bdr_higher_t-$colors"] },
-		],
-		[
-			/^bdr_higher_b(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: higherColorBdr,
-						border: higherGrayBdr,
-						prefix: "border-b",
-					})}`;
-			},
-			{ autocomplete: ["bdr_higher_b", "bdr_higher_b-$colors"] },
-		],
-		[
-			/^bdr_higher_r(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: higherColorBdr,
-						border: higherGrayBdr,
-						prefix: "border-r",
-					})}`;
-			},
-			{ autocomplete: ["bdr_higher_r", "bdr_higher_r-$colors"] },
-		],
-		[
-			/^bdr_higher_l(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genOutline({
-						color,
-						appearance,
-						colorBorder: higherColorBdr,
-						border: higherGrayBdr,
-						prefix: "border-l",
-					})}`;
-			},
-			{ autocomplete: ["bdr_higher_l", "bdr_higher_l-$colors"] },
 		],
 	];
 

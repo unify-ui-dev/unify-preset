@@ -1,84 +1,36 @@
-import type { BgBackdropBlur, SolidShade } from "@/types";
-import { WhiteBG } from "./types";
+import type { BgBodyUi, BaseColor } from "@/types";
 
-const bgGray: SolidShade = {
-	light: {
-		bgShade: "100",
-		textShade: "700",
-	},
+const bgGray: BaseColor = {
+	shade: "100",
 	dark: {
-		bgShade: "900",
-		textShade: "300",
+		shade: "900",
 	},
 };
-const innerBgGray: SolidShade = {
-	light: {
-		bgShade: "200",
-		textShade: "800",
-	},
+const innerBgGray: BaseColor = {
+	shade: '200',
 	dark: {
-		bgShade: "800",
-		textShade: "200",
+		shade: "800",
 	},
 };
 
-const subInnerBgGray: SolidShade = {
-	light: {
-		bgShade: "300",
-		textShade: "800",
-	},
+const subInnerBgGray: BaseColor = {
+	shade: "300",
 	dark: {
-		bgShade: "700",
-		textShade: "200",
+		shade: "700",
 	},
 };
 
-const whiteBlured: BgBackdropBlur = {
-	blur: "xl",
-	light: {
-		color: "white",
-		opacity: 60,
-	},
-	dark: {
-		color: "gray-950",
-		opacity: 55,
-	},
-};
 
-const grayBlured: BgBackdropBlur = {
-	blur: "xl",
-	light: {
-		color: "gray-100",
-		opacity: 50,
-	},
-	dark: {
-		color: "gray-900",
-		opacity: 30,
-	},
-};
+const whiteBg: BgBodyUi = {
+	default: {
+		color_shade: "white",
+		dark: "gray-950"
+	}
+}
 
-const grayInnerBlured: BgBackdropBlur = {
-	blur: "xl",
-	light: {
-		color: "white",
-		opacity: 50,
-	},
-	dark: {
-		color: "gray-800",
-		opacity: 40,
-	},
-};
-
-const whiteBg: WhiteBG = {
-	light: "white",
-	dark: "gray-950",
-};
 export const dropdownDefault = {
 	whiteBg,
 	bgGray,
 	innerBgGray,
 	subInnerBgGray,
-	whiteBlured,
-	grayBlured,
-	grayInnerBlured,
 };

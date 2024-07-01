@@ -19,10 +19,8 @@ export const getAllRules = (appearance: Appearance) => {
 			"u-fx-popper",
 			{
 				position: "absolute",
-				transform:
-					"translate(var(--fx-popper-placement-x), var(--fx-popper-placement-y))",
-				left: "0",
-				top: "0",
+				left: "var(--fx-popper-placement-x)",
+				top: "var(--fx-popper-placement-y)",
 			},
 		],
 		[
@@ -128,7 +126,6 @@ ${
 			},
 			{ autocomplete: "range-track-bg-(light|gray|high|higher)" },
 		],
-
 		[
 			/^progress-bar-(xs|sm|md|lg|xl|2xl)$/,
 			([, d]) => ({
@@ -223,6 +220,7 @@ ${selector}::-moz-progress-bar{
 				};
 			},
 		],
+
 	] as Rule<Theme>[];
 
 	return rules;

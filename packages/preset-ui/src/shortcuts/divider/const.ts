@@ -1,11 +1,11 @@
 import type { DividerShadeBase } from "./types";
 
 export const divideGray: DividerShadeBase = {
-	light: "300",
+	shade: "300",
 	dark: "700",
 };
 
 export const dividerShade: DividerShadeBase = {
-	light: "600",
+	shade: "600",
 	dark: "500",
 };

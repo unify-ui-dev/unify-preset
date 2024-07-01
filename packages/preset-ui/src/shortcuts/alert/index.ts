@@ -3,7 +3,7 @@ import { getConfigValue } from "@/utils";
 import {
 	genVariantOutline,
 	genVariantSoft,
-	genVariantSolid,
+	genUiBackground,
 	genVariantSubtle,
 } from "../helpers";
 import { helperDefaultValues } from "../helpers";
@@ -27,7 +27,7 @@ const getAlertShortcuts = (
 		alert?.subtle || sharedConfig?.subtle || helperDefaultValues.defaultSubtle;
 	const outline =
 		alert?.outline ||
-		sharedConfig?.border ||
+		sharedConfig?.outline ||
 		helperDefaultValues.defaultOutlineELement;
 
 	const graySolid =
@@ -61,7 +61,7 @@ const getAlertShortcuts = (
 			([, , color = "gray"], { theme }) => {
 				if (isValidColor(color, theme)) {
 					const colorShades = color === "gray" ? graySolid : solidShade;
-					return `${genVariantSolid({ color, appearance, colorShades })}`;
+					return `${genUiBackground({ color, appearance, colorShades })}`;
 				}
 			},
 			{
@@ -110,8 +110,9 @@ const getAlertShortcuts = (
 		[
 			/^alert-soft(-(\S+))?$/,
 			([, , color = "gray"], { theme }) => {
+				const soft_ = color === 'gray'?graySoft : soft
 				if (isValidColor(color, theme))
-					return `${genVariantSoft({ color, appearance, soft, graySoft })}`;
+					return `${genVariantSoft({ color, appearance, soft:soft_ })}`;
 			},
 			{
 				autocomplete: [

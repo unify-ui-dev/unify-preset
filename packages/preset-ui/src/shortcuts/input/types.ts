@@ -1,51 +1,49 @@
-import type { ColorShade, SolidShade } from "@/types";
+import type { ColorShade, BaseColor, ElSizeVariants } from "@/types";
 
-export type InputBaseSize = {
-	padding?: {
-		x?: number | string;
-		y?: number | string;
-	};
-	textSize?: "xs" | "sm" | "base" | "lg" | "xl";
-};
 
-export type InputOutline = {
-	light?: ColorShade;
+type InputBorderBase = {
+	shade: ColorShade;
 	dark?: ColorShade;
 };
 
-type inputBorderBase = {
-	color?: string;
-	light?: ColorShade;
+type BasePlaceHolder = {
+	shade: ColorShade;
 	dark?: ColorShade;
-};
-
+}
+export type InputBorder = {
+	normal?: InputBorderBase;
+	light?: InputBorderBase;
+	high?: InputBorderBase;
+	higher?: InputBorderBase;
+}
+export type InputPlaceHolder = {
+	light?: BasePlaceHolder,
+	lighter?: BasePlaceHolder,
+	lightest?: BasePlaceHolder
+}
 export type Input = {
-	borderSize?: number;
-	focusBorderSize?: number;
-	textColor?: {
-		light?: ColorShade;
-		dark?: ColorShade;
-	};
-	placeHolder?: {
-		light?: ColorShade;
-		dark?: ColorShade;
-	};
-	size?: {
-		"2xs"?: InputBaseSize;
-		xs?: InputBaseSize;
-		sm?: InputBaseSize;
-		md?: InputBaseSize;
-		lg?: InputBaseSize;
-		xl?: InputBaseSize;
-	};
-	solidGray?: SolidShade;
-	lightGray?: SolidShade;
-	highGray?: SolidShade;
-	higherGray?: SolidShade;
-	border?: inputBorderBase;
-	borderLight?: inputBorderBase;
-	borderHigh?: inputBorderBase;
-	horderHigher?: inputBorderBase;
-	focusGray?: InputOutline;
-	focusColor?: InputOutline;
+	placeHolder?: InputPlaceHolder;
+	size?: ElSizeVariants;
+	background?: {
+		normalGray?: BaseColor;
+		lightGray?: BaseColor;
+		highGray?: BaseColor;
+		higherGray?: BaseColor;
+	}
+	border?: InputBorder,
+	bordered?: {
+		md?: {
+			size: number,
+			focus?: number,
+		},
+		lg?: {
+			size: number,
+			focus?: number,
+		}
+	}
+	borderFocusColor: {
+		color: string,
+		shade: ColorShade,
+		dark?: ColorShade
+	}
 };

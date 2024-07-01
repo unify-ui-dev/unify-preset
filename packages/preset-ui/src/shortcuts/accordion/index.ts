@@ -4,7 +4,7 @@ import {
 	genOutline,
 	genVariantOutline,
 	genVariantSoft,
-	genVariantSolid,
+	genUiBackground,
 	genVariantSubtle,
 } from "../helpers";
 import { helperDefaultValues } from "../helpers";
@@ -33,7 +33,7 @@ const getAccordionShortcuts = (
 		helperDefaultValues.defaultSubtle;
 	const outline =
 		accordion?.outline ||
-		sharedConfig?.border ||
+		sharedConfig?.outline ||
 		helperDefaultValues.defaultOutlineELement;
 
 	const solidGray =
@@ -53,33 +53,14 @@ const getAccordionShortcuts = (
 		sharedConfig?.outlineGray ||
 		helperDefaultValues.defaultOutlineGrayELement;
 
-	const softActive =
-		accordion?.softActive ||
-		sharedConfig?.softActive ||
-		helperDefaultValues.generalSoft;
-	const subtleActive =
-		accordion?.subtleActive ||
-		sharedConfig?.subtleActive ||
-		helperDefaultValues.defaultSubtle;
-	const graySoftActive =
-		accordion?.graySoftActive ||
-		sharedConfig?.graySoftActive ||
-		helperDefaultValues.generalSoftGrayActive;
-	const graySubtleActive =
-		accordion?.graySubtleActive ||
-		sharedConfig?.graySubtleActive ||
-		helperDefaultValues.defaultSubtleGrayActive;
+
 
 	const appearance = uiConfig?.appearance || "both";
 
 	const grayDivider =
 		accordion?.grayDivider || defaultAcValues.defaultDividerGray;
-	const coloredDivider =
-		accordion?.colorDivider || defaultAcValues.defaultDividerColor;
 	const itemWithBorder =
-		accordion?.itemWithBorderColor || defaultAcValues.itemWithBorderGray;
-	const itemWithBorderColor =
-		accordion?.itemWithBorderColor || defaultAcValues.itemWithBorder;
+		accordion?.itemWithBorder || defaultAcValues.itemWithBorderGray;
 
 	const dynamicAccordions: Shortcut[] = [
 		[
@@ -92,7 +73,7 @@ const getAccordionShortcuts = (
 			([, , color = "gray"], { theme }) => {
 				if (isValidColor(color, theme)) {
 					const colorShades = color === "gray" ? solidGray : solidShade;
-					return `${genVariantSolid({ color, appearance, colorShades })}`;
+					return `${genUiBackground({ color, appearance, colorShades })}`;
 				}
 			},
 			{ autocomplete: ["accordion-solid", "accordion-solid-$colors"] },
@@ -126,8 +107,9 @@ const getAccordionShortcuts = (
 		[
 			/^accordion-soft(-(\S+))?$/,
 			([, , color = "gray"], { theme }) => {
+				const soft_ = color === "gray" ? graySoft : soft
 				if (isValidColor(color, theme))
-					return `${genVariantSoft({ color, appearance, soft, graySoft })}`;
+					return `${genVariantSoft({ color, appearance, soft: soft_ })}`;
 			},
 			{ autocomplete: ["accordion-soft", "accordion-soft-$colors"] },
 		],
@@ -139,7 +121,6 @@ const getAccordionShortcuts = (
 						color: color,
 						appearance,
 						divider: grayDivider,
-						colorDivider: coloredDivider,
 					})}`;
 			},
 			{ autocomplete: ["wrapper-joined", "wrapper-joined-$colors"] },
@@ -152,50 +133,13 @@ const getAccordionShortcuts = (
 						appearance,
 						color,
 						prefix: itemWithBorder.prefix,
-						border: { ...itemWithBorder.border },
-						colorBorder: { ...itemWithBorderColor.border },
+						border: { shade: itemWithBorder.border?.shade, dark: itemWithBorder.border?.dark }
 					})})}`;
 			},
 			{
 				autocomplete: [
 					"accordion-item-border-bottom",
 					"accordion-item-border-bottom-$colors",
-				],
-			},
-		],
-		[
-			/^accordion-item-soft-active(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genVariantSoft({
-						color,
-						appearance,
-						soft: softActive,
-						graySoft: graySoftActive,
-					})}`;
-			},
-			{
-				autocomplete: [
-					"accordion-item-soft-active",
-					"accordion-item-soft-active-$colors",
-				],
-			},
-		],
-		[
-			/^accordion-item-subtle-active(-(\S+))?$/,
-			([, , color = "gray"], { theme }) => {
-				if (isValidColor(color, theme))
-					return `${genVariantSubtle({
-						color,
-						appearance,
-						subtle: subtleActive,
-						graySubtle: graySubtleActive,
-					})}`;
-			},
-			{
-				autocomplete: [
-					"accordion-item-subtle-active",
-					"accordion-item-subtle-active-$colors",
 				],
 			},
 		],
