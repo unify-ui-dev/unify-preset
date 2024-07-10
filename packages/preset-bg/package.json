@@ -30,9 +30,6 @@
   ],
   "author": "Johnkat MJ",
   "license": "MIT",
-  "dependencies": {
-    "@unifydev/unify-variant": "^0.0.2"
-  },
   "devDependencies": {
     "@biomejs/biome": "1.6.2",
     "@types/node": "^20.11.27",
@@ -46,7 +43,7 @@
     "unocss": ">= 0.58.0 < 1"
   },
   "keywords": [
-    "Preset UI",
+    "Preset BG",
     "unify preset",
     "atomic ui library",
     "unocss ui",

@@ -2,11 +2,11 @@ import type { BtnGhostOrSoft, BtnGhostVariants, BtnGradientVariants, BtnIconBase
 import { genBtnVariantOutline, genBtnVariantSolid, genBtnVariantSoft, genBtnVariantGhost, genBtnVariantWhite, genBtnVariantSolidGradient, } from "./helpers";
 import { getConfigValue } from "@/utils";
 import { btnCongig } from "./const";
-import { genFocusVisibleOutline } from "../shortcut_helper";
 
-import type { RingColorShades, SharedFormConfig, UiConfig, formOutline } from "@/types";
+import type { SharedFormConfig, UiConfig, formOutline } from "@/types";
 import type { Shortcut } from "unocss";
 import { isValidColor } from "@/utils/colors-utils";
+import { genBtnGradientBase, genBtnOutlineBase, genBtnSoftBase, genBtnVariantSolidBase } from "./baseHelpers";
 
 const getBtnSizeInfo = (sizeVariant: BtnSizeBase) => {
 	return `h-${getConfigValue(sizeVariant?.height)} px-${getConfigValue(
@@ -36,10 +36,12 @@ const getBtnShortcuts = ({
 	const gradientVariants = btn.gradientVariants
 	const btnWhite = btn.btnWhite;
 	const appearance = uiConfig.appearance;
-	const focusRing = Object.assign({}, formConfig?.ring, btn?.ring);
-	const focusRingGray = Object.assign({}, formConfig?.ring, btn.ringGray);
 	const ringBase = Object.assign({}, formConfig?.ringBase, btn.ringBase)
 
+	const btnOutlineOnFocus = () =>
+		`focus-visible-outline focus-visible-outline-offset-${ringBase.offset} 
+		focus-visible-outline-${ringBase.size} 
+		focus-visible-outline-[--btn-focus-outline-color]`;
 	const btns = {
 		btn: "flex items-center disabled-opacity-50 disabled-cursor-not-allowed disabled-hover-opacity-70 outline-0 outline-transparent",
 		"btn-xs": `${getBtnSizeInfo(btnSizes?.xs as BtnSizeBase)}`,
@@ -53,19 +55,18 @@ const getBtnShortcuts = ({
 		"btn-icon-lg": `${getBtnIconSizeInfo(btnIconSizes?.lg as BtnIconBase)}`,
 		"btn-icon-xl": `${getBtnIconSizeInfo(btnIconSizes?.xl as BtnIconBase)}`,
 		"btn-white": `${genBtnVariantWhite({ solid: btnWhite, appearance })}`,
+		"btn-solid": `${genBtnVariantSolidBase()} ${btnOutlineOnFocus()}`,
+		"btn-outline": `${genBtnOutlineBase()} ${btnOutlineOnFocus()}`,
+		"btn-soft": `${genBtnSoftBase({ isGhost: false })} ${btnOutlineOnFocus()}`,
+		"btn-ghost": `${genBtnSoftBase({ isGhost: true })} ${btnOutlineOnFocus()}`,
+		"btn-gradient": `${genBtnGradientBase()} ${btnOutlineOnFocus()}`
 	};
 
-	const getOutlineOnSolid = (color: string, ringVal: RingColorShades) =>
-		`focus-visible-outline focus-visible-outline-offset-${ringBase?.offset
-		} focus-visible-outline-${getConfigValue(
-			ringBase?.size,
-		)} ${genFocusVisibleOutline(color, appearance, ringVal)}`;
 	const dynamicBtns: Shortcut[] = [
 		[
-			/^btn-solid(-(\S+))?$/,
-			([, , color = "primary"], { theme }) => {
+			/^btn-solid-(.*)$/,
+			([, color], { theme }) => {
 				let shades: SolidBtnShade = { bgShade: "500", hoverBgShade: "600", pressBgShade: "700", };
-				const ringVal = color === "gray" ? focusRingGray : focusRing;
 				if (color === 'neutral' || isValidColor(color, theme)) {
 					if (solidVariants) {
 						const key = color as SemanticColorNames
@@ -74,17 +75,16 @@ const getBtnShortcuts = ({
 						} else if (solidVariants.custom && color in solidVariants.custom) {
 							shades = solidVariants.custom[key];
 						} else { shades = solidVariants['global'] as SolidBtnShade }
-						return `${getOutlineOnSolid(color, ringVal)} ${genBtnVariantSolid({ color, appearance, shades })}`;
+						return `${genBtnVariantSolid({ color, appearance, shades, theme })}`;
 					}
 				}
 			},
 			{ autocomplete: ["btn-solid", "btn-solid-(primary|secondary|accent|success|warning|info|danger|gray|neutral)",], },
 		],
 		[
-			/^btn-outline(-(\S+))?$/,
-			([, , color = "primary"], { theme }) => {
+			/^btn-outline-(.*)$/,
+			([, color], { theme }) => {
 				if (color === 'neutral' || isValidColor(color, theme)) {
-					const ringVal = color === "gray" ? focusRingGray : focusRing;
 					let shades: formOutline = { borderSize: 1, borderShade: "500", textShade: "600", hoverBorderShade: "600", hoverTextShade: "700", activeBorderShade: "600" }
 					if (outlineVariants) {
 						const key = color as SemanticColorNames
@@ -93,8 +93,8 @@ const getBtnShortcuts = ({
 						} else if (outlineVariants.custom && color in outlineVariants.custom) {
 							shades = outlineVariants.custom[color as keyof BtnOutlineVariants];
 						} else { shades = outlineVariants['global'] as formOutline }
-						return `${getOutlineOnSolid(color, ringVal)} ${genBtnVariantOutline({
-							color, appearance, outlineShades: shades,
+						return `${genBtnVariantOutline({
+							color, appearance, outlineShades: shades, theme
 						})}`;
 					}
 				}
@@ -102,9 +102,8 @@ const getBtnShortcuts = ({
 			{ autocomplete: ["btn-outline", "btn-outline-(primary|secondary|accent|success|warning|info|danger|gray|neutral)",], },
 		],
 		[
-			/^btn-soft(-(\S+))?$/,
-			([, , color = "primary"], { theme }) => {
-				const ringVal = color === "gray" ? focusRingGray : focusRing;
+			/^btn-soft-(.*)$/,
+			([, color], { theme }) => {
 				if (isValidColor(color, theme)) {
 					if (softVariants) {
 						let shades: BtnGhostOrSoft
@@ -113,12 +112,13 @@ const getBtnShortcuts = ({
 							shades = softVariants.base[key] as BtnGhostOrSoft;
 						} else if (softVariants.custom && color in softVariants.custom) {
 							shades = softVariants.custom[color as keyof BtnSoftVariants];
-						} else { shades = softVariants['global'] as BtnGhostOrSoft }
+						} else { shades = softVariants.global as BtnGhostOrSoft }
 
-						return `${getOutlineOnSolid(color, ringVal)} ${genBtnVariantSoft({
+						return `${genBtnVariantSoft({
 							color,
 							appearance,
 							ghostOrSoft: shades,
+							theme
 						})}`;
 					}
 				}
@@ -126,9 +126,8 @@ const getBtnShortcuts = ({
 			{ autocomplete: ["btn-soft", "btn-soft-(primary|secondary|accent|success|warning|info|danger|gray|neutral)",] },
 		],
 		[
-			/^btn-ghost(-(\S+))?$/,
-			([, , color = "primary"], { theme }) => {
-				const ringVal = color === "gray" ? focusRingGray : focusRing;
+			/^btn-ghost-(.*)$/,
+			([, color], { theme }) => {
 				if (isValidColor(color, theme)) {
 					if (ghostVariants) {
 						let shades: BtnGhostOrSoft
@@ -139,10 +138,11 @@ const getBtnShortcuts = ({
 							shades = ghostVariants.custom[color as keyof BtnGhostVariants];
 						} else { shades = ghostVariants['global'] as BtnGhostOrSoft }
 
-						return `${getOutlineOnSolid(color, ringVal)} ${genBtnVariantGhost({
+						return `${genBtnVariantGhost({
 							color,
 							appearance,
 							ghost: shades,
+							theme
 						})}`;
 					}
 				}
@@ -150,9 +150,9 @@ const getBtnShortcuts = ({
 			{ autocomplete: ["btn-ghost", "btn-ghost-(primary|secondary|accent|success|warning|info|danger|gray|neutral)",], },
 		],
 		[
-			/^btn-gradient(-(\S+))?$/,
-			([, , color = "primary"], { theme }) => {
-				const ringVal = color === "gray" ? focusRingGray : focusRing;
+			/^btn-gradient-(.*)$/,
+			([, color], { theme }) => {
+
 				if (isValidColor(color, theme)) {
 					let shades: GradientBtn
 					if (gradientVariants) {
@@ -162,13 +162,11 @@ const getBtnShortcuts = ({
 						} else if (gradientVariants.custom && color in gradientVariants.custom) {
 							shades = gradientVariants.custom[color as keyof BtnGradientVariants];
 						} else { shades = gradientVariants['global'] as GradientBtn }
-						return `${getOutlineOnSolid(
-							color,
-							ringVal,
-						)} ${genBtnVariantSolidGradient({
+						return `${genBtnVariantSolidGradient({
 							color,
 							gradientShades: shades,
-							appearance
+							appearance,
+							theme
 						})}`;
 					}
 				}

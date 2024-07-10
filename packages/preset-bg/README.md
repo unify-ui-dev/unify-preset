@@ -19,6 +19,7 @@ This presset is a customizable collection of gradient, grid, radial background b
 ```bash
 npm i -D @unifydev/preset-bg
 ```
+Note that PresetUI is a dev dependency
 
 ### Config
 

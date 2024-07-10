@@ -28,10 +28,10 @@ type BaseVariant<T extends object> = {
 export type GhostSoftBase = {
 	bgShade?: ColorShade;
 	bgOpacity?: number;
-	hoverBgOpacity: number | string;
+	hoverBgOpacity: number;
 	hoverBgShade: ColorShade;
 	pressBgShade: ColorShade;
-	pressOpacity: number | string;
+	pressOpacity: number;
 	textShade: ColorShade;
 };
 
@@ -101,7 +101,6 @@ export type BtnGradientVariants = BaseVariant<GradientBtn>;
 export type BtnOutlineVariants = BaseVariant<formOutline>
 
 export type Button = {
-	useRing?: boolean;
 	ringBase?: RingBase;
 	sizes?: BtnSizes;
 	iconSizes?: BtnIconSizes;
