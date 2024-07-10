@@ -11,7 +11,8 @@ export default defineBuildConfig({
         alias: {
             entries: {
                 "@/types": resolve(__dirname, './src/types/'),
-                "@/utils": resolve(__dirname, './src/utils/')
+                "@/utils": resolve(__dirname, './src/utils/'),
+                "@/rules": resolve(__dirname, './src/rules')
             },
         },
         dts: {

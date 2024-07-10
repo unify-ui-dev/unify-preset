@@ -1,11 +1,18 @@
 {
   "name": "root",
   "private": true,
+  "description": "UnifyPreset : UnoCSS Preset Collection",
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
     "@biomejs/biome": "1.6.2",
     "lerna": "^8.1.2"
+  },
+  "scripts": {
+    "b-preset-bg": "npx lerna run build --scope=@unifydev/preset-bg",
+    "b-unify-variant": "npx lerna run build --scope=@unifydev/unify-variant",
+    "b-preset-ui": "npx lerna run build --scope=@unifydev/preset-ui",
+    "build": "npm run b-preset-bg &&  npm run b-unify-variant && npm run b-preset-ui"
   }
 }

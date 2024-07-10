@@ -43,8 +43,8 @@ export type ElSizeVariants = {
 };
 
 export type RingBase = {
-	offset?: number | string;
-	size?: number | string;
+	offset: number;
+	size: number;
 };
 
 export type RingColorShades = {

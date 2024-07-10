@@ -16,6 +16,12 @@ export type InputBorder = {
 	high?: InputBorderBase;
 	higher?: InputBorderBase;
 }
+export type InputBg = {
+	normalGray?: BaseColor;
+	lightGray?: BaseColor;
+	highGray?: BaseColor;
+	higherGray?: BaseColor;
+}
 export type InputPlaceHolder = {
 	light?: BasePlaceHolder,
 	lighter?: BasePlaceHolder,
@@ -24,23 +30,8 @@ export type InputPlaceHolder = {
 export type Input = {
 	placeHolder?: InputPlaceHolder;
 	size?: ElSizeVariants;
-	background?: {
-		normalGray?: BaseColor;
-		lightGray?: BaseColor;
-		highGray?: BaseColor;
-		higherGray?: BaseColor;
-	}
+	background?: InputBg,
 	border?: InputBorder,
-	bordered?: {
-		md?: {
-			size: number,
-			focus?: number,
-		},
-		lg?: {
-			size: number,
-			focus?: number,
-		}
-	}
 	borderFocusColor: {
 		color: string,
 		shade: ColorShade,

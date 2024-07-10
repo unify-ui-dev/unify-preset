@@ -28,13 +28,13 @@ import { getSwitchShortcuts } from "./switch";
 
 export const getAllShortcut = ({
 	components,
-	sharedElementVariant,
+	globalElement: sharedElementVariant,
 	baseUI,
 	form,
 	appearance,
 }: {
 	components?: Components;
-	sharedElementVariant?: SharedVariant;
+	globalElement?: SharedVariant;
 	baseUI?: BaseUI;
 	form?: SharedFormConfig;
 	appearance: Appearance;

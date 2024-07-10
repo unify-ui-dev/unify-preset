@@ -26,9 +26,12 @@ const extractRgbaIfContainsAlphaValue = (input: string | undefined) => {
 	return match ? match[1] : null;
 };
 
-export const getVariableBgValue = (body: string, theme: Theme) => {
+export const getVariableBgValue = (body: string, theme: Theme, withAlpha?: boolean) => {
 	const color = parseColor(body, theme);
 	const extractedColor = extractRgbaIfContainsAlphaValue(color?.color);
+
+	if (color?.cssColor?.type === "rgb" && color.cssColor.components && withAlpha)
+		return `${color.cssColor.components.join(",")}`
 	if (color?.cssColor?.type === "rgb" && color.cssColor.components)
 		return `rgb(${color.cssColor.components.join(",")})`;
 	if (
@@ -36,7 +39,7 @@ export const getVariableBgValue = (body: string, theme: Theme) => {
 		color.cssColor.components &&
 		extractedColor
 	)
-		return `var(${extractedColor})`;
+		return `rgba(${extractedColor})`;
 	return color?.color;
 };
 

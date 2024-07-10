@@ -31,7 +31,8 @@
   "author": "Johnkat MJ",
   "license": "MIT",
   "dependencies": {
-    "@unifydev/unify-variant": "^0.0.2"
+    "@unifydev/unify-variant": "latest",
+    "@unifydev/preset-bg":"latest"
   },
   "devDependencies": {
     "@biomejs/biome": "1.6.2",

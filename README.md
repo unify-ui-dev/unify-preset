@@ -17,14 +17,7 @@ Preset UI stands at the forefront of UI customization, offering a comprehensive 
 
 [Read more here](./packages/preset-ui/README.md)
 
-
-### UnifyVariant
-
-This is a preset package that provides variants for Components Libraries based on data-state attribute value, and help to create custom variant selector.
-
-[Know more here](./packages/unify-variant/README.md)
-
-### Install Preset UI
+#### Install Preset UI
 
 ```bash
 npm i -D @unifydev/preset-ui
@@ -33,6 +26,14 @@ yarn add @unifydev/preset-ui -D
 # or
 pnpm add @unifydev/preset-ui -D
 ```
+
+### UnifyVariant
+
+This is a preset package that provides variants for Components Libraries based on data-state attribute value, and help to create custom variant selector.
+
+[Know more here](./packages/unify-variant/README.md)
+
+
 
 Install also `@julr/unocss-preset-forms` in case you'll form controls.
 
@@ -85,8 +86,7 @@ export default defineConfig({
 
 ```
 
-### Use UnifyPreset
-
+### Use PresetUI
 
 ```html
 <div class="space-y-6">
@@ -141,6 +141,3 @@ Contribute, collaborate, and become a part of our mission 🚀
 If you like this project and want to support us, feel free to get in touch with one of maintainers : 
 
 - [johnkatembue4@gmail.com](mailto:johnkatembue4@gmail.com)
-
-
-
