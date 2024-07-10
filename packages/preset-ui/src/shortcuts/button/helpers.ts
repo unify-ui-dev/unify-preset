@@ -7,94 +7,105 @@ import type {
 	BtnWhite,
 	GradientBtn,
 } from "./types";
-import { getBackgroundOpacity } from "../shortcut_helper";
+
+import { getVariableBgValue } from "@/rules/utils";
+import { getRealOpacityValue } from "../shortcut_helper";
 
 export const genBtnVariantWhite = ({
 	solid,
 	appearance,
-}: { solid: BtnWhite|undefined; appearance: Appearance }) => {
+}: { solid: BtnWhite | undefined; appearance: Appearance }) => {
 	if (!solid) {
 		return '';
 	}
 	const { bg, hoverBg, pressBg, textColor, dark } = solid;
 	const btnvariantLight = `${appearance === "light" || appearance === "both"
-		? `b b-gray-200/60 bg-${bg} hover-bg-${hoverBg} active-bg-${pressBg} text-${textColor} focus-visible-outline-${hoverBg}`
+		? `b b-gray-200 bg-${bg} hover-bg-${hoverBg} active-bg-${pressBg} text-${textColor} focus-visible-outline-${textColor}`
 		: ""
 		} `;
 
 	const variantDark = dark ? `${appearance === "dark"
-		? `b b-gray-800/60 bg-${dark.bg} hover-bg-${dark.hoverBg} active-bg-${dark.pressBg} text-${dark.textColor} focus-visible-outline-${dark.hoverBg}`
+		? `b b-gray-800 bg-${dark.bg} hover-bg-${dark.hoverBg} active-bg-${dark.pressBg} text-${dark.textColor} focus-visible-outline-${dark.textColor}`
 		: appearance === "both"
-			? `dark-b-gray-800/60 dark-bg-${dark.bg} dark-hover-bg-${dark.hoverBg} dark-active-bg-${dark.pressBg} dark-text-${dark.textColor} dark-focus-visible-outline-${dark.hoverBg}`
+			? `dark-b-gray-800 dark-bg-${dark.bg} dark-hover-bg-${dark.hoverBg} dark-active-bg-${dark.pressBg} dark-text-${dark.textColor} dark-focus-visible-outline-${dark.textColor}`
 			: ""
 		}` : '';
-	return `${btnvariantLight} ${variantDark}`;
+	return `${btnvariantLight} ${variantDark} focus-visible-outline focus-visible-outline-offset-2 
+		focus-visible-outline-2`;
 };
 
 export const genBtnVariantSolid = ({
 	color,
 	shades,
 	appearance,
+	theme
 }: {
 	color: string;
 	shades: SolidBtnShade;
 	appearance: Appearance;
-	removeDefaultTextColor?: boolean;
+	theme: object
 }) => {
 	if (color === "neutral")
-		return `${genBtnVariantSolidNeutral({ appearance })}`;
+		return `${genBtnVariantSolidNeutral({ appearance, theme })}`;
 	const { bgShade, hoverBgShade, pressBgShade, dark } = shades;
 
 	const bgDark = getShortcutsIfNotSame({
 		val1: `${color}-${bgShade}`,
 		val2: `${color}-${dark?.bgShade}`,
-		shortcuts: `dark-bg-${color}-${dark?.bgShade}`,
+		shortcuts: `dark-[--btn-solid-color:${getVariableBgValue(`${color}-${dark?.bgShade}`, theme)}]`,
 	});
 	const bgHover = getShortcutsIfNotSame({
 		val1: `${color}-${hoverBgShade}`,
 		val2: `${color}-${dark?.hoverBgShade}`,
-		shortcuts: `dark-hover-bg-${color}-${dark?.hoverBgShade} dark-focus-visible-outline-${color}-${dark?.hoverBgShade}`,
+		shortcuts: `dark-[--btn-solid-color-hover:${getVariableBgValue(`${color}-${dark?.hoverBgShade}`, theme)}]`,
 	});
 	const activeBg = getShortcutsIfNotSame({
 		val1: `${color}-${pressBgShade}`,
 		val2: `${color}-${dark?.pressBgShade}`,
-		shortcuts: ` dark-active-bg-${color}-${dark?.pressBgShade}`,
+		shortcuts: ` dark-[--btn-solid-color-press:${getVariableBgValue(`${color}-${dark?.pressBgShade}]`, theme)}]`,
 	});
 
 	const shadowLight = `unify-internal-btn-solid-base-${color}-${bgShade} hover-unify-internal-btn-solid-base-${color}-${hoverBgShade}`;
-	const shadowDark = `unify-internal-btn-solid-base-${color}-${dark?.bgShade} hover-unify-internal-btn-solid-base-${color}-${dark?.hoverBgShade}`;
-	const darkBoth = `
+	const shadowDark = dark ? `unify-internal-btn-solid-base-${color}-${dark.bgShade} hover-unify-internal-btn-solid-base-${color}-${dark.hoverBgShade}` : '';
+	const darkBoth = dark ? `
     ${getShortcutsIfNotSame({
 		val1: `${color}-${bgShade}`,
 		val2: `${color}-${dark?.bgShade}`,
-		shortcuts: `dark-unify-internal-btn-solid-base-${color}-${dark?.bgShade}`,
+		shortcuts: `dark-unify-internal-btn-solid-base-${color}-${dark.bgShade}`,
 	})}
     ${getShortcutsIfNotSame({
 		val1: `${color}-${bgShade}`,
-		val2: `${color}-${dark?.bgShade}`,
-		shortcuts: `dark-hover-unify-internal-btn-solid-base-${color}-${dark?.hoverBgShade}`,
+		val2: `${color}-${dark.bgShade}`,
+		shortcuts: `dark-hover-unify-internal-btn-solid-base-${color}-${dark.hoverBgShade}`,
 	})}
-    `;
+    `: '';
 
 	const btnvariantDefault = `${appearance === "light" || appearance === "both"
-		? `${shadowLight} bg-${color}-${bgShade} hover-bg-${color}-${hoverBgShade} active-bg-${color}-${pressBgShade} focus-visible-outline-${color}-${hoverBgShade}`
-		: ""
-		} `;
+		? `${shadowLight} 
+			[--btn-solid-color:${getVariableBgValue(`${color}-${bgShade}`, theme)}]
+			[--btn-solid-color-hover:${getVariableBgValue(`${color}-${hoverBgShade}`, theme)}] 
+			[--btn-solid-color-press:${getVariableBgValue(`${color}-${pressBgShade}`, theme)}]`
+		: ""} `;
 
 	const variantDark = dark ? `${appearance === "dark"
-		? `${shadowDark} bg-${color}-${dark?.bgShade} hover-bg-${color}-${dark?.hoverBgShade} active-bg-${color}-${dark?.pressBgShade} focus-visible-outline-${color}-${dark?.hoverBgShade}`
+		? `${shadowDark} 
+		[--btn-solid-color:${getVariableBgValue(`${color}-${dark.bgShade}`, theme)}] 
+		[--btn-solid-color-hover:${getVariableBgValue(`${color}-${dark.hoverBgShade}`, theme)}] 
+		[--btn-solid-color-press:${getVariableBgValue(`${color}-${dark.pressBgShade}`, theme)}] 
+		`
 		: appearance === "both"
 			? `${bgDark} ${bgHover} ${activeBg} ${darkBoth}`
 			: ""
 		}` : '';
-	return `${btnvariantDefault} ${variantDark}`;
+	return `${btnvariantDefault} ${variantDark} [--btn-focus-outline-color:var(--btn-solid-color-hover)]`;
 };
 
 export const genBtnVariantOutline = ({
 	color,
 	appearance,
 	outlineShades,
-}: { color: string; appearance: Appearance; outlineShades: formOutline }) => {
+	theme
+}: { color: string; appearance: Appearance; outlineShades: formOutline, theme: object }) => {
 	const { borderSize, textShade, borderShade, hoverBorderShade, hoverTextShade, dark } = outlineShades;
 
 	const borderSize_ = borderSize ? borderSize : 1;
@@ -102,41 +113,54 @@ export const genBtnVariantOutline = ({
 	if (color === "neutral")
 		return `${genBtnVariantOutlineNeutral({
 			appearance,
-			borderSize: borderSize_ ,
+			borderSize: borderSize_,
+			theme
 		})}`;
 
 	const variantLight = `${appearance === "light" || appearance === "both"
-		? `bg-transparent hover-bg-${color}-${textShade}/10 border-${color}-${borderShade} hover-border-${color}-${hoverBorderShade} text-${color}-${textShade} hover-text-${color}-${hoverTextShade} focus-visible-outline-${color}-${hoverBorderShade}`
+		? ` 
+		[--btn-outline-color:${getVariableBgValue(`${color}-${borderShade}`, theme)}] 
+		[--btn-outline-border-hover:${getVariableBgValue(`${color}-${hoverBorderShade}`, theme)}] 
+		[--btn-outline-text-color:${getVariableBgValue(`${color}-${textShade}`, theme)}] 
+		[--btn-outline-text-color-hover:${getVariableBgValue(`${color}-${hoverTextShade}`, theme)}]`
 		: ""
 		}`;
 
 	const variantDark = dark ? `${appearance === "dark"
-		? `bg-transparent hover-bg-${color}-${dark?.textShade}/10 border-${color}-${dark?.borderShade} hover-border-${color}-${dark?.hoverBorderShade} text-${color}-${dark?.textShade} hover-text-${color}-${dark?.hoverTextShade} focus-visible-outline-${color}-${dark?.hoverBorderShade}`
+		? `bg-transparent 
+		
+
+		[--btn-outline-color:${getVariableBgValue(`${color}-${dark.borderShade}`, theme)}] 
+		[--btn-outline-border-hover:${getVariableBgValue(`${color}-${dark.hoverBorderShade}`, theme)}] 
+		[--btn-outline-text-color:${getVariableBgValue(`${color}-${dark.textShade}`, theme)}] 
+		[--btn-outline-text-color-hover:${getVariableBgValue(`${color}-${dark.hoverTextShade}`, theme)}]
+
+		hover-bg-${color}-${dark?.textShade}/10 border-${color}-${dark?.borderShade} hover-border-${color}-${dark?.hoverBorderShade} text-${color}-${dark?.textShade} hover-text-${color}-${dark?.hoverTextShade} focus-visible-outline-${color}-${dark?.hoverBorderShade}`
 		: appearance === "both"
 			? `
             ${getShortcutsIfNotSame({
 				val1: `${borderShade}`,
 				val2: `${dark?.borderShade}`,
-				shortcuts: `dark-border-${color}-${dark?.borderShade}`,
+				shortcuts: `dark-[--btn-outline-color:${getVariableBgValue(`${color}-${dark?.borderShade}`, theme)}]`,
 			})}
             ${getShortcutsIfNotSame({
 				val1: `${textShade}`,
 				val2: `${dark?.textShade}`,
-				shortcuts: `dark-text-${color}-${dark?.textShade} dark-hover-bg-${color}-${dark?.textShade}/10`,
+				shortcuts: `dark-[--btn-outline-text-color:${getVariableBgValue(`${color}-${dark.textShade}`, theme)}] `,
 			})}
             ${getShortcutsIfNotSame({
 				val1: `${hoverBorderShade}`,
 				val2: `${dark?.hoverBorderShade}`,
-				shortcuts: `dark-hover-border-${color}-${dark?.hoverBorderShade} dark-focus-visible-outline-${color}-${dark?.hoverBorderShade}`,
+				shortcuts: `dark-[--btn-outline-border-hover:${getVariableBgValue(`${color}-${dark.hoverBorderShade}`, theme)}]`,
 			})}
             ${getShortcutsIfNotSame({
 				val1: `${hoverTextShade}`,
 				val2: `${dark?.hoverTextShade}`,
-				shortcuts: `dark-hover-text-${color}-${dark?.hoverTextShade}`,
+				shortcuts: `dark-[--btn-outline-text-color-hover:${getVariableBgValue(`${color}-${dark.hoverTextShade}`, theme)}]`,
 			})}`
 			: ""
 		}` : '';
-	return `border-${getConfigValue(borderSize_)} ${variantLight} ${variantDark}`;
+	return `border-${getConfigValue(borderSize_)} ${variantLight} ${variantDark} [--btn-focus-outline-color:var(--btn-outline-border-hover)]`;
 };
 
 export const genBtnVariantSoftOrGost = ({
@@ -144,51 +168,68 @@ export const genBtnVariantSoftOrGost = ({
 	appearance,
 	ghostOrSoft,
 	variant,
+	theme
 }: {
 	color: string;
 	appearance: Appearance;
 	ghostOrSoft: BtnGhostOrSoft;
 	variant: "soft" | "ghost";
+	theme: object
 }) => {
 	if (color === "neutral") {
-		return `${genNeutralSoftGhost({ variant, appearance })}`;
+		return `${genNeutralSoftGhost({ variant, appearance, theme })}`;
 	}
 
 	const { bgShade, bgOpacity, hoverBgOpacity, hoverBgShade, textShade, pressBgShade, pressOpacity, dark } = ghostOrSoft;
 	const variantLight = `${appearance === "light" || appearance === "both"
-		? `${variant === "ghost" ? "" : `bg-${color}-${bgShade}`}${getBackgroundOpacity(bgOpacity)} 
-		hover-bg-${color}-${hoverBgShade}/${getConfigValue(hoverBgOpacity)} active-bg-${color}-${pressBgShade}/${getConfigValue(pressOpacity)} text-${color}-${textShade || 600
-		} focus-visible-outline-${color}-${textShade || 600}`
+		? `
+		${variant === "ghost" ? "" :
+			`
+				[--btn-soft-bg-color:rgba(${getVariableBgValue(`${color}-${bgShade}`, theme, true)},${getRealOpacityValue(bgOpacity as number)})]
+			`
+		}
+		 [--btn-soft-bg-color-hover:rgba(${getVariableBgValue(`${color}-${hoverBgShade}`, theme, true)},${getRealOpacityValue(hoverBgOpacity)})]
+		 [--btn-soft-bg-color-press:rgba(${getVariableBgValue(`${color}-${pressBgShade}`, theme, true)},${getRealOpacityValue(pressOpacity)})]
+		 [--btn-soft-text-color:${getVariableBgValue(`${color}-${textShade}`, theme)}]`
 		: ""
 		}`;
 
 	const variantDark = dark ? `${appearance === "dark"
-		? `${variant === "ghost" ? "" : `bg-${color}-${dark?.bgShade}`
-		}${getBackgroundOpacity(dark?.bgOpacity)} hover-bg-${color}-${dark?.hoverBgShade
-		}/${getConfigValue(dark?.hoverBgOpacity)} active-bg-${color}-${dark?.pressBgShade
-		}/${getConfigValue(dark?.pressOpacity)} text-${color}-${dark?.textShade || 500
-		} focus-visible-outline-${color}-${dark?.textShade || 500}`
+		? `
+			${variant === "ghost" ? "" :
+			`
+				[--btn-soft-bg-color:rgba(${getVariableBgValue(`${color}-${dark.bgShade}`, theme, true)},${getRealOpacityValue(dark.bgOpacity as number)})] 
+			`
+		}
+		 [--btn-soft-bg-color-hover:rgba(${getVariableBgValue(`${color}-${dark.hoverBgShade}`, theme, true)},${getRealOpacityValue(dark.hoverBgOpacity)})] 
+		 [--btn-soft-bg-color-press:rgba(${getVariableBgValue(`${color}-${dark.pressBgShade}`, theme, true)},${getRealOpacityValue(dark.pressOpacity)})]
+		 [--btn-soft-text-color:${getVariableBgValue(`${color}-${dark.textShade}`, theme)}]
+		`
 		: appearance === "both"
-			? `${variant === "ghost" ? "" : `dark-bg-${color}-${dark?.bgShade}`
-			}${getBackgroundOpacity(dark?.bgOpacity)} dark-hover-bg-${color}-${dark?.hoverBgShade
-			}/${getConfigValue(dark?.hoverBgOpacity)} dark-active-bg-${color}-${dark?.pressBgShade
-			}/${getConfigValue(dark?.pressOpacity)} dark-text-${color}-${dark?.textShade || 500
-			} dark-focus-visible-outline-${color}-${dark?.textShade || 500}`
-			: ""
+			? `${variant === "ghost" ? "" :
+				`
+				dark-[--btn-soft-bg-color:rgba(${getVariableBgValue(`${color}-${dark.bgShade}`, theme, true)},${getRealOpacityValue(dark.bgOpacity as number)})] 
+			`
+			}
+		 dark-[--btn-soft-bg-color-hover:rgba(${getVariableBgValue(`${color}-${dark.hoverBgShade}`, theme, true)},${getRealOpacityValue(dark.hoverBgOpacity)})]
+		 dark-[--btn-soft-bg-color-press:rgba(${getVariableBgValue(`${color}-${dark.pressBgShade}`, theme, true)},${getRealOpacityValue(dark.pressOpacity)})]
+		 dark-[--btn-soft-text-color:${getVariableBgValue(`${color}-${dark.textShade}`, theme)}]` : ""
 		}` : '';
-	return `${variantLight} ${variantDark}`;
+	return `${variantLight} ${variantDark} [--btn-focus-outline-color:var(--btn-soft-bg-color-hover)]`;
 };
 
 export const genBtnVariantSoft = ({
 	color,
 	appearance,
 	ghostOrSoft,
-}: { color: string; appearance: Appearance; ghostOrSoft: BtnGhostOrSoft }) => {
+	theme
+}: { color: string; appearance: Appearance; ghostOrSoft: BtnGhostOrSoft, theme: object }) => {
 	return `${genBtnVariantSoftOrGost({
 		variant: "soft",
 		color,
 		appearance,
 		ghostOrSoft,
+		theme
 	})}`;
 };
 
@@ -196,92 +237,152 @@ export const genBtnVariantGhost = ({
 	color,
 	appearance,
 	ghost: ghostOrSoft,
-}: { color: string; appearance: Appearance; ghost: BtnGhostOrSoft }) => {
+	theme
+}: { color: string; appearance: Appearance; ghost: BtnGhostOrSoft, theme: object }) => {
 	return `${genBtnVariantSoftOrGost({
 		variant: "ghost",
 		color,
 		appearance,
 		ghostOrSoft,
+		theme
 	})}`;
 };
 
+
+
 export const genBtnVariantSolidNeutral = ({
 	appearance,
-}: { appearance: Appearance }) => {
+	theme
+}: { appearance: Appearance, theme: object }) => {
 	const shadowLight = "unify-internal-btn-solid-base-gray-800";
 	const shadowDark = "unify-internal-btn-solid-base-gray-100";
 	const darkBoth =
-		"dark-unify-internal-btn-solid-base-gray-100 hover-dark-unify-internal-btn-solid-base-gray-200";
+		"dark-unify-internal-btn-solid-base-gray-100 dark-hover-unify-internal-btn-solid-base-gray-200";
 
 	const btnvariantLight = `${appearance === "light" || appearance === "both"
-		? `bg-gray-900 ${shadowLight} hover-bg-gray-950 active-bg-gray-700 text-white focus-visible-outline-gray-900`
-		: ""
-		} `;
+		? ` 
+		[--btn-solid-color:${getVariableBgValue('gray-900', theme)}] ${shadowLight}]
+		[--btn-solid-color-hover:${getVariableBgValue('gray-950', theme)}] 
+		[--btn-solid-color-press:${getVariableBgValue('gray-900', theme)}] text-white` : ""}`;
 
 	const variantDark = `${appearance === "dark"
-		? `bg-gray-50 ${shadowDark} hover-bg-gray-100 active-bg-white text-gray-900 focus-visible-outline-gray-50`
+		? `
+		${shadowDark} 
+		[--btn-solid-color:${getVariableBgValue('gray-50', theme)}] ${shadowLight}]
+		[--btn-solid-color-hover:${getVariableBgValue('gray-100', theme)}] 
+		[--btn-solid-color-press:${getVariableBgValue('white', theme)}]
+		text-gray-900`
 		: appearance === "both"
-			? `dark-bg-gray-50 ${darkBoth} dark-hover-bg-gray-100 dark-active-bg-white dark-text-gray-900 dark-focus-visible-outline-gray-900`
-			: ""
-		}`;
-	return `${btnvariantLight} ${variantDark}`;
+			? `${darkBoth} 
+			dark-[--btn-solid-color:${getVariableBgValue('gray-50', theme)}] ${shadowLight}]
+			dark-[--btn-solid-color-press:${getVariableBgValue('white', theme)}] 
+			dark-[--btn-solid-color-hover:${getVariableBgValue('gray-100', theme)}]
+			dark-text-gray-950
+			`: ""}`;
+	return `${btnvariantLight} ${variantDark} [--btn-focus-outline-color:var(--btn-solid-color-hover)]`;
 };
+
 const genBtnVariantOutlineNeutral = ({
 	appearance,
 	borderSize,
-}: { appearance: Appearance; borderSize?: string | number }) => {
+	theme
+}: { appearance: Appearance; borderSize?: string | number, theme: object }) => {
 	const borderSize_ = borderSize ? borderSize : 1;
 	const variantLight = `${appearance === "light" || appearance === "both"
-		? "bg-transparent border-gray-800 hover-bg-gray-100/40 active-bg-gray-100/50 text-gray-800 hover-text-gray-900"
+		? `bg-transparent 
+		[--btn-outline-color:${getVariableBgValue('gray-800', theme)}] 
+		[--btn-outline-border-hover:${getVariableBgValue('gray-900', theme)}] 
+		[--btn-outline-text-color:${getVariableBgValue('gray-800', theme)}] 
+		[--btn-outline-text-color-hover:${getVariableBgValue('gray-900', theme)}]
+		hover-bg-gray-100/40 active-bg-gray-100/50`
 		: ""
 		}`;
 
 	const variantDark = `${appearance === "dark"
-		? "bg-transparent border-white hover-bg-gray-900/30 text-white"
+		? `bg-transparent  
+		[--btn-outline-color:${getVariableBgValue('white', theme)}] 
+		[--btn-outline-border-hover:${getVariableBgValue('gray-100', theme)}] 
+		[--btn-outline-text-color:${getVariableBgValue('white', theme)}] 
+		[--btn-outline-text-color-hover:${getVariableBgValue('gray-100', theme)}]
+		hover-bg-gray-900/30 active-bg-gray-900/50`
 		: appearance === "both"
-			? "dark-border-white dark-hover-bg-gray-900/30 dark-text-white dark-hover-text-white"
+			? `dark-[--btn-outline-color:${getVariableBgValue('white', theme)}] 
+			dark-[--btn-outline-border-hover:${getVariableBgValue('gray-100', theme)}] 
+			dark-[--btn-outline-text-color:${getVariableBgValue('white', theme)}] 
+			dark-[--btn-outline-text-color-hover:${getVariableBgValue('gray-100', theme)}]`
 			: ""
 		}`;
-	return `border-${getConfigValue(borderSize_)} ${variantLight} ${variantDark}`;
+	return `border-${getConfigValue(borderSize_)} ${variantLight} ${variantDark} 
+	[--btn-focus-outline-color:var(--btn-outline-border-hover)]`;
 };
+
 
 const genNeutralSoftGhost = ({
 	appearance,
 	variant,
-}: { variant: "soft" | "ghost"; appearance: Appearance }) => {
+	theme
+}: { variant: "soft" | "ghost"; appearance: Appearance, theme: object }) => {
 	return variant === "soft"
-		? `${genBtnNeutralSoft(appearance)}`
-		: `${genBtnNeutralGhost(appearance)}`;
+		? `${genBtnNeutralSoft(appearance, theme)}`
+		: `${genBtnNeutralGhost(appearance, theme)}`;
 };
 
-const genBtnNeutralGhost = (appearance: Appearance) => {
+const genBtnNeutralGhost = (appearance: Appearance, theme: object) => {
 	const lightV = `${appearance === "light" || appearance === "both"
-		? "hover-bg-gray-900/90 hover-text-white active-bg-gray-900/80 text-gray-900"
-		: ""
+		? `[--btn-soft-bg-color-hover:rgba(${getVariableBgValue("gray-900", theme,true)},.9)]
+		 [--btn-soft-bg-color-press:rgba(${getVariableBgValue("gray-900", theme,true)},.8)]
+		 [--btn-soft-text-color:${getVariableBgValue("gray-900", theme)}]
+		hover-text-white
+		`: ""
 		}`;
 	const darkV = `${appearance === "dark"
-		? "hover-bg-white/90 active-bg-white/60 text-white hover-text-gray-900"
+		? `
+		[--btn-soft-bg-color-hover:rgba(${getVariableBgValue("white", theme,true)},.9)]
+		 [--btn-soft-bg-color-press:rgba(${getVariableBgValue("white", theme,true)},.6)]
+		 [--btn-soft-text-color:${getVariableBgValue("white", theme)}]
+		hover-text-gray-900`
 		: appearance === "both"
-			? "dark-hover-bg-white/90 dark-active-bg-white/60 dark-text-white dark-hover-text-gray-900"
+			? `
+			dark-[--btn-soft-bg-color-hover:rgba(${getVariableBgValue("white", theme,true)},.9)]
+		 dark-[--btn-soft-bg-color-press:rgba(${getVariableBgValue("white", theme,true)},.6)] 
+		 dark-[--btn-soft-text-color:${getVariableBgValue("white", theme)}]
+		 dark-hover-text-gray-900`
 			: ""
 		}`;
 
-	return `bg-transparent ${lightV} ${darkV}`;
+	return `bg-transparent ${lightV} ${darkV}
+	[--btn-focus-outline-color:var(--btn-soft-bg-color-hover)]`;
 };
 
-const genBtnNeutralSoft = (appearance: Appearance) => {
+const genBtnNeutralSoft = (appearance: Appearance, theme: object) => {
 	const lightV = `${appearance === "light" || appearance === "both"
-		? "bg-gray-50 hover-bg-gray-950 hover-text-white active-bg-gray-900 text-gray-900"
+		? `
+		 [--btn-soft-bg-color:rgba(${getVariableBgValue("gray-50", theme, true)},1)]
+		 [--btn-soft-bg-color-hover:rgba(${getVariableBgValue("gray-950", theme, true)},1)]
+		 [--btn-soft-bg-color-press:rgba(${getVariableBgValue("gray-900", theme, true)},1)]
+		 [--btn-soft-text-color:${getVariableBgValue("gray-900", theme)}]
+		 hover-text-white`
 		: ""
 		}`;
 	const darkV = `${appearance === "dark"
-		? "bg-white/4 hover-bg-white active-bg-gray-50 text-white hover-text-gray-900"
+		? `
+		 [--btn-soft-bg-color:rgba(${getVariableBgValue("white", theme, true)},.4)]
+		 [--btn-soft-bg-color-hover:rgba(${getVariableBgValue("white", theme, true)},1)]
+		 [--btn-soft-bg-color-press:rgba(${getVariableBgValue("gray-50", theme, true)},1)]
+		 [--btn-soft-text-color:${getVariableBgValue("white", theme)}]
+		 hover-text-gray-900`
 		: appearance === "both"
-			? "dark-bg-white/4 dark-hover-bg-white dark-active-bg-gray-50 dark-text-white dark-hover-text-gray-900"
+			? `
+		 dark-[--btn-soft-bg-color:rgba(${getVariableBgValue("white", theme, true)},.4)]
+		 dark-[--btn-soft-bg-color-hover:rgba(${getVariableBgValue("white", theme, true)},1)]
+		 dark-[--btn-soft-bg-color-press:rgba(${getVariableBgValue("gray-50", theme, true)},1)]
+		 dark-[--btn-soft-text-color:${getVariableBgValue("white", theme)}]
+		 dark-hover-text-gray-900`
 			: ""
 		}`;
 	return `${lightV} ${darkV}`;
 };
+
 
 export const genBtnVariantSolidNeutralGradient = ({
 	appearance,
@@ -303,52 +404,64 @@ export const genBtnVariantSolidNeutralGradient = ({
 export const genBtnVariantSolidGradient = ({
 	color,
 	gradientShades: gradient,
-	appearance
+	appearance, theme
 }: {
 	color: string;
 	gradientShades: GradientBtn;
 	appearance: Appearance;
+	theme: object
 }) => {
 	if (color === "neutral")
 		return `${genBtnVariantSolidNeutralGradient({ appearance })}`;
 	const { bgShadeFrom, borderShade, hoverShadeFrom, hoverShadeTo, bgShadeTo, dark, useLightForBoth } = gradient;
 
 	const btnvariantLight = `${appearance === "light" || appearance === "both"
-		? `b-${color}-${borderShade} from-${color}-${bgShadeFrom} to-${color}-${bgShadeTo} hover-from-${color}-${hoverShadeFrom} hover-to-${color}-${hoverShadeTo} focus-b-transparent focus-visible-outline-${color}-${bgShadeFrom}`
+		? `[--btn-gradient-border-color:${getVariableBgValue(`${color}-${borderShade}`, theme)}] 
+		[--btn-gradient-color-from:${getVariableBgValue(`${color}-${bgShadeFrom}`, theme)}] 
+		[--btn-gradient-color-to:${getVariableBgValue(`${color}-${bgShadeTo}`, theme)}] 
+		[--btn-gradient-color-from:${getVariableBgValue(`${color}-${hoverShadeFrom}`, theme)}] 
+		[--btn-gradient-color-to:${getVariableBgValue(`${color}-${hoverShadeTo}`, theme)}] 
+		 `
 		: ""
 		} `;
 
-	const variantDark = `${appearance === "dark"
-		? `b-${color}-${dark?.borderShade} from-${color}-${dark?.bgShadeFrom} to-${color}-${dark?.bgShadeTo} hover-from-${color}-${dark?.hoverShadeFrom} hover-to-${color}-${dark?.hoverShadeTo} focus-b-transparent focus-visible-outline-${color}-${dark?.bgShadeFrom}`
+	const variantDark = dark ? `${appearance === "dark"
+		? `
+		[--btn-gradient-border-color:${getVariableBgValue(`${color}-${dark.borderShade}`, theme)}] 
+		[--btn-gradient-color-from:${getVariableBgValue(`${color}-${dark.bgShadeFrom}`, theme)}] 
+		[--btn-gradient-color-to:${getVariableBgValue(`${color}-${dark.bgShadeTo}`, theme)}] 
+		[--btn-gradient-hover-color-from:${getVariableBgValue(`${color}-${dark.hoverShadeFrom}`, theme)}] 
+		[--btn-gradient-hover-color-to:${getVariableBgValue(`${color}-${dark.hoverShadeTo}`, theme)}]
+		`
 		: appearance === "both"
 			? `${getShortcutsIfNotSame({
 				val1: `${borderShade}`,
 				val2: `${dark?.borderShade}`,
-				shortcuts: `dark-b-${color}-${dark?.borderShade}`,
+				shortcuts: `[--btn-gradient-border-color:${getVariableBgValue(`${color}-${dark.borderShade}`, theme)}]`,
 			})} 
             ${getShortcutsIfNotSame({
 				val1: `${bgShadeFrom}`,
 				val2: `${dark?.bgShadeFrom}`,
-				shortcuts: `dark-from-${color}-${dark?.bgShadeFrom}  dark-focus-visible-outline-${color}-${dark?.bgShadeFrom}`,
+				shortcuts: `[--btn-gradient-color-from:${getVariableBgValue(`${color}-${dark.bgShadeFrom}`, theme)}]`,
 			})}
             ${getShortcutsIfNotSame({
 				val1: `${bgShadeTo}`,
 				val2: `${dark?.bgShadeTo}`,
-				shortcuts: `dark-to-${color}-${dark?.bgShadeTo}`,
+				shortcuts: `[--btn-gradient-color-to:${getVariableBgValue(`${color}-${dark.bgShadeTo}`, theme)}]`,
 			})}
             ${getShortcutsIfNotSame({
 				val1: `${hoverShadeFrom}`,
 				val2: `${dark?.hoverShadeFrom}`,
-				shortcuts: `dark-hover-from-${color}-${dark?.hoverShadeFrom}`,
+				shortcuts: `[--btn-gradient-hover-color-from:${getVariableBgValue(`${color}-${dark.hoverShadeFrom}`, theme)}]`,
 			})}
             ${getShortcutsIfNotSame({
 				val1: `${hoverShadeTo}`,
 				val2: `${dark?.hoverShadeTo}`,
-				shortcuts: `dark-hover-to-${color}-${dark?.hoverShadeTo}`,
+				shortcuts: `[--btn-gradient-hover-color-to:${getVariableBgValue(`${color}-${dark.hoverShadeFrom}`, theme)}]`,
 			})}
              `
 			: ""
-		}`;
-	return `bg-gradient-to-b b active-opacity-90 ${btnvariantLight} ${useLightForBoth ? "" : variantDark
+		}` : '';
+	return `${btnvariantLight} ${useLightForBoth ? "" : variantDark
 		}`;
 };

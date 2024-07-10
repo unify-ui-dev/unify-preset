@@ -212,7 +212,6 @@ const btnGradient: GradientBtn = {
 
 
 const solidVariants: BtnSolidVariants = {
-	
 	base: {
 		primary: solidShade,
 		secondary: solidShade,
@@ -239,7 +238,6 @@ const softVariants: BtnSoftVariants = {
 	global: softConfig
 }
 const ghostVariants: BtnGhostVariants = {
-	
 	base: {
 		primary: ghostConfig,
 		secondary: ghostConfig,
@@ -256,7 +254,6 @@ const gradientVariants: BtnGradientVariants = {
 	global: btnGradient
 }
 const outlineVariants: BtnOutlineVariants = {
-	
 	base: {
 		primary: btnOutline,
 		secondary: btnOutline,
