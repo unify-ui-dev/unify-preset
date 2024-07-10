@@ -45,7 +45,7 @@ yarn add @unifydev/preset-ui -D
 pnpm add @unifydev/preset-ui -D
 ```
 
-Install also `@julr/unocss-preset-forms` in case you'll form controls.
+Install also `@julr/unocss-preset-forms` in case you'll need to use form controls.
 
 ```bash
 npm i -D @julr/unocss-preset-forms

@@ -4,6 +4,7 @@ import { getAllShortcut } from "./shortcuts/";
 import { getAllRules } from "./rules";
 import { getAllVariants } from "./variants";
 import { theme } from "./ui-theme";
+import { presetBg } from "@unifydev/preset-bg";
 
 /**
  * presetUI
@@ -14,7 +15,7 @@ function presetUI(config?: presetUiConfig): Preset {
 	const appearance = config?.appearance || "both";
 	const shortcuts = getAllShortcut({
 		components: config?.components,
-		sharedElementVariant: config?.ui?.element,
+		globalElement: config?.ui?.globalElement,
 		appearance,
 		baseUI: config?.baseUi,
 		form: config?.ui?.form,
@@ -23,12 +24,17 @@ function presetUI(config?: presetUiConfig): Preset {
 	const rules = getAllRules(appearance);
 	const variants = getAllVariants(config?.prefixDataStateVariant || "fx");
 
+	const presets = [
+		presetBg(),
+	]
+
 	return {
 		name: "unify-preset",
 		variants,
 		shortcuts,
 		rules,
 		theme,
+		presets
 	};
 }
 

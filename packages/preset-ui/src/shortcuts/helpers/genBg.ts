@@ -21,7 +21,7 @@ export const genUiBackground = ({
 	if (color === "neutral") {
 		return `${genVariantSolidNeutral({ appearance })}`;
 	}
-	const { shade, dark } = colorShades;
+	const { shade: shade, dark } = colorShades;
 
 	const variantLight = `${appearance === "light" || appearance === "both" ? `bg-${color}-${shade}` : ""} `;
 
@@ -65,7 +65,7 @@ export const genOutline = ({
 }) => {
 	if (color === "neutral")
 		return `${genOutlineNeutral({ appearance, prefix })}`;
-	const { shade, dark } = border
+	const { shade: shade, dark } = border
 
 	const variantLight = `${appearance === "light" || appearance === "both"
 		? `${prefix}-${color}-${shade}`

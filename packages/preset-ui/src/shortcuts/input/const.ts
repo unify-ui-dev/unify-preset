@@ -1,5 +1,5 @@
 import type { ElSizeVariants, RingBase } from "@/types";
-import type { InputBorder, InputPlaceHolder } from "./types";
+import type { InputBg, InputBorder, InputPlaceHolder } from "./types";
 
 export const defRingBase: RingBase = {
 	size: 2,
@@ -39,7 +39,7 @@ export const InputSizes: ElSizeVariants = {
 	},
 }
 
-export const InputBg = {
+export const InputBg_:InputBg = {
 	normalGray: {
 		shade: "100",
 		dark: { shade: "900" }

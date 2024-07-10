@@ -90,39 +90,36 @@ export const getAllRules = (appearance: Appearance) => {
 				if (variantHandlers.length) return;
 				const selector = e(rawSelector);
 				return `
-${
-	appearance === "light" || appearance === "both"
-		? `
+${appearance === "light" || appearance === "both"
+						? `
 ${selector}{
     --range-track-bg: ${getVariableBgValue(
-			getBarShades(name as BarShade).light,
-			theme,
-		)}
+							getBarShades(name as BarShade).light,
+							theme,
+						)}
 }`
-		: ""
-}
- ${
-		appearance === "dark"
-			? `
+						: ""
+					}
+ ${appearance === "dark"
+						? `
 ${selector}{
     --range-track-bg: ${getVariableBgValue(
-			getBarShades(name as BarShade).dark,
-			theme,
-		)}
+							getBarShades(name as BarShade).dark,
+							theme,
+						)}
 }`
-			: ""
- }
-${
-	appearance === "both"
-		? `
+						: ""
+					}
+${appearance === "both"
+						? `
 .dark ${selector}{
     --range-track-bg: ${getVariableBgValue(
-			getBarShades(name as BarShade).dark,
-			theme,
-		)} !important
+							getBarShades(name as BarShade).dark,
+							theme,
+						)} !important
 }`
-		: ""
-}`;
+						: ""
+					}`;
 			},
 			{ autocomplete: "range-track-bg-(light|gray|high|higher)" },
 		],
@@ -145,39 +142,36 @@ ${
 				if (variantHandlers.length) return;
 				const selector = e(rawSelector);
 				return `
-${
-	appearance === "light" || appearance === "both"
-		? `
+${appearance === "light" || appearance === "both"
+						? `
 ${selector}{
     --progress-bar-bg: ${getVariableBgValue(
-			getBarShades(name as BarShade).light,
-			theme,
-		)}
+							getBarShades(name as BarShade).light,
+							theme,
+						)}
 }`
-		: ""
-}
- ${
-		appearance === "dark"
-			? `
+						: ""
+					}
+ ${appearance === "dark"
+						? `
 ${selector}{
     --progress-bar-bg: ${getVariableBgValue(
-			getBarShades(name as BarShade).dark,
-			theme,
-		)}
+							getBarShades(name as BarShade).dark,
+							theme,
+						)}
 }`
-			: ""
- }
-${
-	appearance === "both"
-		? `
+						: ""
+					}
+${appearance === "both"
+						? `
 .dark ${selector}{
     --progress-bar-bg: ${getVariableBgValue(
-			getBarShades(name as BarShade).dark,
-			theme,
-		)}
+							getBarShades(name as BarShade).dark,
+							theme,
+						)}
 }`
-		: ""
-}`;
+						: ""
+					}`;
 			},
 			{ autocomplete: "progress-bar-bg-(light|gray|high|higher)" },
 		],
@@ -211,12 +205,8 @@ ${selector}::-moz-progress-bar{
 				const shadowBottom = `${colorName}-${shadowBottomColorShades}`;
 				const shadowTop = `${colorName}-${shadowTopColorShades}`;
 				return {
-					"background-image":
-						"radial-gradient(farthest-corner at 50% -50%, rgba(255, 255, 255, .1) 0%, transparent 100%)",
-					"box-shadow": `inset 0px 2px 0 ${getVariableBgValue(
-						shadowTop,
-						theme,
-					)}, inset 0px -2px 0 ${getVariableBgValue(shadowBottom, theme)}`,
+					"--btn-solid-top-shadow": `${getVariableBgValue(shadowTop, theme)}`,
+					"--btn-solid-bottom-shadow": `${getVariableBgValue(shadowBottom, theme)}`,
 				};
 			},
 		],

@@ -1,4 +1,4 @@
-import type { Appearance, BaseColor, BaseUI, BorderPrefix, SharedVariant } from "@/types";
+import type { Appearance, BaseColor, BaseUI, BorderPrefix } from "@/types";
 import {
 	genTextColor,
 	genVariantWhiteBlack,
@@ -9,11 +9,11 @@ import { helperDefaultValues } from "../helpers";
 import { isValidColor } from "@/utils/colors-utils";
 import type { Shortcut } from "unocss";
 
+
 const getGeneralShortcuts = ({
 	uiConfig,
 	globalElement,
 }: {
-	sharedConfig?: SharedVariant;
 	globalElement?: BaseUI;
 	uiConfig: { appearance: Appearance };
 }) => {
@@ -73,6 +73,11 @@ const getGeneralShortcuts = ({
 		"d-flex-items-end": "flex items-end",
 		"d-flex-between": "flex justify-between",
 		"d-flex-place-center": "flex justify-center items-center",
+
+		// pseudo before and after 
+		"before-empty": "before-absolute before-content-empty",
+		"after-empty": "after-absolute after-content-empty",
+		"before-after-empty": "before-absolute before-content-empty after-absolute after-content-empty",
 	};
 
 

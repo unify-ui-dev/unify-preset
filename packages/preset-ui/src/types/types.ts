@@ -23,7 +23,7 @@ export type SharedFormConfig = {
 };
 
 export type SharedUiConfig = {
-	element?: SharedVariant;
+	globalElement?: SharedVariant;
 	form?: SharedFormConfig;
 };
 
