@@ -32,6 +32,8 @@ export const getVariableBgValue = (body: string, theme: Theme, withAlpha?: boole
 
 	if (color?.cssColor?.type === "rgb" && color.cssColor.components && withAlpha)
 		return `${color.cssColor.components.join(",")}`
+	if(color?.cssColor?.type === 'rgba' && color.cssColor.components && withAlpha)
+		return `${color.cssColor.components.join(",")}`
 	if (color?.cssColor?.type === "rgb" && color.cssColor.components)
 		return `rgb(${color.cssColor.components.join(",")})`;
 	if (
@@ -39,7 +41,7 @@ export const getVariableBgValue = (body: string, theme: Theme, withAlpha?: boole
 		color.cssColor.components &&
 		extractedColor
 	)
-		return `rgba(${extractedColor})`;
+		return `rgb(${color.cssColor.components.join(",")})`;
 	return color?.color;
 };
 

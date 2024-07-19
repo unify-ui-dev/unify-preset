@@ -1,9 +1,9 @@
-import type { BtnGhostOrSoft, BtnGhostVariants, BtnGradientVariants, BtnIconBase, BtnOutlineVariants, BtnSizeBase, BtnSoftVariants, Button, GradientBtn, SemanticColorNames, SolidBtnShade } from "./types";
+import type { BtnGhostOrSoft, BtnGhostVariants, BtnGradientVariants, BtnIconBase, BtnOutlineVariants, BtnSizeBase, BtnSoftVariants, Button, GradientBtn, SolidBtnShade } from "./types";
 import { genBtnVariantOutline, genBtnVariantSolid, genBtnVariantSoft, genBtnVariantGhost, genBtnVariantWhite, genBtnVariantSolidGradient, } from "./helpers";
 import { getConfigValue } from "@/utils";
 import { btnCongig } from "./const";
 
-import type { SharedFormConfig, UiConfig, formOutline } from "@/types";
+import type { SemanticColorNames, SharedFormConfig, UiConfig, formOutline } from "@/types";
 import type { Shortcut } from "unocss";
 import { isValidColor } from "@/utils/colors-utils";
 import { genBtnGradientBase, genBtnOutlineBase, genBtnSoftBase, genBtnVariantSolidBase } from "./baseHelpers";

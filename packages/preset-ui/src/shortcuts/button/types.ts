@@ -4,25 +4,12 @@ import type {
 	formOutline,
 	TextSizes,
 	RingBase,
+	BaseVariant,
 } from "@/types";
 
 
-export type SemanticColorNames = 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'danger' | 'gray'
 
-type BaseVariant<T extends object> = {
-	base?: {
-		primary?: T;
-		secondary?: T;
-		accent?: T;
-		success?: T;
-		warning?: T;
-		info?: T;
-		danger?: T;
-		gray?: T;
-	};
-	custom?: Record<string, T>;
-	global?: T;
-};
+
 
 
 export type GhostSoftBase = {
