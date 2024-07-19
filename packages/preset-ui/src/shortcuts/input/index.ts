@@ -64,7 +64,6 @@ const getFormInputShortcuts = ({
 		"form-input-bordered-high": `${genBorderColor({ appearance, color: "gray", border: { shade: inputBdr.high?.shade as ColorShade, dark: inputBdr.high?.dark } })}`,
 		"form-input-bordered-higher": `${genBorderColor({ appearance, color: "gray", border: { shade: inputBdr.higher?.shade as ColorShade, dark: inputBdr.higher?.dark } })}`,
 
-
 		"input-placeholder-light": `${getPlaceHolder({ appearance, placeholder: { shade: placeHolder.light?.shade as ColorShade, dark: placeHolder.light?.dark } })}`,
 		"input-placeholder-lighter": `${getPlaceHolder({ appearance, placeholder: { shade: placeHolder.lighter?.shade as ColorShade, dark: placeHolder.lighter?.dark } })}`,
 		"input-placeholder-lightest": `${getPlaceHolder({ appearance, placeholder: { shade: placeHolder.lightest?.shade as ColorShade, dark: placeHolder.lightest?.dark } })}`,

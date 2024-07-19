@@ -1,3 +1,5 @@
+import { SizeBaseVaraint } from "@/types";
+
 export type BaseSwitchInfo = {
 	width: number | string;
 	height: number | string;
@@ -6,10 +8,5 @@ export type BaseSwitchInfo = {
 	left: number | string;
 };
 
-export type SwitchInfo = {
-	sm?: BaseSwitchInfo;
-	md?: BaseSwitchInfo;
-	lg?: BaseSwitchInfo;
-	xl?: BaseSwitchInfo;
-};
+export type SwitchInfo = SizeBaseVaraint<BaseSwitchInfo>
 export type switchSize = "sm" | "md" | "lg" | "xl";

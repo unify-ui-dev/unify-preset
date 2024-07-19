@@ -3,13 +3,7 @@ import { flexillaShortcuts } from "./flexilla-utils";
 import type { Components } from "./types";
 import { getBtnShortcuts } from "./button";
 import { getBadgeShortcuts } from "./badge";
-import type {
-	Appearance,
-	BaseUI,
-	SharedFormConfig,
-	SharedVariant,
-} from "../types";
-import { getAlertShortcuts } from "./alert";
+import type { Appearance, BaseUI, SharedFormConfig, } from "../types";
 import { getAspectRatioShortcuts } from "./aspect-ratio";
 import { getAvatarShortcuts } from "./avatar";
 import { getCardShortcuts } from "./card";
@@ -20,27 +14,27 @@ import { getKdbShortcuts } from "./kbd";
 import { getAccordionShortcuts } from "./accordion";
 import { getFormCheckboxShortcuts } from "./checkbox";
 import { getFormRadioShortcuts } from "./radio";
-import { getDropdownShortcuts } from "./dropdown";
 import { getMeterShortcuts } from "./meter";
 import { getRangeSlideShortcuts } from "./range";
 import { getProgressBarShortcuts } from "./progress";
 import { getSwitchShortcuts } from "./switch";
+import { getUiShortcuts } from "./ui";
+import type { BaseVariants } from "./ui/types";
 
 export const getAllShortcut = ({
 	components,
-	globalElement: sharedElementVariant,
-	baseUI,
 	form,
+	baseUI,
+	baseVariants,
 	appearance,
 }: {
 	components?: Components;
-	globalElement?: SharedVariant;
+	baseVariants?: BaseVariants,
 	baseUI?: BaseUI;
 	form?: SharedFormConfig;
 	appearance: Appearance;
 }) => {
 	const generalShortcuts = getGeneralShortcuts({
-		sharedConfig: sharedElementVariant,
 		globalElement: baseUI,
 		uiConfig: { appearance: appearance || "both" },
 	});
@@ -50,25 +44,14 @@ export const getAllShortcut = ({
 		uiConfig: { appearance },
 		formConfig: form,
 	});
-	const badge = getBadgeShortcuts(components?.badge, sharedElementVariant, {
-		appearance,
-	});
+	const badge = getBadgeShortcuts(components?.badge);
 
 	const accordion = getAccordionShortcuts(
 		components?.accordion,
-		sharedElementVariant,
-		{ appearance },
 	);
-	const alert = getAlertShortcuts(components?.alert, sharedElementVariant, {
-		appearance,
-	});
 	const aspectRatio = getAspectRatioShortcuts();
-	const avatar = getAvatarShortcuts(components?.avatar, sharedElementVariant, {
-		appearance,
-	});
+	const avatar = getAvatarShortcuts(components?.avatar);
 	const card = getCardShortcuts(
-		components?.card,
-		sharedElementVariant,
 		baseUI,
 		{ appearance },
 	);
@@ -77,32 +60,24 @@ export const getAllShortcut = ({
 		divider: components?.divider,
 		appearance,
 	});
-	const dropdown = getDropdownShortcuts({
-		dropdown: components?.drodpown,
-		sharedConfig: sharedElementVariant,
-		baseUI: baseUI,
-		uiConfig: { appearance },
-	});
+
 	const inputForm = getFormInputShortcuts({
 		input: components?.input,
 		uiConfig: { appearance },
 	});
-	const kbd = getKdbShortcuts({
-		kdb: components?.kbd,
-		sharedConfig: sharedElementVariant,
-		uiConfig: { appearance },
-	});
+	const kbd = getKdbShortcuts({ kdb: components?.kbd });
 
 	const meter = getMeterShortcuts();
 	const progress = getProgressBarShortcuts();
 	const radio = getFormRadioShortcuts({ uiConfig: { appearance } });
 	const range = getRangeSlideShortcuts();
 	const switchShortcuts = getSwitchShortcuts({ appearance });
+
+	const uiShortcuts = getUiShortcuts(baseVariants, { appearance })
 	const shortcuts = [
 		...[flexillaShortcuts],
 		...generalShortcuts,
 		...accordion,
-		...alert,
 		...aspectRatio,
 		...avatar,
 		...badge,
@@ -110,7 +85,6 @@ export const getAllShortcut = ({
 		...card,
 		...checkbox,
 		...divider,
-		...dropdown,
 		...inputForm,
 		...kbd,
 		...meter,
@@ -118,6 +92,7 @@ export const getAllShortcut = ({
 		...radio,
 		...range,
 		...switchShortcuts,
+		...uiShortcuts
 	] as Exclude<Preset["shortcuts"], undefined | StaticShortcutMap>;
 	return shortcuts;
 };

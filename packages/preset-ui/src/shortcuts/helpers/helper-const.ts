@@ -1,4 +1,5 @@
-import type { OutlineVariant, Soft, Subtle, BgUI, BorderUI, RingBase, RingColorShades, BgBodyUi, BaseColor, ElSizeVariants, } from "@/types";
+import type { OutlineVariant, Soft, Subtle, BgUI, BorderUI, RingBase, RingColorShades, BgBodyUi, BaseColor, ElSizeVariants, CardSizeVariant, } from "@/types";
+import { BaseVariants } from "../ui/types";
 
 
 export const uiSizeVariants: ElSizeVariants = {
@@ -9,8 +10,17 @@ export const uiSizeVariants: ElSizeVariants = {
 	xl: { py: 1.25, px: 3, textSize: "base" },
 }
 
+export const cardSizeVariants: CardSizeVariant = {
+	xs: { padding: 2.5, textSize: "xs" },
+	sm: { padding: 3, textSize: "sm" },
+	md: { padding: 4, textSize: "base" },
+	lg: { padding: 6, textSize: "base" },
+	xl: { padding: 8, textSize: "base" },
+}
+
 const defaultSolidShades: BaseColor = {
 	shade: "600",
+	textColor: "white",
 	dark: {
 		shade: "500"
 	}
@@ -18,15 +28,10 @@ const defaultSolidShades: BaseColor = {
 
 const defaultSolidGrayShades: BaseColor = {
 	shade: "100",
+	textColor: "gray-700",
 	dark: {
-		shade: "900"
-	}
-};
-
-const defaultSolidGrayInheritShades: BaseColor = {
-	shade: "200",
-	dark: {
-		shade: "800"
+		shade: "900",
+		textColor: "gray-300"
 	}
 };
 
@@ -229,6 +234,7 @@ const ringGrayConfig: RingColorShades = {
 	dark: "800",
 };
 
+
 export const helperDefaultValues = {
 	ringBase,
 	ringConfig,
@@ -236,7 +242,6 @@ export const helperDefaultValues = {
 	defaultOutlineELement,
 	defaultOutlineGrayELement,
 	defaultSolidGrayShades,
-	defaultSolidGrayInheritShades,
 	defaultSolidShades,
 	defaultSubtle,
 	defaultSubtleGray,
@@ -249,3 +254,34 @@ export const helperDefaultValues = {
 	bdrUI,
 	uiBodyColors,
 };
+
+export const globalUiConfig: BaseVariants = {
+	variants: {
+		solid: {
+			base: {
+				gray: helperDefaultValues.defaultSolidGrayShades
+			},
+			global: helperDefaultValues.defaultSolidShades,
+		},
+		soft: {
+			base: {
+				gray: helperDefaultValues.generalSoftGray,
+			},
+			global: helperDefaultValues.generalSoft
+		},
+		subtle: {
+			base: {
+				gray: helperDefaultValues.defaultSubtleGray
+			},
+			global: helperDefaultValues.defaultSubtle
+		},
+		outline: {
+			base: {
+				gray: helperDefaultValues.defaultOutlineGrayELement
+			},
+			global: helperDefaultValues.defaultOutlineELement
+		}
+	},
+	size: uiSizeVariants,
+	cardSize: cardSizeVariants
+}

@@ -1,10 +1,5 @@
 import type { Appearance, BaseColor, BaseUI, BorderPrefix } from "@/types";
-import {
-	genTextColor,
-	genVariantWhiteBlack,
-	genOutline,
-	genUiBackground,
-} from "../helpers";
+import { genTextColor, genVariantWhiteBlack, genOutline, genUiBackground } from "../helpers";
 import { helperDefaultValues } from "../helpers";
 import { isValidColor } from "@/utils/colors-utils";
 import type { Shortcut } from "unocss";
@@ -47,6 +42,7 @@ const getGeneralShortcuts = ({
 			typoGrayReverse.subTitle,
 		)}`,
 		"text-body": `${genTextColor(appearance, typoGray.text)}`,
+		"text-body-reverse": `${genTextColor(appearance, typoGrayReverse.text)}`,
 		"text-text-reverse": `${genTextColor(appearance, typoGrayReverse.text)}`,
 		"text-sub-body": `${genTextColor(appearance, typoGray.subText)}`,
 		"text-sub-body-reverse": `${genTextColor(
@@ -78,6 +74,15 @@ const getGeneralShortcuts = ({
 		"before-empty": "before-absolute before-content-empty",
 		"after-empty": "after-absolute after-content-empty",
 		"before-after-empty": "before-absolute before-content-empty after-absolute after-content-empty",
+		"before-0-x": "before-empty before-inset-x-0",
+		"before-0-y": "before-empty before-inset-y-0",
+		'before-0': "before-empty before-inset-0",
+		"after-0-x": "after-empty after-inset-x-0",
+		"after-0-y": "after-empty after-inset-y-0",
+		'after-0': "after-empty after-inset-0",
+		"before-after-0-x": "before-empty before-inset-x-0 after-empty inset-x-0",
+		"before-after-0-y": "before-empty before-inset-y-0 after-empty inset-y-0",
+		'before-after-0': "before-empty after-empty before-inset-0 after-inset-0"
 	};
 
 
@@ -88,7 +93,7 @@ const getGeneralShortcuts = ({
 				const uiBg = bg[type as "light" | "nm" | "light_nm" | "nm_light" | "high" | "higher"] as BaseColor
 				if (["light", "nm", "high", "higher", "highest"].includes(type) && isValidColor(color, theme))
 					return `${genUiBackground({
-						color, appearance, colorShades: { shade: uiBg.shade, dark: uiBg.dark }
+						color, appearance, colorShades: { shade: uiBg.shade, ignoreTextColor: true, dark: uiBg.dark }
 					})}`;
 			},
 			{ autocomplete: ["bg-(light_nm|light|nm_light|nm|high|higher)", "bg-(light_nm|light|nm_light|nm|high|higher)-$colors"] },
