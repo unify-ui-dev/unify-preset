@@ -2,27 +2,27 @@ import type { BaseColor } from "@/types";
 
 const cardGray: BaseColor = {
 	shade: "100",
-	textShade: "700",
+	textColor: "700",
 	dark: {
 		shade: "900",
-		textShade: "300",
+		textColor: "300",
 	},
 };
 const cardInnerGray: BaseColor = {
 	shade: "200",
-	textShade: "800",
+	textColor: "800",
 	dark: {
 		shade: "800",
-		textShade: "200",
+		textColor: "200",
 	},
 };
 
 const cardSubInnerGray: BaseColor = {
 	shade: "300",
-	textShade: "800",
+	textColor: "800",
 	dark: {
 		shade: "700",
-		textShade: "100",
+		textColor: "100",
 	},
 };
 

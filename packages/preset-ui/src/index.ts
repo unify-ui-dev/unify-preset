@@ -15,10 +15,10 @@ function presetUI(config?: presetUiConfig): Preset {
 	const appearance = config?.appearance || "both";
 	const shortcuts = getAllShortcut({
 		components: config?.components,
-		globalElement: config?.ui?.globalElement,
 		appearance,
+		baseVariants:config?.baseVariants,
 		baseUI: config?.baseUi,
-		form: config?.ui?.form,
+		form: config?.formShared,
 	});
 
 	const rules = getAllRules(appearance);

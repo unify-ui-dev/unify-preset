@@ -11,8 +11,13 @@ export type ColorShade =
 	| "900"
 	| "950";
 export type Appearance = "light" | "dark" | "both";
+export type SemanticColorNames = 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'danger' | 'gray'
+
+
 
 export type UiConfig = { appearance: Appearance };
+
+export type SizeVariantBase = "xs" | "sm" | "md" | "lg" | "xl"
 export type TextSizes = "xs" | "sm" | "base" | "lg" | "xl" | "2xl";
 
 type BorderPosition = "b" | "t" | "l" | "r" | "x" | "y";
@@ -30,17 +35,21 @@ export type TextTypoColor = {
 	subText: BaseTypoColor;
 };
 
-export type BorderVariant = BaseColor
+
+export type SizeBaseVaraint<T extends object> = {
+	'2xs'?: T;
+	xs?: T;
+	sm?: T;
+	md?: T;
+	lg?: T;
+	xl?: T;
+}
 
 export type ElSizeBase = { py: number | string; px: number | string; textSize: TextSizes }
-export type ElSizeVariants = {
-	'2xs'?: ElSizeBase;
-	xs?: ElSizeBase;
-	sm?: ElSizeBase;
-	md?: ElSizeBase;
-	lg?: ElSizeBase;
-	xl?: ElSizeBase;
-};
+export type CardSizeBase = { padding: number | string; textSize: TextSizes }
+
+export type ElSizeVariants = SizeBaseVaraint<ElSizeBase>
+export type CardSizeVariant = SizeBaseVaraint<CardSizeBase>
 
 export type RingBase = {
 	offset: number;
@@ -69,14 +78,6 @@ export type BaseUiShade = {
 
 
 
-type UiSolidBase = {
-	bgShade: ColorShade,
-	textShade: ColorShade,
-}
-export type UiSolid = UiSolidBase & {
-	dark?: UiSolidBase
-}
-
 export type SubtleBase = {
 	borderShade: ColorShade;
 	borderOpacity: number | string;
@@ -99,27 +100,12 @@ export type OutlineVariant = OutlineBase & {
 };
 
 
-export type SharedVariant = {
-	solid?: BaseColor;
-	solidGray?: BaseColor;
-	ghost?: Soft;
-	soft?: Soft;
-	softActive?: Soft;
-	softGray?: Soft;
-	graySoftActive?: Soft;
-	outlineGray?: OutlineVariant;
-	outline?: OutlineVariant,
-	subtle?: Subtle;
-	subtleActive?: Subtle;
-	subtleGray?: Subtle;
-	graySubtleActive?: Subtle;
-};
-
 type UBaseColor = {
 	shade: ColorShade,
-	textShade?: ColorShade
+	textColor?: string
 }
 export type BaseColor = UBaseColor & {
+	ignoreTextColor?: boolean,
 	dark?: UBaseColor
 };
 
@@ -135,7 +121,21 @@ type UiColorBaseVariants<T extends object> = {
 	nm_light?: T
 }
 
-export type BorderUI = UiColorBaseVariants<BaseColor>;
+export type BaseVariant<T extends object> = {
+	base?: {
+		primary?: T;
+		secondary?: T;
+		accent?: T;
+		success?: T;
+		warning?: T;
+		info?: T;
+		danger?: T;
+		gray?: T;
+	};
+	custom?: Record<string, T>;
+	global?: T;
+};
+export type BorderUI = UiColorBaseVariants<{ shade: ColorShade, dark?: { shade: ColorShade } }>;
 
 export type BgUI = UiColorBaseVariants<BaseColor>;
 

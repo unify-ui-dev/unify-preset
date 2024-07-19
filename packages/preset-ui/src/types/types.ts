@@ -1,9 +1,9 @@
+import type { BaseVariants } from "@/shortcuts/ui/types";
 import type {
 	Appearance,
 	ColorShade,
 	RingColorShades,
 	BaseUI,
-	SharedVariant,
 	RingBase,
 } from ".";
 import type { Components } from "@/shortcuts/types";
@@ -22,10 +22,6 @@ export type SharedFormConfig = {
 	grayRing: RingColorShades;
 };
 
-export type SharedUiConfig = {
-	globalElement?: SharedVariant;
-	form?: SharedFormConfig;
-};
 
 export type formOutlineBase = {
 	borderShade: ColorShade;
@@ -49,7 +45,8 @@ export type formOutline = formOutlineBase & {
 export type presetUiConfig = {
 	appearance?: Appearance;
 	prefixDataStateVariant?: string;
-	ui?: SharedUiConfig;
+	formShared?: SharedFormConfig;
 	components?: Components;
 	baseUi?: BaseUI;
+	baseVariants?: BaseVariants,
 };
