@@ -85,7 +85,7 @@ const defaultOutlineGrayELement: OutlineVariant = {
 	shade: "200",
 	textShade: "700",
 	dark: {
-		shade: "900",
+		shade: "800",
 		textShade: "300",
 	},
 };
