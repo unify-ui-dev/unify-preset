@@ -1,32 +1,23 @@
-import type {
-	Appearance,
-	BorderVariant,
-	BorderPrefix,
-	OutlineVariant,
-	Soft,
-	Subtle,
-	ColorShade,
-	BaseColor,
-} from "@/types";
+import type { Appearance, BorderPrefix, OutlineVariant, Soft, Subtle, ColorShade, BaseColor, } from "@/types";
 import { getConfigValue, getShortcutsIfNotSame } from "@/utils";
 
 import { helperDefaultValues } from "./helper-const";
 import { getBackgroundOpacity } from "../shortcut_helper";
 
-export const genUiBackground = ({
-	color,
-	appearance,
-	colorShades,
-}: { colorShades: BaseColor; color: string; appearance: Appearance }) => {
+export const genUiBackground = ({ color, appearance, colorShades }: { colorShades: BaseColor; color: string; appearance: Appearance }) => {
 	if (color === "neutral") {
 		return `${genVariantSolidNeutral({ appearance })}`;
 	}
-	const { shade: shade, dark } = colorShades;
+	const ignoreText = colorShades.ignoreTextColor
+	const { shade: shade, dark, textColor } = colorShades;
+	const textLight = ignoreText ? '' : textColor && appearance === "light" || appearance === "both" ? `text-${textColor}` : ''
 
-	const variantLight = `${appearance === "light" || appearance === "both" ? `bg-${color}-${shade}` : ""} `;
+	const textDark = ignoreText ? '' : dark?.textColor && appearance === 'dark' ? `text-${dark.textColor}` : ''
+	const textBoth = textColor !== dark?.textColor ? `${ignoreText ? '' : dark?.textColor && appearance === 'both' ? `dark-text-${dark.textColor}` : ''}` : ''
+	const variantLight = `${appearance === "light" || appearance === "both" ? `bg-${color}-${shade} ${textLight}` : ""} `;
 
 	const variantDark = dark ? `${appearance === "dark"
-		? `bg-${color}-${dark.shade}` : appearance === "both" ? `${getShortcutsIfNotSame({
+		? `bg-${color}-${dark.shade} ${textDark}` : appearance === "both" ? `${textBoth} ${getShortcutsIfNotSame({
 			val1: `${shade}`,
 			val2: `${dark.shade}`,
 			shortcuts: `dark-bg-${color}-${dark.shade}`
@@ -34,15 +25,8 @@ export const genUiBackground = ({
 	return `${variantLight} ${variantDark}`;
 };
 
-const genOutlineNeutral = ({
-	appearance,
-	prefix = "border",
-}: {
-	prefix?: BorderPrefix;
-	appearance: Appearance;
-}) => {
-	const variantLight = `${appearance === "light" || appearance === "both" ? `${prefix}-gray-900` : ""
-		}`;
+const genOutlineNeutral = ({ appearance, prefix = "border", }: { prefix?: BorderPrefix, appearance: Appearance; }) => {
+	const variantLight = `${appearance === "light" || appearance === "both" ? `${prefix}-gray-900` : ""}`;
 
 	const variantDark = `${appearance === "dark"
 		? `${prefix}-white`
@@ -52,25 +36,12 @@ const genOutlineNeutral = ({
 		}`;
 	return `${variantLight} ${variantDark}`;
 };
-export const genOutline = ({
-	color,
-	appearance,
-	border,
-	prefix = "border",
-}: {
-	prefix?: BorderPrefix;
-	color: string;
-	appearance: Appearance;
-	border: BorderVariant;
-}) => {
+export const genOutline = ({ color, appearance, border, prefix = "border", }: { prefix?: BorderPrefix; color: string; appearance: Appearance; border: { shade: ColorShade, dark?: { shade: ColorShade } }; }) => {
 	if (color === "neutral")
 		return `${genOutlineNeutral({ appearance, prefix })}`;
 	const { shade: shade, dark } = border
 
-	const variantLight = `${appearance === "light" || appearance === "both"
-		? `${prefix}-${color}-${shade}`
-		: ""
-		}`;
+	const variantLight = `${appearance === "light" || appearance === "both" ? `${prefix}-${color}-${shade}` : ""}`;
 
 	const variantDark = dark ? `${appearance === "dark"
 		? `${prefix}-${color}-${dark.shade}`
@@ -85,19 +56,8 @@ export const genOutline = ({
 	return `${variantLight} ${variantDark}`;
 };
 
-export const genVariantOutline = ({
-	color,
-	appearance,
-	outlineColor,
-	outlineGray,
-}: {
-	color: string;
-	appearance: Appearance;
-	outlineColor: OutlineVariant;
-	outlineGray: OutlineVariant;
-}) => {
-	const { borderSize, shade, textShade, dark } =
-		color === "gray" ? outlineGray : outlineColor;
+export const genVariantOutline = ({ color, appearance, outlineColor, }: { color: string; appearance: Appearance; outlineColor: OutlineVariant; }) => {
+	const { borderSize, shade, textShade, dark } = outlineColor;
 	const borderSize_ = borderSize ? borderSize : 1;
 	if (color === "neutral")
 		return `${genVariantOutlineNeutral({
@@ -134,15 +94,7 @@ export const genVariantOutline = ({
 	return `b ${getBorderValue}  ${variantLight} ${variantDark}`;
 };
 
-export const genBorderColor = ({
-	appearance,
-	color,
-	border,
-}: {
-	appearance: Appearance;
-	color: string,
-	border: { shade: ColorShade; dark?: ColorShade };
-}) => {
+export const genBorderColor = ({ appearance, color, border, }: { appearance: Appearance; color: string, border: { shade: ColorShade; dark?: ColorShade }; }) => {
 	const { shade, dark } = border;
 	const lightUtilities = `
         ${appearance === "light" || appearance === "both"
@@ -161,11 +113,7 @@ export const genBorderColor = ({
 	return `${lightUtilities} ${darkUtilities}`;
 };
 
-export const genVariantSoft = ({
-	color: color_,
-	soft,
-	appearance,
-}: { color: string; appearance: Appearance; soft: Soft; }) => {
+export const genVariantSoft = ({ color: color_, soft, appearance, }: { color: string; appearance: Appearance; soft: Soft; }) => {
 	const color = color_ === "neutral" ? "gray" : color_;
 	const { bgOpacity, bgShade, textShade, dark } = soft;
 
@@ -194,21 +142,11 @@ export const genVariantSoft = ({
 	return `${variantLight} ${variantDark}`;
 };
 
-export const genVariantSubtle = ({
-	color: color_,
-	appearance,
-	subtle,
-	graySubtle,
-}: {
-	color: string;
-	appearance: Appearance;
-	subtle: Subtle;
-	graySubtle: Subtle;
-}) => {
+export const genVariantSubtle = ({ color: color_, appearance, subtle, }: { color: string; appearance: Appearance; subtle: Subtle; }) => {
 	const color = color_ === "neutral" ? "gray" : color_;
 	if (color_ === "neutral")
 		return `${genVariantSubtleNeutral({ appearance, subtle })}`;
-	const { borderWidth, bgShade, textShade, borderShade, borderOpacity, bgOpacity, dark } = color === "gray" ? graySubtle : subtle;
+	const { borderWidth, bgShade, textShade, borderShade, borderOpacity, bgOpacity, dark } = subtle;
 
 	const variantLight = `${appearance === "light" || appearance === "both"
 		? `border-${color}-${borderShade}/${getConfigValue(
@@ -237,9 +175,7 @@ export const genVariantSubtle = ({
 	})}  border-${getConfigValue(borderWidth)} ${variantLight} ${variantDark}`;
 };
 
-export const genVariantSolidNeutral = ({
-	appearance,
-}: { appearance: Appearance }) => {
+export const genVariantSolidNeutral = ({ appearance, }: { appearance: Appearance }) => {
 	const variantLight = `${appearance === "light" || appearance === "both" ? "bg-gray-900" : ""
 		} `;
 
@@ -252,10 +188,7 @@ export const genVariantSolidNeutral = ({
 	return `${variantLight} ${variantDark}`;
 };
 
-export const genVariantWhiteBlack = ({
-	appearance,
-	colors,
-}: { appearance: Appearance; colors: { white: string; black: string } }) => {
+export const genVariantWhiteBlack = ({ appearance, colors, }: { appearance: Appearance; colors: { white: string; black: string } }) => {
 	const { white, black } = colors;
 	const variantLight = `${appearance === "light" || appearance === "both" ? `bg-${white}` : ""
 		} `;
@@ -269,13 +202,10 @@ export const genVariantWhiteBlack = ({
 	return `${variantLight} ${variantDark}`;
 };
 
-export const genVariantOutlineNeutral = ({
-	appearance,
-	borderSize,
-}: { appearance: Appearance; borderSize: string | number }) => {
+export const genVariantOutlineNeutral = ({ appearance, borderSize, }: { appearance: Appearance; borderSize: string | number }) => {
 	const borderSize_ = borderSize ? borderSize : 1;
 	const variantLight = `${appearance === "light" || appearance === "both"
-		? "border-gray-800/40 text-gray-800"
+		? "border-gray-800 text-gray-800"
 		: ""
 		}`;
 
@@ -288,10 +218,7 @@ export const genVariantOutlineNeutral = ({
 	return `border-${getConfigValue(borderSize_)} ${variantLight} ${variantDark}`;
 };
 
-export const genNeutralSoftGhost = (
-	appearance: Appearance,
-	variant: "soft" | "ghost",
-) => {
+export const genNeutralSoftGhost = (appearance: Appearance, variant: "soft" | "ghost",) => {
 	return variant === "ghost"
 		? `${genNeutralGhost(appearance)}`
 		: `${genNeutralSoft(appearance)}`;

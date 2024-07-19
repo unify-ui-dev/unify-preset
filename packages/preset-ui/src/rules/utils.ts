@@ -45,6 +45,8 @@ export const getVariableBgValue = (body: string, theme: Theme, withAlpha?: boole
 	return color?.color;
 };
 
+
+
 export const getBarShades = (val: BarShade) => {
 	return barShades[val];
 };
