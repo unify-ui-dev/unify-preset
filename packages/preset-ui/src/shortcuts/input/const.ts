@@ -42,18 +42,22 @@ export const InputSizes: ElSizeVariants = {
 export const InputBg_:InputBg = {
 	normalGray: {
 		shade: "100",
+		ignoreTextColor:true,
 		dark: { shade: "900" }
 	},
 	lightGray: {
 		shade: "50",
+		ignoreTextColor:true,
 		dark: { shade: "950" }
 	},
 	higherGray: {
 		shade: "300",
+		ignoreTextColor:true,
 		dark: { shade: "700" }
 	},
 	highGray: {
 		shade: "200",
+		ignoreTextColor:true,
 		dark: { shade: "800" }
 	}
 }

@@ -31,7 +31,7 @@ const getFormInputShortcuts = ({
 	})}`;
 
 	const inputs = {
-		input: `wfull ${borderFocus}`,
+		'form-input': `wfull ${borderFocus}`,
 		"form-input-gray": `${genUiBackground({
 			appearance,
 			color: "gray",
