@@ -8,7 +8,7 @@ const getCardShortcuts = (
 	uiConfig?: { appearance?: Appearance },
 ) => {
 	const appearance = uiConfig?.appearance || "both";
-	const body = globalElement?.body || helperDefaultValues.uiBodyColors
+	const body = Object.assign({},helperDefaultValues.uiBodyColors,globalElement?.body)
 
 	const cards = {
 		"card-body": `${genVariantWhiteBlack({

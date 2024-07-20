@@ -1,6 +1,6 @@
 {
   "name": "@unifydev/preset-ui",
-  "version": "0.0.3-beta.0",
+  "version": "0.0.3",
   "description": "UnoCSS Theming Toolkit, create modern and beautifull Web Ui",
   "publishConfig": {
     "access": "public"

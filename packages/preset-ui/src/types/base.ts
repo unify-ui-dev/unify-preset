@@ -18,7 +18,9 @@ export type SemanticColorNames = 'primary' | 'secondary' | 'accent' | 'info' | '
 export type UiConfig = { appearance: Appearance };
 
 export type SizeVariantBase = "xs" | "sm" | "md" | "lg" | "xl"
-export type TextSizes = "xs" | "sm" | "base" | "lg" | "xl" | "2xl";
+export type TextSize = "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl" | "8xl" | "9xl"
+export type TextVariantBase = "xs-body" | "x-body" | "body" | "x-title" | "title" | "l-title"
+export type FontWeightBase = "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900" | "thin" | "light" | "normal" | "black"
 
 type BorderPosition = "b" | "t" | "l" | "r" | "x" | "y";
 export type BorderPrefix = "border" | `border-${BorderPosition}`;
@@ -45,8 +47,8 @@ export type SizeBaseVaraint<T extends object> = {
 	xl?: T;
 }
 
-export type ElSizeBase = { py: number | string; px: number | string; textSize: TextSizes }
-export type CardSizeBase = { padding: number | string; textSize: TextSizes }
+export type ElSizeBase = { py: number | string; px: number | string; textSize: TextSize }
+export type CardSizeBase = { padding: number | string; textSize: TextSize }
 
 export type ElSizeVariants = SizeBaseVaraint<ElSizeBase>
 export type CardSizeVariant = SizeBaseVaraint<CardSizeBase>
@@ -149,10 +151,26 @@ export type BgBodyUi = {
 	defaultReverse?: BaseBodyUi,
 	'light-high'?: BaseBodyUi
 }
+
+
+
+
+export type TextTypos = {
+	'xs-body'?: string,
+	'x-body'?: string,
+	body?: string,
+	'x-title'?: string,
+	title?: string,
+	'l-title'?: string,
+	'xl-title'?:string,
+	'2xl-title'?:string,
+}
+
 export type BaseUI = {
-	bodyColor?: TextTypoColor;
-	bodyColorReverse?: TextTypoColor;
-	bodyNeutral?: TextTypoColor;
+	textColor?: TextTypoColor;
+	textColorReverse?: TextTypoColor;
+	textNeutral?: TextTypoColor;
+	textTypo?: TextTypos,
 	body: BgBodyUi,
 	border?: BorderUI;
 	bg?: BgUI;
