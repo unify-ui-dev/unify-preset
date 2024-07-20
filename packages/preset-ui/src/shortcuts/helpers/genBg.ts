@@ -14,10 +14,10 @@ export const genUiBackground = ({ color, appearance, colorShades }: { colorShade
 
 	const textDark = ignoreText ? '' : dark?.textColor && appearance === 'dark' ? `text-${dark.textColor}` : ''
 	const textBoth = textColor !== dark?.textColor ? `${ignoreText ? '' : dark?.textColor && appearance === 'both' ? `dark-text-${dark.textColor}` : ''}` : ''
-	const variantLight = `${appearance === "light" || appearance === "both" ? `bg-${color}-${shade} ${textLight}` : ""} `;
+	const variantLight = `${appearance === "light" || appearance === "both" ? `bg-${color}-${shade} ${textLight.includes('undefined') ? '' : textLight}` : ""} `;
 
 	const variantDark = dark ? `${appearance === "dark"
-		? `bg-${color}-${dark.shade} ${textDark}` : appearance === "both" ? `${textBoth} ${getShortcutsIfNotSame({
+		? `bg-${color}-${dark.shade} ${textDark.includes('undefined') ? '' : textDark}` : appearance === "both" ? `${textBoth.includes('undefined') ? '' : textBoth} ${getShortcutsIfNotSame({
 			val1: `${shade}`,
 			val2: `${dark.shade}`,
 			shortcuts: `dark-bg-${color}-${dark.shade}`

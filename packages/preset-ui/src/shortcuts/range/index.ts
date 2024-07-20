@@ -4,7 +4,7 @@ const getRangeSlideShortcuts = () => {
 			"relative z-3 appearance-none rounded-full ring-2 ring-current size-[--range-slide-thumb-size] mt-[calc(var(--range-mt)*-1)] border-0 bg-[--range-thumb-bg]",
 		"moz-range-slide-track":
 			"group-disabled:bg-opacity-50 bg-[--range-track-bg] h-[--range-track-height] rounded-lg",
-		range: `w-full absolute appearance-none bg-transparent
+		'form-input-range': `w-full absolute appearance-none bg-transparent
                      disabled:cursor-not-allowed disabled:opacity-50
                      range-slider-thumb:relative range-slider-thumb:ring-2 
                      range-slider-thumb:ring-current 

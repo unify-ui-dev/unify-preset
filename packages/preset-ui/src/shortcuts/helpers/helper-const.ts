@@ -1,4 +1,4 @@
-import type { OutlineVariant, Soft, Subtle, BgUI, BorderUI, RingBase, RingColorShades, BgBodyUi, BaseColor, ElSizeVariants, CardSizeVariant, } from "@/types";
+import type { OutlineVariant, Soft, Subtle, BgUI, BorderUI, RingBase, RingColorShades, BgBodyUi, BaseColor, ElSizeVariants, CardSizeVariant, TextTypos, } from "@/types";
 import { BaseVariants } from "../ui/types";
 
 
@@ -234,6 +234,16 @@ const ringGrayConfig: RingColorShades = {
 	dark: "800",
 };
 
+const textTypo: TextTypos = {
+	"x-body": "text-10px",
+	"xs-body": "text-xs",
+	body: "text-base",
+	"x-title": "text-lg sm-text-xl md-text-2xl",
+	title: "text-3xl sm-text-4xl/snug lg-text-5xl",
+	"l-title": "text-3xl/tight md-text-4xl/tight xl-text-5xl/tight",
+	"xl-title": "text-3xl/tight lg-text-4xl/tight xl-text-5xl/tight",
+	'2xl-title': "text-3xl/tight md-text-4xl/tight xl-text-6xl/tight"
+}
 
 export const helperDefaultValues = {
 	ringBase,
@@ -253,6 +263,7 @@ export const helperDefaultValues = {
 	bgSoligUI: uiBackground,
 	bdrUI,
 	uiBodyColors,
+	textTypo
 };
 
 export const globalUiConfig: BaseVariants = {
@@ -283,5 +294,6 @@ export const globalUiConfig: BaseVariants = {
 		}
 	},
 	size: uiSizeVariants,
-	cardSize: cardSizeVariants
+	cardSize: cardSizeVariants,
+
 }

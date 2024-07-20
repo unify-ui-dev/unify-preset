@@ -14,11 +14,12 @@ const getFormRadioShortcuts = ({ uiConfig }: { uiConfig: UiConfig }) => {
 
 	const dynamicRadio: Shortcut[] = [
 		[
-			/^form-radio(-(\S+))?$/,
+			/^form-input-radio(-(\S+))?$/,
 			([, , color = "primary"], { theme }) => {
 				if (isValidColor(color, theme))
 					return `${baseUtilities} ${getRadioBase(appearance, color)}`;
 			},
+			{ autocomplete: ["form-input-radio", "form-input-radio-(primary|secondary|accent|success|warning|info|danger|gray|neutral)",], },
 		],
 	];
 	return [...dynamicRadio];
