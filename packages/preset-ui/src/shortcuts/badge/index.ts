@@ -6,7 +6,7 @@ import type { Badge } from "./types";
 const getBadgeShortcuts = (
 	badge?: Badge,
 ) => {
-	const { xs, sm, md, xl, lg } = badge?.sizes || uiSizeVariants;
+	const { xs, sm, md, xl, lg } = Object.assign({}, uiSizeVariants, badge?.sizes);
 
 	const badges = {
 		"badge-xs": `${genUiSizes(xs as ElSizeBase)}`,

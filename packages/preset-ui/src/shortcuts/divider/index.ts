@@ -10,8 +10,8 @@ const getDividerShortcuts = ({
 	appearance: appearance_,
 }: { divider?: Divider; appearance?: Appearance | undefined }) => {
 	const appearance = appearance_ || "both";
-	const shades = divider?.shades || dividerShade;
-	const grayShades = divider?.grayShades || divideGray;
+	const shades = Object.assign({}, dividerShade, divider?.shades);
+	const grayShades = Object.assign({}, divideGray, divider?.grayShades);
 	const dividers = {
 		"divider-hr-2": "border-2",
 		"divider-hr-3": "border-3",

@@ -16,10 +16,8 @@ const getAccordionShortcuts = (
 ) => {
 	const appearance = uiConfig?.appearance || "both";
 
-	const grayDivider =
-		accordion?.grayDivider || defaultAcValues.defaultDividerGray;
-	const itemWithBorder =
-		accordion?.itemWithBorder || defaultAcValues.itemWithBorderGray;
+	const grayDivider = Object.assign({}, defaultAcValues.defaultDividerGray, accordion?.grayDivider);
+	const itemWithBorder = Object.assign({}, defaultAcValues.itemWithBorderGray, accordion?.itemWithBorder);
 
 	const dynamicAccordions: Shortcut[] = [
 		[

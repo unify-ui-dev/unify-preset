@@ -1,31 +1,20 @@
-import type { Appearance, BaseColor, BaseUI, BorderPrefix } from "@/types";
+import type { Appearance, BaseColor, BaseUI, BorderPrefix, TextVariantBase } from "@/types";
 import { genTextColor, genVariantWhiteBlack, genOutline, genUiBackground } from "../helpers";
 import { helperDefaultValues } from "../helpers";
 import { isValidColor } from "@/utils/colors-utils";
 import type { Shortcut } from "unocss";
 
 
-const getGeneralShortcuts = ({
-	uiConfig,
-	globalElement,
-}: {
-	globalElement?: BaseUI;
-	uiConfig: { appearance: Appearance };
-}) => {
+const getGeneralShortcuts = ({ uiConfig, globalElement, }: { globalElement?: BaseUI; uiConfig: { appearance: Appearance }; }) => {
 	const { appearance } = uiConfig;
+	const bg = Object.assign({}, helperDefaultValues.bgSoligUI, globalElement?.bg)
+	const border = Object.assign({}, helperDefaultValues.bdrUI, globalElement?.border)
+	const textTypo = Object.assign({}, helperDefaultValues.textTypo, globalElement?.textTypo)
+	const typoGray = Object.assign({}, helperDefaultValues.defaultTypoGray, globalElement?.textColor)
+	const typoGrayReverse = Object.assign({}, helperDefaultValues.textTypoColorReverse, globalElement?.textColorReverse);
 
-	const bg = globalElement?.bg || helperDefaultValues.bgSoligUI
-	const border = globalElement?.border || helperDefaultValues.bdrUI
-
-
-	const typoGray =
-		globalElement?.bodyColor || helperDefaultValues.defaultTypoGray;
-	const typoGrayReverse =
-		globalElement?.bodyColorReverse || helperDefaultValues.textTypoColorReverse;
-
-	const typoNeutral =
-		globalElement?.bodyNeutral || helperDefaultValues.defaultTypoNeutral;
-	const bodyBgUi = globalElement?.body || helperDefaultValues.uiBodyColors
+	const typoNeutral = Object.assign({}, helperDefaultValues.defaultTypoNeutral, globalElement?.textNeutral)
+	const bodyBgUi = Object.assign({}, helperDefaultValues.uiBodyColors, globalElement?.body)
 
 	const utils: Record<string, string> = {
 		// bg
@@ -97,6 +86,15 @@ const getGeneralShortcuts = ({
 					})}`;
 			},
 			{ autocomplete: ["bg-(light_nm|light|nm_light|nm|high|higher)", "bg-(light_nm|light|nm_light|nm|high|higher)-$colors"] },
+		],
+		[
+			/^(txt|ui-text)-(xs-body|x-body|body|x-title|title|l-title)$/,
+			([, size]) => {
+				if (["xs-body", "x-body", "body", "x-title", "title", "l-title"].includes(size)) {
+					return `${textTypo[size as TextVariantBase]}`
+				}
+			},
+			{ autocomplete: ["(txt|ui-text)-(xs-body|x-body|body|x-title|title|l-title)"] },
 		],
 
 		[/^bdr-(light|nm|high|higher|highest)(-(\S+))?$/,

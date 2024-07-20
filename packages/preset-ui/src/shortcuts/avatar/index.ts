@@ -5,14 +5,14 @@ import type { Avatar } from "./types";
 const getAvatarShortcuts = (
 	avatar?: Avatar
 ) => {
-	const { xs, sm, md, xl, lg } = avatar?.sizes || {
+	const { xs, sm, md, xl, lg } = Object.assign({}, {
 		xs: 6.5,
 		sm: 8,
 		md: 9.5,
 		lg: 10.5,
 		xl: 12,
-	};
-	
+	}, avatar?.sizes);
+
 	const avatars = {
 		"avatar-fit-none": "object-none",
 		"avatar-fit-fill": "object-fill",

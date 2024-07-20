@@ -7,7 +7,7 @@ export const getAllVariants = (prefixState?: string) => {
 		dataStateVariants({
 			prefix: prefixState,
 			variants:
-				"visible|hidden|active|inactive|open|close|resize|minimize|maximaze|opened|closed|maximazed|resized",
+				"visible|hidden|active|inactive|open|close|resize|minimize|maximaze|opened|closed|maximazed|resized|copied",
 			selector: "data-state",
 		}),
 		browserVariants({
@@ -16,18 +16,12 @@ export const getAllVariants = (prefixState?: string) => {
 				"meter-optimum-val": "::-webkit-meter-optimum-value",
 				"metter-bar": "::-webkit-meter-bar",
 				"moz-meter-bar": "::-moz-meter-bar",
-			},
-		}),
-		browserVariants({
-			variants: {
+
 				"range-slider-thumb": "::-webkit-slider-thumb",
 				"moz-range-thumb": "::-moz-range-thumb",
 				"slider-runnable-track": "::-webkit-slider-runnable-track",
 				"moz-range-track": "::-moz-range-track",
-			},
-		}),
-		browserVariants({
-			variants: {
+
 				"w-progress-bar": "::-webkit-progress-bar",
 				"w-progress-value": "::-webkit-progress-value",
 				"m-progress-bar": "::-moz-progress-bar",

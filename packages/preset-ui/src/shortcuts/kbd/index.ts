@@ -3,12 +3,11 @@ import {
 	uiSizeVariants
 } from "../helpers";
 import type { Kbd } from "./types";
-import type { Shortcut } from "unocss";
 
 const getKdbShortcuts = ({
 	kdb: kbd,
-}: { kdb?: Kbd}) => {
-	const { xs, sm, md, xl, lg } = kbd?.sizes || uiSizeVariants;
+}: { kdb?: Kbd }) => {
+	const { xs, sm, md, xl, lg } = Object.assign({}, uiSizeVariants, kbd?.sizes);
 
 	const kbds = {
 		"kbd-xs": `py-${getConfigValue(xs?.py)} px-${getConfigValue(xs?.px)} text-${xs?.textSize}`,
@@ -18,10 +17,7 @@ const getKdbShortcuts = ({
 		"kbd-xl": `py-${getConfigValue(xl?.py)} px-${getConfigValue(xl?.px)} text-${xl?.textSize}`,
 	};
 
-	const dynamicKbd: Shortcut[] = [
-
-	];
-	return [kbds, ...dynamicKbd];
+	return [kbds];
 };
 
 export { getKdbShortcuts, type Kbd };

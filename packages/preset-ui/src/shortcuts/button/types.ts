@@ -2,7 +2,7 @@ import type {
 	RingColorShades,
 	ColorShade,
 	formOutline,
-	TextSizes,
+	TextSize,
 	RingBase,
 	BaseVariant,
 } from "@/types";
@@ -29,7 +29,7 @@ export type BtnGhostOrSoft = GhostSoftBase & {
 export type BtnSizeBase = {
 	height?: number | string;
 	px?: number | string;
-	textSize?: TextSizes;
+	textSize?: TextSize;
 };
 
 export type BtnSizes = {
@@ -40,7 +40,7 @@ export type BtnSizes = {
 	xl?: BtnSizeBase;
 };
 
-export type BtnIconBase = { size?: number | string; textSize?: TextSizes };
+export type BtnIconBase = { size?: number | string; textSize?: TextSize };
 export type BtnIconSizes = {
 	xs?: BtnIconBase;
 	sm?: BtnIconBase;
