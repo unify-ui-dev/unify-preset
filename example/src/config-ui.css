@@ -13,7 +13,7 @@
 
 
     --uno-ring-offset-color: hsl(var(--bg));
-    --uno-input-image-color: red;
+    --uno-input-image-color: hsl(0, 100%, 50%);
 }
 
 

@@ -34,7 +34,8 @@ export type UiHelperConfig = {
 		button?: UiButton
 	},
 	exclude?: ThingsToExclude,
-	appearance?: Appearance
+	appearance?: Appearance,
+	defineColor?:boolean
 }
 
 export type presetUiConfig = {
