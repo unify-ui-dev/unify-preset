@@ -25,7 +25,7 @@ function presetUIHelper(config?: UiHelperConfig): Preset {
 	return {
 		name: "preset-ui-helper",
 		shortcuts,
-		theme: getUiTheme(colorFormat, varPrefix)
+		theme: getUiTheme(colorFormat, varPrefix, config?.defineColor || true)
 	};
 }
 
