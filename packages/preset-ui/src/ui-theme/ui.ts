@@ -4,13 +4,13 @@ import { uiColorFormat } from "@/types";
 import type { Theme } from "@unocss/preset-uno";
 
 const getWhite = (format: uiColorFormat): string => {
-  const formats = {
-    rgb: 'rgb(255,255,255, <alpha-value>)',
-    hex: '',
-    oklch: 'oklch(1 0 0)',
-    hsl: 'hsl(0 0% 100%)'
-  };
-  return formats[format as keyof typeof formats] ?? '#ffffff';
+    const formats = {
+        rgb: 'rgb(255,255,255, <alpha-value>)',
+        hex: '',
+        oklch: 'oklch(1 0 0)',
+        hsl: 'hsl(0 0% 100%)'
+    };
+    return formats[format as keyof typeof formats] ?? '#ffffff';
 };
 
 export const getUiTheme = (colorMode: uiColorFormat, colorPrefix?: string, defineColor?: boolean) => {
@@ -25,11 +25,15 @@ export const getUiTheme = (colorMode: uiColorFormat, colorPrefix?: string, defin
             bg: {
                 DEFAULT: getBrice(colorMode, "bg", "none"),
                 surface: getBrice(colorMode, "bg-surface", "none"),
-                subtle: getBrice(colorMode, "bg-subtle", "none"),
+                subtle: {
+                    DEFAULT: getBrice(colorMode, "bg-subtle", "none"),
+                    elevated: getBrice(colorMode, "bg-surface-elevated", "none"),
+                },
                 muted: getBrice(colorMode, "bg-muted", "none"),
-                'surface-elevated': getBrice(colorMode, "bg-surface-elevated", "none"),
-                input: getBrice(colorMode, "bg-input", "none"),
-                'input-gray': getBrice(colorMode, "bg-input-gray", "none"),
+                input: {
+                    DEFAULT: getBrice(colorMode, "bg-input", "none"),
+                    gray: getBrice(colorMode, "bg-input-gray", "none"),
+                }
             },
             fg: {
                 DEFAULT: getBrice(colorMode, "fg", "none"),
