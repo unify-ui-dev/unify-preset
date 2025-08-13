@@ -1,6 +1,6 @@
 {
   "name": "@unifydev/flexilla",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Variants, shortcuts, utilities for flexilla",
   "publishConfig": {
     "access": "public"
