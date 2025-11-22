@@ -3,3 +3,4 @@ lerna-debug.log
 dist
 .nx
 **/.DS_STORE
+test-package
